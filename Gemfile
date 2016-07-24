@@ -49,4 +49,4 @@ end
 
 # Custom gems
 gem 'mechanize'
-
+gem 'typhoeus'
