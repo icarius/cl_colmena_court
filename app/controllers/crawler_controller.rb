@@ -118,7 +118,7 @@ class CrawlerController < ApplicationController
 		end
 	end
 
-	def hello
+	def index
 		@cases = Case.all
 	end
 
