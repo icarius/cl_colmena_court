@@ -50,4 +50,5 @@ end
 # Custom gems
 gem 'mechanize'
 gem 'typhoeus'
+gem 'httpclient'
 gem 'adminlte-rails'
