@@ -55,6 +55,7 @@ GEM
       activesupport (>= 4.1.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    httpclient (2.8.0)
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -171,6 +172,7 @@ PLATFORMS
 DEPENDENCIES
   adminlte-rails
   byebug
+  httpclient
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

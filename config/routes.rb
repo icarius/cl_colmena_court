@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 			scope '/crawler' do
 				get '/poder_judicial_civil' => 'crawler#poder_judicial_civil'
 				get '/poder_judicial_civil/:search' => 'crawler#poder_judicial_civil'
+				get '/poder_judicial_corte' => 'crawler#poder_judicial_corte'
 				# get '/cases' => 'crawler#index'
 			end
 		end
