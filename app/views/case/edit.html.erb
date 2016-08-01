@@ -1,0 +1,42 @@
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Editar ID #<%=params[:id]%></h3>
+	</div>
+	<div class="box-body">
+		<div class="col-md-6 col-md-offset-3">
+			<%= form_for(@consultanttestimony) do |f| %>
+				<%#= render 'shared/error_messages', object: f.object %>
+				<%#= render 'shared/error_messages' %>
+				<%= f.label :entry_number %>
+				<%= f.text_field :entry_number, class: 'form-control' %>
+				<br/>
+				<%= f.label :entry_date %>
+				<%= f.text_field :entry_date, class: 'form-control' %>
+				<br/>
+				<%= f.label :location %>
+				<%= f.text_field :location, class: 'form-control' %>
+				<br/>
+				<%= f.label :location_date %>
+				<%= f.text_field :location_date, class: 'form-control' %>
+				<br/>
+				<%= f.label :dosage %>
+				<%= f.text_field :dosage, class: 'form-control' %>
+				<br/>
+				<%= f.label :created_at %>
+				<%= f.datetime_field :created_at, :readonly => true, class: 'form-control' %>
+				<br/>
+				<%= f.label :updated_at %>
+				<%= f.datetime_field :updated_at, :readonly => true, class: 'form-control' %>
+				<br/>
+				<br/>
+				<%= f.check_box :status %>
+				<%= f.label :status %>
+				<br/>
+				<br/>
+				<%= f.submit "Guardar", class: "btn btn-primary" %>
+			<% end %>
+		</div>
+	</div>
+	<div class="box-footer">
+	</div>
+</div>

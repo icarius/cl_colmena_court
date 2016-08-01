@@ -9,11 +9,11 @@ class CaseController < ApplicationController
 	end
 
 	def show
-		@cases = Case.find_by_id(params[:id])
+		@case = Case.find_by_id(params[:id])
 	end
 
 	def new
-		@cases = Case.new
+		@case = Case.new
 	end
 
 	def create
