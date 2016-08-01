@@ -47,7 +47,7 @@ class CasesController < ApplicationController
 	private
 
 	def cases_params
-		params.require(:cases).permit(
+		params.require(:case).permit(
 			:entry_number,
 			:entry_date,
 			:location,
