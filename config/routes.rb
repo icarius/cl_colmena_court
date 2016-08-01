@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-	root to: "case#welcome"
+	root to: "cases#welcome"
 
 	scope '/api' do
 		scope '/v1' do
