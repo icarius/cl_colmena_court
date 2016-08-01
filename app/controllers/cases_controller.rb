@@ -1,4 +1,4 @@
-class CaseController < ApplicationController
+class CasesController < ApplicationController
 
 	def welcome
 		render :json => { :status => true, :message => "Colmena golden cross 'Colmena court'." }, :status => 200
@@ -17,8 +17,7 @@ class CaseController < ApplicationController
 	end
 
 	def create
-		@case = Case.new(case_params)
-		# Se guarda y se actua segun resultado
+		@case = Case.new(cases_params)
 		if @case.save
 			flash[:success] = "El caso fue creado de forma exitosa!"
 			render 'edit'
@@ -33,11 +32,8 @@ class CaseController < ApplicationController
 
 	def update
 		@case = Case.find_by_id(params[:id])
-		# Guardamos y actuamos segun corresponda
-		if @case.update_attributes(case_params)
+		if @case.update_attributes(cases_params)
 			flash[:success] = "El caso fue modificado!"
-			render 'edit'
-		else
 			render 'edit'
 		end
 	end
@@ -50,7 +46,7 @@ class CaseController < ApplicationController
 
 	private
 
-	def case_params
+	def cases_params
 		params.require(:cases).permit(
 			:entry_number,
 			:entry_date,

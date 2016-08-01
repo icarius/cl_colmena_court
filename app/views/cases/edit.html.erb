@@ -4,7 +4,7 @@
 	</div>
 	<div class="box-body">
 		<div class="col-md-6 col-md-offset-3">
-			<%= form_for(@consultanttestimony) do |f| %>
+			<%= form_for(@case) do |f| %>
 				<%#= render 'shared/error_messages', object: f.object %>
 				<%#= render 'shared/error_messages' %>
 				<%= f.label :entry_number %>
@@ -19,8 +19,14 @@
 				<%= f.label :location_date %>
 				<%= f.text_field :location_date, class: 'form-control' %>
 				<br/>
-				<%= f.label :dosage %>
-				<%= f.text_field :dosage, class: 'form-control' %>
+				<%= f.label :court %>
+				<%= f.text_field :court, class: 'form-control' %>
+				<br/>
+				<%= f.label :caption %>
+				<%= f.text_field :caption, class: 'form-control' %>
+				<br/>
+				<%= f.label :public_detail_url %>
+				<%= f.text_field :public_detail_url, :readonly => true, class: 'form-control' %>
 				<br/>
 				<%= f.label :created_at %>
 				<%= f.datetime_field :created_at, :readonly => true, class: 'form-control' %>
