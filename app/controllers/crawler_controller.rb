@@ -1,13 +1,5 @@
 class CrawlerController < ApplicationController
 
-	def welcome
-		render :json => { :status => true, :message => "No se encontraron noticias2." }, :status => 200
-	end
-
-	def index
-		@cases = Case.all
-	end
-
 	def poder_judicial_corte
 		require 'patron'
 		require 'nokogiri'

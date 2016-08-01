@@ -50,3 +50,4 @@ end
 # Custom gems
 gem 'patron'
 gem 'adminlte-rails'
+gem 'will_paginate', '>= 3.1'

@@ -5,6 +5,10 @@
 	<!-- /.box-header -->
 	<div class="box-body">
 		<div class="table-responsive">
+			<%= form_tag(index_path, method: :get) do %>
+				<%= text_field_tag :term, params[:term] %>
+				<%= submit_tag 'Search', name: nil %>
+			<% end %>
 			<table class="table no-margin">
 				<thead>
 					<tr>
@@ -29,7 +33,7 @@
 					<% end %>
 				</tbody>
 			</table>
+			<%= will_paginate @cases %>
 		</div>
-		<!-- /.table-responsive -->
 	</div>
 </div>
