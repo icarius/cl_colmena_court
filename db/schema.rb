@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160725085634) do
     t.date     "location_date"
     t.string   "court",                            null: false
     t.string   "caption",                          null: false
-    t.string   "public_detail_url",                null: false
+    t.string   "public_detail_url"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.boolean  "status",            default: true

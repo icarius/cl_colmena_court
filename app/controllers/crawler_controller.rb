@@ -44,7 +44,7 @@ class CrawlerController < ApplicationController
 						location_date: obj.css('td')[3].text.squish,
 						court: obj.css('td')[4].text.squish,
 						caption: obj.css('td')[5].text.squish,
-						public_detail_url: obj.css('td')[0].css('a').href.squish
+						public_detail_url: obj.css('td')[0].css('a')[0]['href']
 					}
 					# Creamos un registro en la BD.
 					caso = Case.new(data)

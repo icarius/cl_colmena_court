@@ -7,7 +7,7 @@ class CreateCases < ActiveRecord::Migration[5.0]
 			t.date :location_date, null: true
 			t.string :court, null: false
 			t.string :caption, null: false
-			t.string :public_detail_url, null: false
+			t.string :public_detail_url, null: true
 			t.timestamps null: false
 			t.boolean :status, default: 1, null: true
 		end
