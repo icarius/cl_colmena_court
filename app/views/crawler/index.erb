@@ -8,19 +8,23 @@
 			<table class="table no-margin">
 				<thead>
 					<tr>
-					<th>ROL</th>
-						<th>Fecha</th>
+						<th>Numero Ingreso</th>
+						<th>Fecha Ingreso</th>
+						<th>Ubicacion</th>
+						<th>Fecha Ubicacion</th>
+						<th>Corte</th>
 						<th>Caratulado</th>
-						<th>Tribunal</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% @cases.each do |obj| %>
 						<tr>
-							<td><%=obj.rol%></td>
-							<td><%=obj.date%></td>
-							<td><span class="label label-success"><%=obj.caption%></span></td>
+							<td><%=obj.entry_number%></td>
+							<td><%=obj.entry_date%></td>
+							<td><%=obj.location%></td>
+							<td><%=obj.location_date%></td>
 							<td><%=obj.court%></td>
+							<td><%=obj.caption%></td>
 						</tr>
 					<% end %>
 				</tbody>

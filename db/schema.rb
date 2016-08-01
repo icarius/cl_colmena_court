@@ -13,13 +13,16 @@
 ActiveRecord::Schema.define(version: 20160725085634) do
 
   create_table "cases", force: :cascade do |t|
-    t.string   "rol",                       null: false
-    t.date     "date"
-    t.string   "caption",                   null: false
-    t.string   "court",                     null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.boolean  "status",     default: true
+    t.string   "entry_number",                     null: false
+    t.date     "entry_date"
+    t.string   "location",                         null: false
+    t.date     "location_date"
+    t.string   "court",                            null: false
+    t.string   "caption",                          null: false
+    t.string   "public_detail_url",                null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "status",            default: true
   end
 
 end
