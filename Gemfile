@@ -51,3 +51,4 @@ end
 gem 'patron'
 gem 'adminlte-rails'
 gem 'will_paginate', '>= 3.1'
+gem 'mysql2'

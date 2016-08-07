@@ -7,8 +7,20 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= yield %>
+  		<!-- Site wrapper -->
+		<div class="wrapper">
+			<%= render "shared/admin_header" %>
+			<%= render "shared/admin_aside_sidebar" %>
+			<!-- Content -->
+			<div class="content-wrapper">
+				<section class="content">
+					<%= render "shared/admin_notice" %>
+					<%= yield %>
+				</section>
+			</div>
+			<!-- !Content -->
+			<%= render "shared/admin_footer" %>
+		</div>
   </body>
 </html>

@@ -1,0 +1,151 @@
+<aside class="main-sidebar">
+	<section class="sidebar">
+		<ul class="sidebar-menu">
+			<li class="header">Aplicaciones</li>
+			<li class="treeview <%= (params[:controller] == 'doctors' || params[:controller] == 'doctor_drugs' || params[:controller] == 'medical_visits' || params[:controller] == 'medical_news' || params[:controller] == 'medical_conferences' || params[:controller] == 'medical_cfr_programs' || params[:controller] == 'doctor_help_for_patients' || params[:controller] == 'sample_drugs' || params[:controller] == 'notification' || params[:controller] == 'system_settings')? 'active' : '' %>">
+				<a href="#">
+					<i class="fa fa-laptop"></i>
+					<span>AdocZ</span>
+					<i class="fa fa-angle-left pull-right"></i>
+				</a>
+				<ul class="treeview-menu">
+					<li class="<%= ((params[:controller] == 'notification'))? 'active' : '' %>">
+						<%= link_to controller: "notification", action: "messenger" do %>
+							<i class='fa fa-circle-o'></i>
+							Messenger
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'doctors'))? 'active' : '' %>" >
+						<%= link_to controller: "doctors", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Medicos
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'doctor_drugs'))? 'active' : '' %>">
+						<%= link_to controller: "doctor_drugs", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Vademecum
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'medical_visits'))? 'active' : '' %>">
+						<%= link_to controller: "medical_visits", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Visita Medica
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'medical_news'))? 'active' : '' %>">
+						<%= link_to controller: "medical_news", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Noticias
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'medical_conferences'))? 'active' : '' %>">
+						<%= link_to controller: "medical_conferences", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Congresos
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'doctor_help_for_patients'))? 'active' : '' %>">
+						<%= link_to controller: "doctor_help_for_patients", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Ayuda pacientes
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'medical_cfr_programs'))? 'active' : '' %>">
+						<%= link_to controller: "medical_cfr_programs", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Programas CFR
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'sample_drugs'))? 'active' : '' %>">
+						<%= link_to controller: "sample_drugs", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Muestras medicas
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'system_settings'))? 'active' : '' %>">
+						<%= link_to controller: "system_settings", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Settings
+						<% end %>
+					</li>
+				</ul>
+			</li>
+			<li class="treeview <%= (params[:controller] == 'patients' || params[:controller] == 'entries' || params[:controller] == 'entry_categories' || params[:controller] == 'patient_drugs')? 'active' : '' %>">
+				<a href="#">
+					<i class="fa fa-laptop"></i>
+					<span>SoloMujer</span>
+					<i class="fa fa-angle-left pull-right"></i>
+				</a>
+				<ul class="treeview-menu">
+					<li class="<%= ((params[:controller] == 'patients'))? 'active' : '' %>" >
+						<%= link_to controller: "patients", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Usuarios SoloMujer
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'entries'))? 'active' : '' %>" >
+						<%= link_to controller: "entries", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Articulos
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'entry_categories'))? 'active' : '' %>" >
+						<%= link_to controller: "entry_categories", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Categorias
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'patient_drugs'))? 'active' : '' %>" >
+						<%= link_to controller: "patient_drugs", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Medicamentos
+						<% end %>
+					</li>
+				</ul>
+			</li>
+			<li class="treeview <%= (params[:controller] == 'consultants' || params[:controller] == 'consultant_drugs' || params[:controller] == 'consultant_news' || params[:controller] == 'consultant_studies' || params[:controller] == 'consultant_testimonies')? 'active' : '' %>">
+				<a href="#">
+					<i class="fa fa-laptop"></i>
+					<span>Consultores</span>
+					<i class="fa fa-angle-left pull-right"></i>
+				</a>
+				<ul class="treeview-menu">
+					<li class="<%= ((params[:controller] == 'consultants'))? 'active' : '' %>" >
+						<%= link_to controller: "consultants", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Consultores
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'consultant_drugs'))? 'active' : '' %>" >
+						<%= link_to controller: "consultant_drugs", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Medicamentos
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'consultant_news'))? 'active' : '' %>" >
+						<%= link_to controller: "consultant_news", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Noticias
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'consultant_studies'))? 'active' : '' %>" >
+						<%= link_to controller: "consultant_studies", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Estudios
+						<% end %>
+					</li>
+					<li class="<%= ((params[:controller] == 'consultant_testimonies'))? 'active' : '' %>" >
+						<%= link_to controller: "consultant_testimonies", action: "index" do %>
+							<i class='fa fa-circle-o'></i>
+							Testimonios
+						<% end %>
+					</li>
+				</ul>
+			</li>
+			<!-- <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
+			<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
+			<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
+		</ul>
+	</section>
+</aside>
