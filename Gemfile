@@ -49,7 +49,7 @@ end
 
 # Custom gems
 gem 'patron'
-gem 'adminlte-rails'
+gem 'adminlte2-rails'
 gem 'will_paginate', '>= 3.1'
 gem 'mysql2'
 gem 'devise'
