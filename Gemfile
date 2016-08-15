@@ -50,3 +50,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Custom gems
 gem 'mechanize'
 gem 'whenever', :require => false
+gem 'devise'
