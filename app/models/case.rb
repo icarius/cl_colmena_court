@@ -44,6 +44,12 @@ class Case < ApplicationRecord
 		end
 		# Cierro el driver que le dio persistencia a la session durante la ejecucion.
 		driver.quit
+		# Determino la respuesta.
+		if result.any?
+			return result
+		else
+			return false
+		end
 	end
 
 	def self.send_request_court(jsessionid, search)
