@@ -1,2 +1,3 @@
 class Case < ApplicationRecord
+	
 end
