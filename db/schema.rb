@@ -10,22 +10,91 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160807221058) do
+ActiveRecord::Schema.define(version: 20160815024737) do
 
-  create_table "cases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "entry_number",                     null: false
-    t.date     "entry_date"
-    t.string   "location",                         null: false
-    t.date     "location_date"
-    t.string   "court",                            null: false
-    t.string   "caption",                          null: false
-    t.string   "public_detail_url"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "status",            default: true
+  create_table "case_exhorts", force: :cascade do |t|
+    t.integer  "case_id"
+    t.string   "rit_origen"
+    t.string   "tipo_exhorto"
+    t.string   "rit_destino"
+    t.string   "fecha_ordena_exhorto"
+    t.string   "fecha_ingreso_exhorto"
+    t.string   "tribunal_destino"
+    t.string   "estado_exhorto"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.boolean  "status",                default: true
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "case_histories", force: :cascade do |t|
+    t.integer  "case_id"
+    t.string   "folio"
+    t.string   "link_doc"
+    t.string   "etapa"
+    t.string   "tramite"
+    t.string   "descripcion_tramite"
+    t.string   "fecha_tramite"
+    t.string   "foja"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "status",              default: true
+  end
+
+  create_table "case_litigants", force: :cascade do |t|
+    t.integer  "case_id"
+    t.string   "participante"
+    t.string   "rut"
+    t.string   "persona"
+    t.string   "razon_social"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "status",       default: true
+  end
+
+  create_table "case_notifications", force: :cascade do |t|
+    t.integer  "case_id"
+    t.string   "estado_notificacion"
+    t.string   "rol"
+    t.string   "ruc"
+    t.string   "fecha_tramite"
+    t.string   "tipo_part"
+    t.string   "nombre"
+    t.string   "tramite"
+    t.string   "obs_fallida"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "status",              default: true
+  end
+
+  create_table "case_solves", force: :cascade do |t|
+    t.integer  "case_id"
+    t.string   "doc"
+    t.string   "fecha_ingreso"
+    t.string   "tipo_escrito"
+    t.string   "solicitante"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "status",        default: true
+  end
+
+  create_table "cases", force: :cascade do |t|
+    t.string   "rol"
+    t.string   "fecha"
+    t.string   "caratulado"
+    t.string   "tribunal"
+    t.string   "est_adm"
+    t.string   "proc"
+    t.string   "ubicacion"
+    t.string   "etapa"
+    t.string   "est_proc"
+    t.string   "link_txt_exhorto"
+    t.string   "link_level_1"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "status",           default: true
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -36,19 +105,10 @@ ActiveRecord::Schema.define(version: 20160807221058) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        default: 0,  null: false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

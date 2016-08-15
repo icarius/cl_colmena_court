@@ -1,32 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Colmena Legal</title>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-  <body class="skin-blue sidebar-mini wysihtml5-supported">
-  		<!-- Site wrapper -->
-		<div class="wrapper">
-
-
-
-			<%= render "shared/inside_header" %>
-
-			<%= render "shared/admin_aside_sidebar" %>
-
-
-
-			<!-- Content -->
-			<div class="content-wrapper">
-				<section class="content">
-					<%= render "shared/admin_notice" %>
-					<%= yield %>
-				</section>
-			</div>
-			<!-- !Content -->
-			<%= render "shared/admin_footer" %>
-		</div>
-  </body>
+<head>
+	<title>ClColmenaCourt</title>
+	<%= csrf_meta_tags %>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+	<%= yield %>
+</body>
 </html>

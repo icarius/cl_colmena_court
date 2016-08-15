@@ -1,23 +1,16 @@
 Rails.application.routes.draw do
 
-  devise_for :users
-	root to: "cases#welcome"
-
+	root to: "case#welcome"
+	devise_for :users
+	
 	scope '/api' do
 		scope '/v1' do
-			# Crawler
-			scope '/crawler' do
-				get '/poder_judicial_corte' => 'crawler#poder_judicial_corte'
+			# Crawler test
+			scope '/case' do
+				get '/test' => 'case#test'
+				get '/test/:search' => 'case#test'
 			end
 		end
 	end
-
-	# Cases
-	scope '/case' do
-		get '/index' => 'case#index'
-	end
-
-	# Recursos
-	resources :cases
 
 end
