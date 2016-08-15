@@ -10,31 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815024737) do
-
-  create_table "case_exhorts", force: :cascade do |t|
-    t.integer  "case_id"
-    t.string   "rit_origen"
-    t.string   "tipo_exhorto"
-    t.string   "rit_destino"
-    t.string   "fecha_ordena_exhorto"
-    t.string   "fecha_ingreso_exhorto"
-    t.string   "tribunal_destino"
-    t.string   "estado_exhorto"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "status",                default: true
-  end
+ActiveRecord::Schema.define(version: 20160815024057) do
 
   create_table "case_histories", force: :cascade do |t|
     t.integer  "case_id"
     t.string   "folio"
+    t.string   "ano"
     t.string   "link_doc"
-    t.string   "etapa"
+    t.string   "link_dto"
+    t.string   "sala"
     t.string   "tramite"
     t.string   "descripcion_tramite"
     t.string   "fecha_tramite"
-    t.string   "foja"
+    t.string   "estado"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.boolean  "status",              default: true
@@ -42,7 +30,7 @@ ActiveRecord::Schema.define(version: 20160815024737) do
 
   create_table "case_litigants", force: :cascade do |t|
     t.integer  "case_id"
-    t.string   "participante"
+    t.string   "sujeto"
     t.string   "rut"
     t.string   "persona"
     t.string   "razon_social"
@@ -51,47 +39,24 @@ ActiveRecord::Schema.define(version: 20160815024737) do
     t.boolean  "status",       default: true
   end
 
-  create_table "case_notifications", force: :cascade do |t|
-    t.integer  "case_id"
-    t.string   "estado_notificacion"
-    t.string   "rol"
-    t.string   "ruc"
-    t.string   "fecha_tramite"
-    t.string   "tipo_part"
-    t.string   "nombre"
-    t.string   "tramite"
-    t.string   "obs_fallida"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.boolean  "status",              default: true
-  end
-
-  create_table "case_solves", force: :cascade do |t|
-    t.integer  "case_id"
-    t.string   "doc"
-    t.string   "fecha_ingreso"
-    t.string   "tipo_escrito"
-    t.string   "solicitante"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "status",        default: true
-  end
-
   create_table "cases", force: :cascade do |t|
     t.string   "rol"
-    t.string   "fecha"
-    t.string   "caratulado"
-    t.string   "tribunal"
-    t.string   "est_adm"
-    t.string   "proc"
+    t.string   "rit"
+    t.string   "ruc"
+    t.string   "ningreso"
     t.string   "ubicacion"
-    t.string   "etapa"
-    t.string   "est_proc"
-    t.string   "link_txt_exhorto"
-    t.string   "link_level_1"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.boolean  "status",           default: true
+    t.string   "corte"
+    t.string   "caratulado"
+    t.string   "recurso"
+    t.string   "fecha_ingreso"
+    t.string   "fecha_ubicacion"
+    t.string   "estado_recurso"
+    t.string   "estado_procesal"
+    t.string   "link_caso_detalle"
+    t.string   "link_caso_txt"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "status",            default: true
   end
 
   create_table "users", force: :cascade do |t|

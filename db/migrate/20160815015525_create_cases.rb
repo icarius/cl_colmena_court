@@ -2,16 +2,19 @@ class CreateCases < ActiveRecord::Migration[5.0]
 	def change
 		create_table :cases do |t|
 			t.string :rol
-			t.string :fecha
-			t.string :caratulado
-			t.string :tribunal
-			t.string :est_adm
-			t.string :proc
+			t.string :rit
+			t.string :ruc
+			t.string :ningreso
 			t.string :ubicacion
-			t.string :etapa
-			t.string :est_proc
-			t.string :link_txt_exhorto
-			t.string :link_level_1
+			t.string :corte
+			t.string :caratulado
+			t.string :recurso
+			t.string :fecha_ingreso
+			t.string :fecha_ubicacion
+			t.string :estado_recurso
+			t.string :estado_procesal
+			t.string :link_caso_detalle
+			t.string :link_caso_txt
 			t.timestamps
 			t.boolean :status, default: 1
 		end

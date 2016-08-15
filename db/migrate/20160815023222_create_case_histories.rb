@@ -3,12 +3,14 @@ class CreateCaseHistories < ActiveRecord::Migration[5.0]
 		create_table :case_histories do |t|
 			t.integer :case_id
 			t.string :folio
+			t.string :ano
 			t.string :link_doc
-			t.string :etapa
+			t.string :link_dto
+			t.string :sala
 			t.string :tramite
 			t.string :descripcion_tramite
 			t.string :fecha_tramite
-			t.string :foja
+			t.string :estado
 			t.timestamps
 			t.boolean :status, default: 1
 		end

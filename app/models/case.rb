@@ -1,10 +1,7 @@
 class Case < ApplicationRecord
 
 	has_many :case_histories
-	has_many :case_notifications
 	has_many :case_litigants
-	has_many :case_solves
-	has_many :case_exhorts
 
 	def self.poderjudicial_crawler
 		require 'selenium-webdriver'
