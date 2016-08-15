@@ -1,0 +1,2 @@
+class CaseExhort < ApplicationRecord
+end

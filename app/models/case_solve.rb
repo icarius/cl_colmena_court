@@ -1,0 +1,2 @@
+class CaseSolve < ApplicationRecord
+end

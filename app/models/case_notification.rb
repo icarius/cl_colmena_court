@@ -1,0 +1,2 @@
+class CaseNotification < ApplicationRecord
+end

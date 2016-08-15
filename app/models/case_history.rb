@@ -1,0 +1,2 @@
+class CaseHistory < ApplicationRecord
+end

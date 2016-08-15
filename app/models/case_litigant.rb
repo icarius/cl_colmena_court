@@ -1,0 +1,2 @@
+class CaseLitigant < ApplicationRecord
+end
