@@ -158,7 +158,7 @@ class Case < ApplicationRecord
 
 		# Estrategia 7
 		require "selenium-webdriver"
-		driver = Selenium::WebDriver.for :firefox
+		driver = Selenium::WebDriver.for :phantomjs
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		puts cookie[:value]
