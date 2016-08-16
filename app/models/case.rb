@@ -23,16 +23,16 @@ class Case < ApplicationRecord
 			row.each do |obj|
 				begin
 					data = {
-						entry_number: obj.css('td')[0].text.squish,
-						entry_date: obj.css('td')[1].text.squish,
-						location: obj.css('td')[2].text.squish,
-						location_date: obj.css('td')[3].text.squish,
-						court: obj.css('td')[4].text.squish,
-						caption: obj.css('td')[5].text.squish,
-						public_detail_url: obj.css('td')[0].css('a')[0]['href']
+						ningreso: obj.css('td')[0].text.squish,
+						fecha_ingreso: obj.css('td')[1].text.squish,
+						ubicacion: obj.css('td')[2].text.squish,
+						fecha_ubicacion: obj.css('td')[3].text.squish,
+						corte: obj.css('td')[4].text.squish,
+						caratulado: obj.css('td')[5].text.squish,
+						link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
 					}
-					puts data.inspect
-					result << data
+					# Por cada elemento obtengo su detalle.
+					result << self.detalle_recurso_scraper(data)
 				rescue StandardError => e
 					error_obj << obj
 					puts "Parse error #{e.message}"
@@ -47,6 +47,19 @@ class Case < ApplicationRecord
 		else
 			return false
 		end
+	end
+
+	def self.detalle_recurso_scraper(data)
+		require 'open-uri'
+		require 'nokogiri'
+		document = Nokogiri::HTML(open(data[:link_caso_detalle]))
+		if document.present?
+			table = document.css('.textoPortal')
+			table.each do |tr|
+				puts tr.css('td')[0].text.squish.strip
+			end
+		end
+		return data
 	end
 
 	def self.send_request_court(jsessionid, search)
