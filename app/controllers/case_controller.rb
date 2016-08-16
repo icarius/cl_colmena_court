@@ -1,7 +1,5 @@
 class CaseController < ApplicationController
 
-	before_filter :authenticate_user!
-
 	def welcome
 		render :json => { :status => true, :message => "Colmena court." }, :status => 200
 	end
