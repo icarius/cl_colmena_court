@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-	root to: "case#welcome"
+	root to: "case#home"
+
 	devise_for :users
 	
 	scope '/api' do
