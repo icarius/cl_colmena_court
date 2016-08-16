@@ -15,12 +15,12 @@ class Case < ApplicationRecord
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
-		document = Nokogiri::HTML(self.send_request_court(cookie[:value], 'COLMENA'))
+		document = Nokogiri::HTML(self.send_request_court(cookie[:value], 'SPENCER'))
 		if document.present?
 			# Obtengo la tabla.
 			row = document.css('.textoPortal')
 			# Itero el resultado.
-			row.each do |obj|
+			row[8..-1].each do |obj|
 				begin
 					data = {
 						ningreso: obj.css('td')[0].text.squish,
@@ -54,9 +54,88 @@ class Case < ApplicationRecord
 		require 'nokogiri'
 		document = Nokogiri::HTML(open(data[:link_caso_detalle]))
 		if document.present?
-			table = document.css('.textoPortal')
-			table.each do |tr|
-				puts tr.css('td')[0].text.squish.strip
+			# Obtengo los elementos del dom y los asocio a objetos segun tema.
+			recurso = document.css('#recurso tr.textoBarra .textoPortal tr')
+			expediente = document.css('#expediente tr.textoBarra .textoPortal tr')
+			historia = document.css('#divHistoria > table:nth-child(2) tr')
+			data[:historia] = Array.new
+			litigantes = document.css('#divLitigantes > table:nth-child(2) tr')
+			data[:litigantes] = Array.new
+			# Recorro los objetos para obtener datos.
+			# Obtengo datos faltantes de recurso.
+			recurso.each do |detail|
+				detail.css('td').each do |obj|
+					if obj.text.squish.strip.include? "Estado Recurso:"
+						data[:estado_recurso] = obj.text.squish.strip.gsub('Estado Recurso:', '').squish.downcase
+					end
+					if obj.text.squish.strip.include? "Estado Procesal:"
+						data[:estado_procesal] = obj.text.squish.strip.gsub('Estado Procesal:', '').squish.downcase
+					end
+					if obj.text.squish.strip.include? "Recurso :"
+						data[:recurso] = obj.text.squish.strip.gsub('Recurso :', '').squish.downcase
+					end
+				end
+			end
+			# Obtengo datos faltantes de expediente.
+			expediente.each do |detail|
+				detail.css('td').each do |obj|
+					if obj.text.squish.strip.include? "RUC :"
+						data[:ruc] = obj.text.squish.strip.gsub('RUC :', '').squish.downcase
+					end
+					if obj.text.squish.strip.include? "Rol o Rit :"
+						data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
+					end
+				end
+			end
+			# Obtengo datos faltantes de litigantes.
+			litigantes.each do |row|
+				litigante = { case_id: 1 }
+				row.css('td').each_with_index do |obj, index|
+					case index
+					when 0
+						litigante[:sujeto] = obj.text.squish.strip
+					when 1
+						litigante[:rut] = obj.text.squish.strip.downcase
+					when 2
+						litigante[:persona] = obj.text.squish.strip.downcase
+					when 3
+						litigante[:razon_social] = obj.text.squish.strip
+					end
+				end
+				data[:litigantes] << litigante
+			end
+			# Obtengo datos faltantes de expediente.
+			historia.each do |row|
+				registro = { case_id: 1 }
+				row.css('td').each_with_index do |obj, index|
+					case index
+					when 0
+						registro[:folio] = obj.text.squish.strip
+					when 1
+						registro[:ano] = obj.text.squish.strip
+					when 2
+						if  obj.css('img')[0]['onclick'].include? "ShowPDF"
+							registro[:link_doc] = 'http://corte.poderjudicial.cl' + obj.css('img')[0]['onclick'].gsub("ShowPDF('", '').gsub("')", '')
+						end
+						if obj.css('img')[0]['onclick'].include? "ShowWord"
+							registro[:link_doc] = 'http://corte.poderjudicial.cl' + obj.css('img')[0]['onclick'].gsub("ShowWord('", '').gsub("')", '')
+						end
+					when 3
+						# Nada por que al parecer nunca va nada.
+						# Sino se parece al anterior.
+					when 4
+						registro[:sala] = obj.text.squish.strip
+					when 5
+						registro[:tramite] = obj.text.squish.strip
+					when 6
+						registro[:descripcion_tramite] = obj.text.squish.strip
+					when 7
+						registro[:fecha_tramite] = obj.text.squish.strip
+					when 8
+						registro[:estado] = obj.text.squish.strip
+					end
+				end
+				data[:historia] << registro
 			end
 		end
 		return data

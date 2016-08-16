@@ -5,7 +5,7 @@ class CreateCaseHistories < ActiveRecord::Migration[5.0]
 			t.string :folio
 			t.string :ano
 			t.string :link_doc
-			t.string :link_dto
+			# t.string :link_dto
 			t.string :sala
 			t.string :tramite
 			t.string :descripcion_tramite
