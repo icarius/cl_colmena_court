@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(version: 20160815024057) do
     t.string   "folio"
     t.string   "ano"
     t.string   "link_doc"
-    t.string   "link_dto"
     t.string   "sala"
     t.string   "tramite"
     t.string   "descripcion_tramite"
@@ -40,8 +39,7 @@ ActiveRecord::Schema.define(version: 20160815024057) do
   end
 
   create_table "cases", force: :cascade do |t|
-    t.string   "rol"
-    t.string   "rit"
+    t.string   "rol_rit"
     t.string   "ruc"
     t.string   "ningreso"
     t.string   "ubicacion"
@@ -53,7 +51,6 @@ ActiveRecord::Schema.define(version: 20160815024057) do
     t.string   "estado_recurso"
     t.string   "estado_procesal"
     t.string   "link_caso_detalle"
-    t.string   "link_caso_txt"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.boolean  "status",            default: true
