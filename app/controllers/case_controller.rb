@@ -5,7 +5,7 @@ class CaseController < ApplicationController
 	end
 
 	def test
-		result = Case.poderjudicial_crawler('SPENCER')
+		result = Case.poderjudicial_crawler('COLMENA')
 		if result
 			render :json => { :status => true, :message => "Colmena court test.", :result => result }, :status => 200
 		else
