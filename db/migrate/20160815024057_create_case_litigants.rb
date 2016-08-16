@@ -1,7 +1,7 @@
 class CreateCaseLitigants < ActiveRecord::Migration[5.0]
 	def change
 		create_table :case_litigants do |t|
-			t.integer :case_id
+			t.integer :case_id, :null => false
 			t.string :sujeto
 			t.string :rut
 			t.string :persona

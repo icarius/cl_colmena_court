@@ -3,7 +3,7 @@ class Case < ApplicationRecord
 	has_many :case_histories
 	has_many :case_litigants
 
-	def self.poderjudicial_crawler
+	def self.poderjudicial_crawler(search)
 		require 'selenium-webdriver'
 		require 'nokogiri'
 		# Inicializo objetos que contendran los resultados.
@@ -15,7 +15,7 @@ class Case < ApplicationRecord
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
-		document = Nokogiri::HTML(self.send_request_court(cookie[:value], 'SPENCER'))
+		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
 		if document.present?
 			# Obtengo la tabla.
 			row = document.css('.textoPortal')
@@ -58,9 +58,7 @@ class Case < ApplicationRecord
 			recurso = document.css('#recurso tr.textoBarra .textoPortal tr')
 			expediente = document.css('#expediente tr.textoBarra .textoPortal tr')
 			historia = document.css('#divHistoria > table:nth-child(2) tr')
-			data[:historia] = Array.new
 			litigantes = document.css('#divLitigantes > table:nth-child(2) tr')
-			data[:litigantes] = Array.new
 			# Recorro los objetos para obtener datos.
 			# Obtengo datos faltantes de recurso.
 			recurso.each do |detail|
@@ -87,9 +85,11 @@ class Case < ApplicationRecord
 					end
 				end
 			end
+			# El objeto caso se encuentra completo por lo que lo creo en la BD.
+			caso = self.where(ningreso: data[:ningreso]).first || self.create(data)
 			# Obtengo datos faltantes de litigantes.
 			litigantes.each do |row|
-				litigante = { case_id: 1 }
+				litigante = { case_id: caso[:id] }
 				row.css('td').each_with_index do |obj, index|
 					case index
 					when 0
@@ -102,11 +102,12 @@ class Case < ApplicationRecord
 						litigante[:razon_social] = obj.text.squish.strip
 					end
 				end
-				data[:litigantes] << litigante
+				# Creo el objeto litigante solo si no existe.
+				CaseLitigant.where(case_id: litigante[:case_id], rut: litigante[:rut]).first || CaseLitigant.create(litigante)
 			end
 			# Obtengo datos faltantes de expediente.
 			historia.each do |row|
-				registro = { case_id: 1 }
+				registro = { case_id: caso[:id] }
 				row.css('td').each_with_index do |obj, index|
 					case index
 					when 0
@@ -135,7 +136,8 @@ class Case < ApplicationRecord
 						registro[:estado] = obj.text.squish.strip
 					end
 				end
-				data[:historia] << registro
+				# Creo el objeto historia solo si no existe.
+				CaseHistory.where(case_id: registro[:case_id], folio: registro[:folio]).first || CaseHistory.create(registro)
 			end
 		end
 		return data
@@ -147,7 +149,6 @@ class Case < ApplicationRecord
 		begin
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
 			# Create client
-			puts jsessionid
 			http = Net::HTTP.new(uri_post.host, uri_post.port)
 			data = {
 				"TIP_Consulta" => "3",

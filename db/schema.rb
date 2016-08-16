@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20160815024057) do
 
   create_table "case_histories", force: :cascade do |t|
-    t.integer  "case_id"
+    t.integer  "case_id",                            null: false
     t.string   "folio"
     t.string   "ano"
     t.string   "link_doc"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160815024057) do
   end
 
   create_table "case_litigants", force: :cascade do |t|
-    t.integer  "case_id"
+    t.integer  "case_id",                     null: false
     t.string   "sujeto"
     t.string   "rut"
     t.string   "persona"
