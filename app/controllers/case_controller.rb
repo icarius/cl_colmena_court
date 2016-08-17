@@ -27,8 +27,17 @@ class CaseController < ApplicationController
 		if params.has_key?(:txtsearch)
 			@cases = Case.where('caratulado COLLATE UTF8_GENERAL_CI LIKE :search OR corte COLLATE UTF8_GENERAL_CI LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
 		elsif params.has_key?(:estadocolmena)
+			# Diccionario
+			# ingresado
+			# notificado
+			# enviadoexterno
 			@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 		elsif params.has_key?(:estadocolmenaprocesal)
+			# Diccionario
+			# aceptado
+			# aceptadoobs
+			# rechazado
+			# traspasadooni
 			@cases = Case.where(estado_colmena_procesal: params['estadocolmenaprocesal']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 		else
 			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
@@ -37,10 +46,7 @@ class CaseController < ApplicationController
 
 	def show
 		@case = Case.find_by_id(params[:id])
-	end
-
-	def edit
-		@case = Case.find_by_id(params[:id])
+		puts @case.case_histories.count
 	end
 
 	def update
