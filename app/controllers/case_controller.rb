@@ -32,13 +32,13 @@ class CaseController < ApplicationController
 			# notificado
 			# enviadoexterno
 			@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
-		elsif params.has_key?(:estadocolmenaprocesal)
+		elsif params.has_key?(:estadocolmenasituacion)
 			# Diccionario
 			# aceptado
 			# aceptadoobs
 			# rechazado
 			# traspasadooni
-			@cases = Case.where(estado_colmena_procesal: params['estadocolmenaprocesal']).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			@cases = Case.where(estado_colmena_situacion: params['estadocolmenasituacion']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 		else
 			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
 		end
