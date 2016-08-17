@@ -52,3 +52,4 @@ gem 'selenium-webdriver', '~> 2.53', '>= 2.53.4'
 gem 'nokogiri'
 gem 'whenever', :require => false
 gem 'devise'
+gem 'will_paginate'
