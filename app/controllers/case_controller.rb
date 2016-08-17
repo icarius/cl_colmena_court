@@ -46,7 +46,6 @@ class CaseController < ApplicationController
 
 	def show
 		@case = Case.find_by_id(params[:id])
-		puts @case.case_histories.count
 	end
 
 	def update
