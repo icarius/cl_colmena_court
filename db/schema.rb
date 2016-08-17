@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20160817201520) do
     t.string   "estado_procesal"
     t.string   "estado_colmena",           default: "ingresado"
     t.string   "estado_colmena_situacion"
-    t.string   "estado_colmena_procesal"
     t.string   "link_caso_detalle"
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
