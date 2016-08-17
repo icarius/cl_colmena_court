@@ -16,7 +16,10 @@ Rails.application.config.assets.precompile += %w( *.svg *.eot *.woff *.woff2 *.t
 # Custom CSS
 Rails.application.config.assets.precompile += %w( AdminLTE.min.css )
 Rails.application.config.assets.precompile += %w( bootstrap.min.css )
+Rails.application.config.assets.precompile += %w( skin-blue.min.css )
 
 # Custom JS
 Rails.application.config.assets.precompile += %w( app.min.js )
 Rails.application.config.assets.precompile += %w( bootstrap.min.js )
+Rails.application.config.assets.precompile += %w( jquery.slimscroll.min.js )
+Rails.application.config.assets.precompile += %w( fastclick.min.js )
