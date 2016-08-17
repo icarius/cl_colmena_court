@@ -25,13 +25,13 @@ class CaseController < ApplicationController
 
 	def index
 		if params.has_key?(:txtsearch)
-			@cases = Case.where('caratulado COLLATE UTF8_GENERAL_CI LIKE :search OR corte COLLATE UTF8_GENERAL_CI LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 20).order('id DESC')
+			@cases = Case.where('caratulado COLLATE UTF8_GENERAL_CI LIKE :search OR corte COLLATE UTF8_GENERAL_CI LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
 		elsif params.has_key?(:estadocolmena)
-			@cases = Case.where('estado_colmena = :search', search: "%#{params['estadocolmena']}%").paginate(page: params[:page], :per_page => 20).order('id DESC')
+			@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 		elsif params.has_key?(:estadocolmenaprocesal)
-			@cases = Case.where('estado_colmena_procesal = :search', search: "%#{params['estadocolmenaprocesal']}%").paginate(page: params[:page], :per_page => 20).order('id DESC')
+			@cases = Case.where(estado_colmena_procesal: params['estadocolmenaprocesal']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 		else
-			@cases = Case.paginate(page: params[:page], :per_page => 20).order('id DESC')
+			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
 		end
 	end
 
