@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817144810) do
+ActiveRecord::Schema.define(version: 20160817201520) do
 
   create_table "case_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "case_id",                            null: false
@@ -50,12 +50,13 @@ ActiveRecord::Schema.define(version: 20160817144810) do
     t.string   "fecha_ubicacion"
     t.string   "estado_recurso"
     t.string   "estado_procesal"
-    t.string   "estado_colmena",          default: "ingresado"
+    t.string   "estado_colmena",           default: "ingresado"
+    t.string   "estado_colmena_situacion"
     t.string   "estado_colmena_procesal"
     t.string   "link_caso_detalle"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.boolean  "status",                  default: true
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.boolean  "status",                   default: true
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
