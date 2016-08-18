@@ -16,11 +16,11 @@ class CaseController < ApplicationController
 	def dashboard
 		@ingresados = Case.where(estado_colmena: 'ingresado').count
 		@notificados = Case.where(estado_colmena: 'notificado').count
-		@enviados = Case.where(estado_colmena: 'enviado_externo').count
+		@enviados = Case.where(estado_colmena: 'enviadoexterno').count
 		@aceptados = Case.where(estado_colmena_situacion: 'aceptado').count
-		@aceptados_obs = Case.where(estado_colmena_situacion: 'aceptado_obs').count
+		@aceptados_obs = Case.where(estado_colmena_situacion: 'aceptadoobs').count
 		@rechazados = Case.where(estado_colmena_situacion: 'rechazado').count
-		@traspasados = Case.where(estado_colmena_situacion: 'traspasado_oni').count
+		@traspasados = Case.where(estado_colmena_situacion: 'traspasadooni').count
 	end
 
 	def index
@@ -48,7 +48,14 @@ class CaseController < ApplicationController
 		@case = Case.find_by_id(params[:id])
 	end
 
-	def update
+	def update_estado
+		Case.update(params[:id_caso], estado_colmena: params[:estado_colmena])
+		render :json => { :status => true, :estado_colmena => params[:estado_colmena] }, :status => 200
+	end
+
+	def update_situacion
+		Case.update(params[:id_caso], estado_colmena_situacion: params[:estado_colmena_situacion])
+		render :json => { :status => true, :estado_colmena_situacion => params[:estado_colmena_situacion] }, :status => 200
 	end
 
 end

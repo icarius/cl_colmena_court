@@ -14,6 +14,15 @@ Rails.application.routes.draw do
 	# 	end
 	# end
 
+	scope '/api' do
+		scope '/estado' do
+			get '/:id_caso/:estado_colmena' => 'case#update_estado'
+		end
+		scope '/situacion' do
+			get '/:id_caso/:estado_colmena_situacion' => 'case#update_situacion'
+		end
+	end
+
 	resources :case
 
 end

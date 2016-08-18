@@ -37,15 +37,26 @@
 	<div class="box-body">
 		<% case @case.estado_colmena %>
 		<% when 'ingresado' %>
-			<button type="button" class="btn btn-block btn-primary">Marcar como notificado</button>
+			<button type="button" caseid="<%=@case.id%>" class="tonotificado btn btn-block btn-primary">Marcar como notificado</button>
 		<% when 'notificado' %>
-			<button type="button" class="btn btn-block btn-success">Marcar como aceptado</button>
-			<br/>
-			<button type="button" class="btn btn-block btn-warning">Marcar como aceptado con observaciones</button>
-			<br/>
-			<button type="button" class="btn btn-block btn-danger">Marcar como rechazado</button>
+			<% case @case.estado_colmena_situacion %>
+			<% when 'aceptado' %>
+				<button type="button" caseid="<%=@case.id%>" class="toenviadoexterno btn btn-block btn-info">Marcar como enviado a externos</button>
+			<% when 'aceptadoobs' %>
+				<button type="button" caseid="<%=@case.id%>" class="toaceptado btn btn-block btn-success">Marcar como aceptado</button>
+			<% when 'rechazado' %>
+			<% when 'traspasadooni' %>
+			<% else %>
+				<button type="button" caseid="<%=@case.id%>" class="toaceptado btn btn-block btn-success">Marcar como aceptado</button>
+				<br/>
+				<button type="button" caseid="<%=@case.id%>" class="toaceptadoobs btn btn-block btn-warning">Marcar como aceptado con observaciones</button>
+				<br/>
+				<button type="button" caseid="<%=@case.id%>" class="torechazado btn btn-block btn-danger">Marcar como rechazado</button>
+			<% end %>
 		<% when 'enviadoexterno' %>
-			<button type="button" class="btn btn-block btn-info">Marcar como traspasado a ONI</button>
+			<% if @case.estado_colmena_situacion != 'traspasadooni' %>
+				<button type="button" caseid="<%=@case.id%>" class="totraspasadooni btn btn-block btn-info">Marcar como traspasado a ONI</button>
+			<% end %>
 		<% end %>
 	</div>
 </div>
@@ -125,3 +136,61 @@
 	</div>
 </div>
 <% end %>
+<script type="text/javascript">
+	$(function(){
+		$('.tonotificado').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/estado/" + $(this).attr('caseid') + "/notificado",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.toaceptado').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/situacion/" + $(this).attr('caseid') + "/aceptado",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.toaceptadoobs').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/situacion/" + $(this).attr('caseid') + "/aceptadoobs",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.torechazado').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/situacion/" + $(this).attr('caseid') + "/rechazado",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.toenviadoexterno').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/estado/" + $(this).attr('caseid') + "/enviadoexterno",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.totraspasadooni').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/situacion/" + $(this).attr('caseid') + "/traspasadooni",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+	});
+</script>
