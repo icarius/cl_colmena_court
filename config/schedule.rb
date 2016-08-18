@@ -18,6 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-# every 1.day, :at => '3:30 am' do
-# 	runner "Case.poderjudicial_crawler('COLMENA')"
-# end
+every 1.day, :at => '11:59 pm' do
+	runner "Case.poderjudicial_crawler('COLMENA')"
+end
