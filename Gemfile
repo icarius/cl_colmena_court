@@ -54,3 +54,4 @@ gem 'whenever', :require => false
 gem 'devise'
 gem 'will_paginate'
 gem 'mysql2'
+gem 'newrelic_rpm'
