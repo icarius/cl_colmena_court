@@ -35,11 +35,10 @@ class CaseController < ApplicationController
 			case params['kind']
 			when "rut"
 				# Busco por RUT.
-				@cases = Array.new
-				litigants = CaseLitigant.where('rut LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
-				puts "Litigantes"
-				puts "kaosbite"
-				puts litigants.inspect
+				litigants = CaseLitigant.where('rut LIKE :search', search: "%#{params['txtsearch']}%")#.paginate(page: params[:page], :per_page => 30).order('id DESC')
+				# Corroboro que no se repitan los casos.
+				litigants.uniq{|x| x.case_id}
+				@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			when "corte"
 				# Busco por Corte.
 				@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
