@@ -43,13 +43,12 @@ class CaseController < ApplicationController
 			when "corte"
 				# Busco por Corte.
 				@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
-				puts "kaosbite entre a corte"
 			when "rol"
 				# Busco por ROL.
-				@cases = Case.where('rol_rit LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
+				@cases = Case.where('lower(rol_rit) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			when "ningreso"
 				# Busco por numero de ingreso.
-				@cases = Case.where('ningreso LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
+				@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			else
 				# En caso de no calzar con algun tipo ejecuto la consulta base del index.
 				@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
