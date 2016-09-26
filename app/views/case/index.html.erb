@@ -1,17 +1,27 @@
 <div class="box">
-<!-- 	<div class="box-header with-border">
+	<div class="box-header with-border">
 		<h3 class="box-title">Causas</h3>
 		<br/>
 		<br/>
 		<div class="input-group input-group-sm pull-left">
-			<input id="txtsearch" type="text" value="<%#=params['txtsearch']%>" class="form-control">
+			<input id="txtsearch" type="text" value="" class="form-control">
 			<span class="input-group-btn">
 				<button id="btnsearch" class="btn btn-info btn-flat" type="button">Buscar!</button>
 			</span>
 		</div>
+		Buscar por:&nbsp;&nbsp;<input type="radio" name="kind" value="rut">&nbsp;RUT,
+		&nbsp;<input type="radio" name="kind" value="corte">&nbsp;Corte,
+		&nbsp;<input type="radio" name="kind" value="rol">&nbsp;Rol,
+		&nbsp;<input type="radio" name="kind" value="ningreso">&nbsp;Número&nbsp;ingreso.
+<!-- 		<div class="box-tools pull-right">
+			<div class="has-feedback">
+				<input type="text" class="form-control input-sm" placeholder="Buscar...">
+				<span class="glyphicon glyphicon-search form-control-feedback"></span>
+			</div>
+		</div> -->
 		<br/>
 		<br/>
-	</div> -->
+	</div>
 	<div class="box-body">
 		<div class="table-responsive">
 			<table class="table no-margin">
@@ -19,6 +29,7 @@
 				<tr>
 					<th>N. Ingreso</th>
 					<th>Ubicacion</th>
+					<th>Corte</th>
 					<th>F. Ingreso</th>
 					<th>F. Ubicacion</th>
 					<th>E. Recurso</th>
@@ -31,6 +42,7 @@
 			<tr>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ningreso %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ubicacion %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.corte %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.fecha_ingreso %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.fecha_ubicacion %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.estado_recurso %><% end %></td>
