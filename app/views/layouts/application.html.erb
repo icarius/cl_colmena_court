@@ -38,11 +38,17 @@
 	<%= javascript_include_tag 'fastclick.min', 'data-turbolinks-track': 'reload' %>
 	<%= javascript_include_tag 'app.min', 'data-turbolinks-track': 'reload' %>
 	<script type="text/javascript">
-		$( document ).ready(function(){
-			$('#btnsearch').click(function(){
+		$(function(){
+			$('#btnsearch').click(function(event){
+				event.preventDefault();
 				var txtsearch = $('#txtsearch').val();
-				if(txtsearch.length > 0){
-					document.location.href = '?txtsearch='+txtsearch;
+				var kind = $("input[name='kind']:checked").val();
+				if((txtsearch != undefined && txtsearch != null && txtsearch.length > 0) &&(kind != undefined && kind != null && kind.length > 0)){
+					console.log(txtsearch);
+					console.log(kind);
+					document.location.href = '?kind='+kind+'&txtsearch='+txtsearch;
+				}else{
+					console.log("No paso na.");
 				}
 			});
 		});

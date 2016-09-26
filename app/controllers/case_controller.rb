@@ -24,21 +24,36 @@ class CaseController < ApplicationController
 	end
 
 	def index
-		if params.has_key?(:txtsearch)
-			@cases = Case.where('caratulado COLLATE UTF8_GENERAL_CI LIKE :search OR corte COLLATE UTF8_GENERAL_CI LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
-		elsif params.has_key?(:estadocolmena)
-			# Diccionario
-			# ingresado
-			# notificado
-			# enviadoexterno
+		if params.has_key?(:estadocolmena)
+			# Diccionario: ingresado, notificado, enviadoexterno.
 			@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 		elsif params.has_key?(:estadocolmenasituacion)
-			# Diccionario
-			# aceptado
-			# aceptadoobs
-			# rechazado
-			# traspasadooni
+			# Diccionario, aceptado, aceptadoobs, rechazado, traspasadooni.
 			@cases = Case.where(estado_colmena_situacion: params['estadocolmenasituacion']).paginate(page: params[:page], :per_page => 30).order('id DESC')
+		elsif params.has_key?(:kind) && params.has_key?(:txtsearch)
+			# Segun el tipo de busqueda ejecuto una query diferente.
+			case params['kind']
+			when "rut"
+				# Busco por RUT.
+				@cases = Array.new
+				litigants = CaseLitigant.where('rut LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
+				puts "Litigantes"
+				puts "kaosbite"
+				puts litigants.inspect
+			when "corte"
+				# Busco por Corte.
+				@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				puts "kaosbite entre a corte"
+			when "rol"
+				# Busco por ROL.
+				@cases = Case.where('rol_rit LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
+			when "ningreso"
+				# Busco por numero de ingreso.
+				@cases = Case.where('ningreso LIKE :search', search: "%#{params['txtsearch']}%").paginate(page: params[:page], :per_page => 30).order('id DESC')
+			else
+				# En caso de no calzar con algun tipo ejecuto la consulta base del index.
+				@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
+			end
 		else
 			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
 		end
