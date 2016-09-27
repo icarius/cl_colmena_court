@@ -21,6 +21,9 @@ Rails.application.routes.draw do
 		scope '/situacion' do
 			get '/:id_caso/:estado_colmena_situacion' => 'case#update_situacion'
 		end
+		scope '/study' do
+			get '/crawler/:search' => 'case#study_crawler'
+		end
 	end
 
 	resources :case
