@@ -34,10 +34,8 @@ class CaseController < ApplicationController
 			# Segun el tipo de busqueda ejecuto una query diferente.
 			case params['kind']
 			when "rut"
-				# Busco por RUT.
-				litigants = CaseLitigant.where('rut LIKE :search', search: "%#{params['txtsearch']}%")#.paginate(page: params[:page], :per_page => 30).order('id DESC')
-				# Corroboro que no se repitan los casos.
-				litigants.uniq{|x| x.case_id}
+				# Busco por RUT y obtengo el case_id.
+				litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
 				@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			when "corte"
 				# Busco por Corte.
