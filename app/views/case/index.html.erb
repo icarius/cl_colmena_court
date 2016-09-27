@@ -20,6 +20,8 @@
 	<div class="box-body">
 		<% if params.has_key?(:estadocolmena) && params[:estadocolmena] === 'ingresado' %>
 			<button type="button" class="tonotificado btn btn-block btn-primary">Marcar como notificado</button>
+		<% elsif params.has_key?(:estadocolmena) && params[:estadocolmena] === 'enviadoexterno' %>
+			<button type="button" class="tocerrado btn btn-block btn-gray">Marcar como cerrado</button>
 		<% end %>
 	</div>
 	<% end %>
@@ -29,7 +31,7 @@
 			<table class="table no-margin">
 			<thead>
 				<tr>
-					<% if params.has_key?(:estadocolmena) && params[:estadocolmena] === 'ingresado' %><th></th><% end %>
+					<% if params.has_key?(:estadocolmena) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno') %><th></th><% end %>
 					<th>N. Ingreso</th>
 					<th>Ubicacion</th>
 					<th>Corte</th>
@@ -43,7 +45,7 @@
 			<tbody>
 			<% @cases.each do |obj| %>
 			<tr>
-				<% if params.has_key?(:estadocolmena) && params[:estadocolmena] === 'ingresado' %><td><input type="checkbox" name="select" value="<%=obj.id%>"></td><% end %>
+				<% if params.has_key?(:estadocolmena) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno') %><td><input type="checkbox" name="select" value="<%=obj.id%>"></td><% end %>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ningreso %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ubicacion %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.corte %><% end %></td>

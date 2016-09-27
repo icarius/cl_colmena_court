@@ -56,6 +56,8 @@
 		<% when 'enviadoexterno' %>
 			<% if @case.estado_colmena_situacion != 'traspasadooni' %>
 				<button type="button" caseid="<%=@case.id%>" class="totraspasadooni btn btn-block btn-info">Marcar como traspasado a ONI</button>
+			<% else %>
+				<button type="button" caseid="<%=@case.id%>" class="tocerrado btn btn-block btn-gray">Marcar como cerrado</button>
 			<% end %>
 		<% end %>
 	</div>
@@ -187,6 +189,15 @@
 			$.ajax({
 				method: "GET",
 				url: "/api/situacion/" + $(this).attr('caseid') + "/traspasadooni",
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.tocerrado').on('click', function(){
+			$.ajax({
+				method: "GET",
+				url: "/api/estado/" + $(this).attr('caseid') + "/cerrado",
 				success: function(data){
 					location.reload();
 				}

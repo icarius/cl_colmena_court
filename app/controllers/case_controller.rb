@@ -17,6 +17,7 @@ class CaseController < ApplicationController
 		@ingresados = Case.where(estado_colmena: 'ingresado').count
 		@notificados = Case.where(estado_colmena: 'notificado').count
 		@enviados = Case.where(estado_colmena: 'enviadoexterno').count
+		@cerrados = Case.where(estado_colmena: 'cerrado').count
 		@aceptados = Case.where(estado_colmena_situacion: 'aceptado').count
 		@aceptados_obs = Case.where(estado_colmena_situacion: 'aceptadoobs').count
 		@rechazados = Case.where(estado_colmena_situacion: 'rechazado').count
