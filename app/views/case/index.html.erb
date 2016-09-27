@@ -18,28 +18,8 @@
 	
 	<% if params.has_key?(:estadocolmena) %>
 	<div class="box-body">
-		<% case params[:estadocolmena] %>
-		<% when 'ingresado' %>
+		<% if params.has_key?(:estadocolmena) && params[:estadocolmena] === 'ingresado' %>
 			<button type="button" class="tonotificado btn btn-block btn-primary">Marcar como notificado</button>
-<!-- 		<%# when 'notificado' %>
-			<%# case params[:estadocolmenasituacion] %>
-			<%# when 'aceptado' %>
-				<button type="button" class="toenviadoexterno btn btn-block btn-info">Marcar como enviado a externos</button>
-			<%# when 'aceptadoobs' %>
-				<button type="button" class="toaceptado btn btn-block btn-success">Marcar como aceptado</button>
-			<%# when 'rechazado' %>
-			<%# when 'traspasadooni' %>
-			<%# else %>
-				<button type="button" class="toaceptado btn btn-block btn-success">Marcar como aceptado</button>
-				<br/>
-				<button type="button" class="toaceptadoobs btn btn-block btn-warning">Marcar como aceptado con observaciones</button>
-				<br/>
-				<button type="button" class="torechazado btn btn-block btn-danger">Marcar como rechazado</button>
-			<%# end %>
-		<%# when 'enviadoexterno' %>
-			<%# if params[:estadocolmenasituacion] != 'traspasadooni' %>
-				<button type="button" class="totraspasadooni btn btn-block btn-info">Marcar como traspasado a ONI</button>
-			<%# end %> -->
 		<% end %>
 	</div>
 	<% end %>
@@ -86,51 +66,21 @@
 	$(function(){
 		$('.tonotificado').on('click', function(){
 			$('input[name="select"]:checked').each(function(index){
-				// console.log($(this).val());
 				$.ajax({
 					method: "GET",
 					url: "/api/estado/" + $(this).val() + "/notificado",
 					success: function(data){
-						// location.reload();
 					}
 				});
 			});
 			location.reload();
 		});
-		$('.toaceptado').on('click', function(){
+		$('.tocerrado').on('click', function(){
 			$('input[name="select"]:checked').each(function(index){
-				// console.log($(this).val());
 				$.ajax({
 					method: "GET",
-					url: "/api/situacion/" + $(this).val() + "/aceptado",
+					url: "/api/estado/" + $(this).val() + "/cerrado",
 					success: function(data){
-						// location.reload();
-					}
-				});
-			});
-			location.reload();
-		});
-		$('.toaceptadoobs').on('click', function(){
-			$('input[name="select"]:checked').each(function(index){
-				// console.log($(this).val());
-				$.ajax({
-					method: "GET",
-					url: "/api/situacion/" + $(this).val() + "/aceptadoobs",
-					success: function(data){
-						// location.reload();
-					}
-				});
-			});
-			location.reload();
-		});
-		$('.torechazado').on('click', function(){
-			$('input[name="select"]:checked').each(function(index){
-				// console.log($(this).val());
-				$.ajax({
-					method: "GET",
-					url: "/api/situacion/" + $(this).val() + "/rechazado",
-					success: function(data){
-						// location.reload();
 					}
 				});
 			});
