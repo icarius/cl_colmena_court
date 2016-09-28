@@ -79,10 +79,10 @@ class StudyCase < ApplicationRecord
 				end
 			end
 			# Obtengo datos faltantes de litigantes.
+			cont_ab_recurrente = 1
+			cont_recurrente = 1
 			litigantes.each do |row|
 				litigante = {}
-				cont_ab_recurrente = 1
-				cont_recurrente = 1
 				row.css('td').each_with_index do |obj, index|
 					case index
 					when 0
