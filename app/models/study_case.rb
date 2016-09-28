@@ -29,8 +29,11 @@ class StudyCase < ApplicationRecord
 						fecha_ingreso: obj.css('td')[1].text.squish,
 						link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
 					}
-					# Por cada elemento obtengo su detalle.
-					result << self.detalle_recurso_scraper(data)
+					# Verifico que no exista la causa.
+					if !self.exists?(correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+						# Por cada elemento obtengo su detalle.
+						result << self.detalle_recurso_scraper(data)
+					end
 				rescue StandardError => e
 					error_obj << obj
 					puts "Parse error #{e.message}"
