@@ -19,10 +19,14 @@ class StudyCase < ApplicationRecord
 			# Itero el resultado.
 			row[8..-1].each do |obj|
 				begin
+					ningreso_arr = obj.css('td')[0].text.squish.split('-')
 					data = {
 						ningreso: obj.css('td')[0].text.squish,
-						fecha_ingreso: obj.css('td')[1].text.squish,
+						tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
+						correlativo: ningreso_arr[ningreso_arr.length-2].squish,
+						ano: ningreso_arr[ningreso_arr.length-1].squish,
 						corte: obj.css('td')[4].text.squish,
+						fecha_ingreso: obj.css('td')[1].text.squish,
 						link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
 					}
 					# Por cada elemento obtengo su detalle.
@@ -68,28 +72,76 @@ class StudyCase < ApplicationRecord
 						data[:ruc] = obj.text.squish.strip.gsub('RUC :', '').squish.downcase
 					end
 					if obj.text.squish.strip.include? "Rol o Rit :"
-						data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
+						rol_rit_arr = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase.split('-')
+						data[:rol] = rol_rit_arr[rol_rit_arr.length-2].squish.downcase
+						data[:rit] = rol_rit_arr[rol_rit_arr.length-1].squish.downcase
 					end
 				end
 			end
 			# Obtengo datos faltantes de litigantes.
 			litigantes.each do |row|
 				litigante = {}
+				cont_ab_recurrente = 1
+				cont_recurrente = 1
 				row.css('td').each_with_index do |obj, index|
 					case index
 					when 0
 						litigante[:sujeto] = obj.text.squish.strip
 					when 1
-						if litigante[:sujeto] === 'Ab. Recurrente'
-							data[:rut_abogado] = obj.text.squish.strip.downcase
-						else
-							data[:rut_sujeto] = obj.text.squish.strip.downcase
+						case litigante[:sujeto]
+						when 'Ab. Recurrente'
+							case cont_ab_recurrente
+							when 1
+								data[:abrecurrente_rut_1] = obj.text.squish.strip.downcase
+							when 2
+								data[:abrecurrente_rut_2] = obj.text.squish.strip.downcase
+							when 3
+								data[:abrecurrente_rut_3] = obj.text.squish.strip.downcase
+							when 4
+								data[:abrecurrente_rut_4] = obj.text.squish.strip.downcase
+							end
+						when 'Recurrente'
+							case cont_recurrente
+							when 1
+								data[:recurrente_rut_1] = obj.text.squish.strip.downcase
+							when 2
+								data[:recurrente_rut_2] = obj.text.squish.strip.downcase
+							when 3
+								data[:recurrente_rut_3] = obj.text.squish.strip.downcase
+							when 4
+								data[:recurrente_rut_4] = obj.text.squish.strip.downcase
+							end
+						when 'Recurrido'
+							data[:recurrido_rut] = obj.text.squish.strip.downcase
 						end
 					when 3
-						if litigante[:sujeto] === 'Ab. Recurrente'
-							data[:nombre_abodago] = obj.text.squish.strip
-						else
-							data[:nombre_sujeto] = obj.text.squish.strip
+						case litigante[:sujeto]
+						when 'Ab. Recurrente'
+							case cont_ab_recurrente
+							when 1
+								data[:abrecurrente_nombre_1] = obj.text.squish.strip
+							when 2
+								data[:abrecurrente_nombre_2] = obj.text.squish.strip
+							when 3
+								data[:abrecurrente_nombre_3] = obj.text.squish.strip
+							when 4
+								data[:abrecurrente_nombre_4] = obj.text.squish.strip
+							end
+							cont_ab_recurrente = cont_ab_recurrente + 1
+						when 'Recurrente'
+							case cont_recurrente
+							when 1
+								data[:recurrente_nombre_1] = obj.text.squish.strip
+							when 2
+								data[:recurrente_nombre_2] = obj.text.squish.strip
+							when 3
+								data[:recurrente_nombre_3] = obj.text.squish.strip
+							when 4
+								data[:recurrente_nombre_4] = obj.text.squish.strip
+							end
+							cont_recurrente = cont_recurrente + 1
+						when 'Recurrido'
+							data[:recurrido_nombre] = obj.text.squish.strip
 						end
 					end
 				end

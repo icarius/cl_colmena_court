@@ -59,20 +59,38 @@ ActiveRecord::Schema.define(version: 20160927062402) do
   end
 
   create_table "study_cases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "rol_rit"
+    t.string   "rol"
+    t.string   "rit"
     t.string   "ruc"
     t.string   "ningreso"
+    t.string   "tipo_causa"
+    t.string   "correlativo"
+    t.string   "ano"
     t.string   "corte"
     t.string   "fecha_ingreso"
-    t.string   "rut_sujeto"
-    t.string   "nombre_sujeto"
-    t.string   "rut_abogado"
-    t.string   "nombre_abodago"
+    t.string   "recurrente_nombre_1"
+    t.string   "recurrente_rut_1"
+    t.string   "recurrente_nombre_2"
+    t.string   "recurrente_rut_2"
+    t.string   "recurrente_nombre_3"
+    t.string   "recurrente_rut_3"
+    t.string   "recurrente_nombre_4"
+    t.string   "recurrente_rut_4"
+    t.string   "abrecurrente_nombre_1"
+    t.string   "abrecurrente_rut_1"
+    t.string   "abrecurrente_nombre_2"
+    t.string   "abrecurrente_rut_2"
+    t.string   "abrecurrente_nombre_3"
+    t.string   "abrecurrente_rut_3"
+    t.string   "abrecurrente_nombre_4"
+    t.string   "abrecurrente_rut_4"
+    t.string   "recurrido_nombre"
+    t.string   "recurrido_rut"
     t.string   "estado_procesal"
     t.string   "link_caso_detalle"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "status",            default: true
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.boolean  "status",                default: true
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
