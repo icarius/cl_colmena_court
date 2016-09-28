@@ -70,4 +70,9 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :estado_colmena_situacion => params[:estado_colmena_situacion] }, :status => 200
 	end
 
+	def study_crawler
+		result = StudyCase.study_crawler(params[:search])
+		render :json => { :status => true, :study_crawler_search => params[:search], :study_crawler_result => result }, :status => 200
+	end
+
 end
