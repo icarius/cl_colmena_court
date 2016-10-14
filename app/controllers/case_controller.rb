@@ -75,4 +75,10 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :study_crawler_search => params[:search], :study_crawler_result => result }, :status => 200
 	end
 
+	def proxy_test
+		require 'tor-privoxy'
+		agent = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
+		render :json => { :status => true, :newip => agent.ip}, :status => 200
+	end
+
 end

@@ -30,7 +30,7 @@ class StudyCase < ApplicationRecord
 						link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
 					}
 					# Verifico que no exista la causa.
-					if !self.exists?(correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+					if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
 						# Por cada elemento obtengo su detalle.
 						result << self.detalle_recurso_scraper(data)
 					end
