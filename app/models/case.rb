@@ -59,7 +59,8 @@ class Case < ApplicationRecord
 	def self.detalle_recurso_scraper(data)
 		require 'open-uri'
 		require 'nokogiri'
-		document = Nokogiri::HTML(open(data[:link_caso_detalle], proxy: URI.parse("http://66.175.216.65:8118")))
+		# document = Nokogiri::HTML(open(data[:link_caso_detalle], proxy: URI.parse("http://66.175.216.65:8118")))
+		document = Nokogiri::HTML(self.get_case_detail(data[:link_caso_detalle]))
 		if document.present?
 			# Obtengo los elementos del dom y los asocio a objetos segun tema.
 			recurso = document.css('#recurso tr.textoBarra .textoPortal tr')
@@ -211,13 +212,26 @@ class Case < ApplicationRecord
 			req.body = body
 			# Fetch Request
 			res = http.request(req)
-			puts "Response HTTP Status Code: #{res.code}"
-			#puts "Response HTTP Response Body: #{res.body}"
+			puts "Search response HTTP Status Code: #{res.code}"
 			return res.body
 		rescue StandardError => e
-			puts "HTTP Request failed (#{e.message})"
+			puts "Search HTTP Request failed (#{e.message})"
 			return nil
 		end
+	end
+
+	def self.get_case_detail(uri)
+		require 'net/http'
+		begin
+			http = Net::HTTP.new(uri.host, uri.port, '66.175.216.65', 8118)
+			req =  Net::HTTP::Post.new(uri)
+			res = http.request(req)
+			puts "Detail response HTTP Status Code: #{res.code}"
+			return res.body
+		rescue StandardError => e
+			puts "Detail HTTP Request failed (#{e.message})"
+			return nil
+		end	
 	end
 
 	def self.send_request_court_mechanize(jsessionid, search)
