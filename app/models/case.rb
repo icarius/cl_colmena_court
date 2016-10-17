@@ -22,17 +22,24 @@ class Case < ApplicationRecord
 			# Itero el resultado.
 			row[8..-1].each do |obj|
 				begin
+					ningreso_arr = obj.css('td')[0].text.squish.split('-')
 					data = {
 						ningreso: obj.css('td')[0].text.squish,
+						tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
+						correlativo: ningreso_arr[ningreso_arr.length-2].squish,
+						ano: ningreso_arr[ningreso_arr.length-1].squish,
+						corte: obj.css('td')[4].text.squish,
 						fecha_ingreso: obj.css('td')[1].text.squish,
 						ubicacion: obj.css('td')[2].text.squish,
 						fecha_ubicacion: obj.css('td')[3].text.squish,
-						corte: obj.css('td')[4].text.squish,
 						caratulado: obj.css('td')[5].text.squish,
 						link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
 					}
-					# Por cada elemento obtengo su detalle.
-					result << self.detalle_recurso_scraper(data)
+					# Verifico que no exista la causa.
+					if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+						# Por cada elemento obtengo su detalle.
+						result << self.detalle_recurso_scraper(data)
+					end
 				rescue StandardError => e
 					error_obj << obj
 					puts "Parse error #{e.message}"
@@ -52,7 +59,7 @@ class Case < ApplicationRecord
 	def self.detalle_recurso_scraper(data)
 		require 'open-uri'
 		require 'nokogiri'
-		document = Nokogiri::HTML(open(data[:link_caso_detalle]))
+		document = Nokogiri::HTML(open(data[:link_caso_detalle], proxy: URI.parse("http://66.175.216.65:8118")))
 		if document.present?
 			# Obtengo los elementos del dom y los asocio a objetos segun tema.
 			recurso = document.css('#recurso tr.textoBarra .textoPortal tr')
@@ -86,7 +93,7 @@ class Case < ApplicationRecord
 				end
 			end
 			# El objeto caso se encuentra completo por lo que lo creo en la BD.
-			caso = self.where(ningreso: data[:ningreso]).first || self.create(data)
+			caso = self.where(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte]).first || self.create(data)
 			# Obtengo datos faltantes de litigantes.
 			litigantes.each do |row|
 				litigante = { case_id: caso[:id] }
