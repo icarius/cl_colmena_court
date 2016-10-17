@@ -227,7 +227,7 @@ class Case < ApplicationRecord
 			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
 			req =  Net::HTTP::Post.new(uri)
 			res = http.request(req)
-			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri_get.host}"
+			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
 			return res.body
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
