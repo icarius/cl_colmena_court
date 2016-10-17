@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 		scope '/test' do
 			get '/proxy' => 'case#proxy_test'
 			get '/crawler' => 'case#crawler_test'
+			get '/driver' => 'case#driver_test'
 		end
 	end
 

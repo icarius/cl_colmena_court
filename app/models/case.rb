@@ -15,10 +15,6 @@ class Case < ApplicationRecord
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
-		puts "kaosbite"
-		puts cookie[:value]
-		puts search
-		exit
 		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
 		if document.present?
 			# Obtengo la tabla.
@@ -268,6 +264,16 @@ class Case < ApplicationRecord
 			puts "HTTP Request failed (#{e.message})"
 			return nil
 		end
+	end
+
+	def self.test_driver_proxy
+		require 'selenium-webdriver'
+		# Creo el driver para obtener la session y poder ejecutar el request.
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
+		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		# Obtengo el valor de JSESSIONID.
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		return cookie[:value]
 	end
 
 end
