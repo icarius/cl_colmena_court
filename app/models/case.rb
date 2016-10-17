@@ -13,6 +13,9 @@ class Case < ApplicationRecord
 		driver = Selenium::WebDriver.for :phantomjs
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
+		puts "kaosbite"
+		puts driver
+		puts driver.manage.inspect
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
 		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
