@@ -15,6 +15,10 @@ class Case < ApplicationRecord
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
+		puts "kaosbite"
+		puts cookie[:value]
+		puts search
+		exit
 		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
 		if document.present?
 			# Obtengo la tabla.
@@ -144,10 +148,6 @@ class Case < ApplicationRecord
 	end
 
 	def self.send_request_court(jsessionid, search)
-		puts "kaosbite"
-		puts jsessionid
-		puts search
-		exit
 		require 'net/http'
 		#http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do (POST )
 		begin
