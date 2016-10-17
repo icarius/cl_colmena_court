@@ -147,6 +147,7 @@ class Case < ApplicationRecord
 		puts "kaosbite"
 		puts jsessionid
 		puts search
+		exit
 		require 'net/http'
 		#http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do (POST )
 		begin
