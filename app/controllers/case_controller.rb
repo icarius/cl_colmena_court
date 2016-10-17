@@ -87,7 +87,6 @@ class CaseController < ApplicationController
 	end
 
 	def driver_test
-		test_driver_proxy
 		result = Case.test_driver_proxy
 		render :json => { :status => true, :result => result}, :status => 200
 	end
