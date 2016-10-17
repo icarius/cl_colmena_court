@@ -25,7 +25,8 @@ Rails.application.routes.draw do
 			get '/crawler/:search' => 'case#study_crawler'
 		end
 		scope '/test' do
-			get '/' => 'case#proxy_test'
+			get '/proxy' => 'case#proxy_test'
+			get '/crawler' => 'case#crawler_test'
 		end
 	end
 

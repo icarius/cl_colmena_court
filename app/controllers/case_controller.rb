@@ -81,4 +81,9 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :newip => agent.ip}, :status => 200
 	end
 
+	def crawler_test
+		ble = Case.poderjudicial_crawler("COLMENA")
+		render :json => { :status => true, :ble => ble}, :status => 200
+	end
+
 end
