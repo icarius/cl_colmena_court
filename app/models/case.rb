@@ -213,7 +213,13 @@ class Case < ApplicationRecord
 			# Fetch Request
 			res = http.request(req)
 			puts "Search response HTTP Status Code: #{res.code}"
-			return res.body
+			if res.code == 200
+				return res.body
+			else
+				self.switch_tor_circuit
+				sleep(0.5)
+				return self.get_case_detail(uri)
+			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
 			return nil
@@ -228,11 +234,25 @@ class Case < ApplicationRecord
 			req =  Net::HTTP::Post.new(uri)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
-			return res.body
+			if res.code == 200
+				return res.body
+			else
+				self.switch_tor_circuit
+				sleep(0.5)
+				return self.get_case_detail(uri)
+			end
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
 			return nil
 		end	
+	end
+
+	def self.switch_tor_circuit
+		require 'net/telnet'
+		localhost = Net::Telnet::new("Host" => "localhost", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
+		localhost.cmd('AUTHENTICATE ""') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
+		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
+		localhost.close
 	end
 
 	def self.send_request_court_mechanize(jsessionid, search)
