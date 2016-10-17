@@ -223,7 +223,8 @@ class Case < ApplicationRecord
 	def self.get_case_detail(uri)
 		require 'net/http'
 		begin
-			http = Net::HTTP.new(uri.host, uri.port, '66.175.216.65', 8118)
+			uri_get = URI(uri)
+			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
 			req =  Net::HTTP::Post.new(uri)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code}"
