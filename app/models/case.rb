@@ -144,6 +144,9 @@ class Case < ApplicationRecord
 	end
 
 	def self.send_request_court(jsessionid, search)
+		puts "kaosbite"
+		puts jsessionid
+		puts search
 		require 'net/http'
 		#http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do (POST )
 		begin
