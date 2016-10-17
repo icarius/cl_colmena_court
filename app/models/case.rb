@@ -10,9 +10,6 @@ class Case < ApplicationRecord
 		result = Array.new
 		error_obj = Array.new
 		# Creo el driver para obtener la session y poder ejecutar el request.
-		# phantomjs_args = [ '--proxy=66.175.216.65:8118', '--proxy-type=socks5']
-		# phantomjs_caps = { "phantomjs.cli.args" => phantomjs_args }
-		# driver = Selenium::WebDriver.for(:phantomjs, :desired_capabilities => phantomjs_caps)
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
