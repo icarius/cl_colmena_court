@@ -216,14 +216,19 @@ class Case < ApplicationRecord
 			if res.code.to_i == 200
 				return res.body
 			else
-				puts "Retry..."
-				return self.send_request_court(jsessionid, search)
+				if self.switch_tor_circuit
+					return self.send_request_court(jsessionid, search)
+				else
+					return nil
+				end
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
-			# return nil
-			puts "Retry..."
-			return self.send_request_court(jsessionid, search)
+			if self.switch_tor_circuit
+				return self.send_request_court(jsessionid, search)
+			else
+				return nil
+			end
 		end
 	end
 
@@ -238,24 +243,31 @@ class Case < ApplicationRecord
 			if res.code.to_i == 200
 				return res.body
 			else
-				puts "Retry..."
-				return self.get_case_detail(uri)
+				if self.switch_tor_circuit
+					return self.get_case_detail(uri)
+				else
+					return nil
+				end
 			end
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
-			# return nil
-			puts "Retry..."
-			return self.get_case_detail(uri)
+			if self.switch_tor_circuit
+				return self.get_case_detail(uri)
+			else
+				return nil
+			end
 		end
 	end
 
 	def self.switch_tor_circuit
 		puts "Retry..."
 		require 'net/telnet'
-		localhost = Net::Telnet::new("Host" => "localhost", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
-		localhost.cmd('AUTHENTICATE ""') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
+		localhost = Net::Telnet::new("Host" => "127.0.0.1", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
+		localhost.cmd('AUTHENTICATE "colmena"') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
 		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
 		localhost.close
+		sleep(1)
+		return true
 	end
 
 	def self.send_request_court_mechanize(jsessionid, search)
