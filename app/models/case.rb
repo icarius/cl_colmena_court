@@ -213,13 +213,11 @@ class Case < ApplicationRecord
 			# Fetch Request
 			res = http.request(req)
 			puts "Search response HTTP Status Code: #{res.code}"
-			if res.code == 200
+			if res.code.to_i == 200
 				return res.body
 			else
-				self.switch_tor_circuit
-				sleep(0.5)
-				res = http.request(req)
-				return res.body
+				puts "Retry..."
+				return self.send_request_court(jsessionid, search)
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
@@ -235,11 +233,10 @@ class Case < ApplicationRecord
 			req =  Net::HTTP::Post.new(uri)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
-			if res.code == 200
+			if res.code.to_i == 200
 				return res.body
 			else
-				self.switch_tor_circuit
-				sleep(0.5)
+				puts "Retry..."
 				return self.get_case_detail(uri)
 			end
 		rescue StandardError => e
