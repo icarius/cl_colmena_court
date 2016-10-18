@@ -221,7 +221,9 @@ class Case < ApplicationRecord
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
-			return nil
+			# return nil
+			puts "Retry..."
+			return self.send_request_court(jsessionid, search)
 		end
 	end
 
@@ -241,7 +243,9 @@ class Case < ApplicationRecord
 			end
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
-			return nil
+			# return nil
+			puts "Retry..."
+			return self.get_case_detail(uri)
 		end	
 	end
 
