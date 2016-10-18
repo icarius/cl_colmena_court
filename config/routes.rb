@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 			get '/proxy' => 'case#proxy_test'
 			get '/crawler' => 'case#crawler_test'
 			get '/driver' => 'case#driver_test'
+			get '/circuit' => 'case#circuit_test'
 		end
 	end
 
