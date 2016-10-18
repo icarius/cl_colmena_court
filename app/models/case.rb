@@ -237,7 +237,7 @@ class Case < ApplicationRecord
 		begin
 			uri_get = URI(uri)
 			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
-			req =  Net::HTTP::Get.new(uri)
+			req =  Net::HTTP::Get.new(uri_get)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
 			if res.code.to_i == 200
@@ -263,8 +263,8 @@ class Case < ApplicationRecord
 		puts "Retry..."
 		require 'net/telnet'
 		localhost = Net::Telnet::new("Host" => "127.0.0.1", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
-		localhost.cmd('AUTHENTICATE "colmena"') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
-		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
+		localhost.cmd('AUTHENTICATE "colmena"') { |c| print c; throw "Cannot authenticate to Tor" if c != "AUTHENTICATE 250 OK\n" }
+		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "signal NEWNYM 250 OK\n" }
 		localhost.close
 		sleep(2)
 		return true
