@@ -248,11 +248,11 @@ class Case < ApplicationRecord
 	end
 
 	def self.switch_tor_circuit
-		require 'net/telnet'
-		localhost = Net::Telnet::new("Host" => "localhost", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
-		localhost.cmd('AUTHENTICATE ""') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
-		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
-		localhost.close
+		# require 'net/telnet'
+		# localhost = Net::Telnet::new("Host" => "localhost", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
+		# localhost.cmd('AUTHENTICATE ""') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
+		# localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
+		# localhost.close
 	end
 
 	def self.send_request_court_mechanize(jsessionid, search)
