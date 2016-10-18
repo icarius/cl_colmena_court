@@ -218,7 +218,8 @@ class Case < ApplicationRecord
 			else
 				self.switch_tor_circuit
 				sleep(0.5)
-				return self.get_case_detail(uri)
+				res = http.request(req)
+				return res.body
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
