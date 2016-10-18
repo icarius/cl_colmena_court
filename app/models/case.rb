@@ -216,19 +216,15 @@ class Case < ApplicationRecord
 			if res.code.to_i == 200
 				return res.body
 			else
-				if self.switch_tor_circuit
-					return self.send_request_court(jsessionid, search)
-				else
-					return nil
-				end
+				self.switch_tor_circuit
+				sleep(2)
+				return self.send_request_court(jsessionid, search)
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
-			if self.switch_tor_circuit
-				return self.send_request_court(jsessionid, search)
-			else
-				return nil
-			end
+			self.switch_tor_circuit
+			sleep(2)
+			return self.send_request_court(jsessionid, search)
 		end
 	end
 
@@ -243,19 +239,15 @@ class Case < ApplicationRecord
 			if res.code.to_i == 200
 				return res.body
 			else
-				if self.switch_tor_circuit
-					return self.get_case_detail(uri)
-				else
-					return nil
-				end
+				self.switch_tor_circuit
+				sleep(2)
+				return self.get_case_detail(uri)
 			end
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
-			if self.switch_tor_circuit
-				return self.get_case_detail(uri)
-			else
-				return nil
-			end
+			self.switch_tor_circuit
+			sleep(2)
+			return self.get_case_detail(uri)
 		end
 	end
 
@@ -266,8 +258,6 @@ class Case < ApplicationRecord
 		localhost.cmd('AUTHENTICATE "colmena"') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
 		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
 		localhost.close
-		sleep(2)
-		return true
 	end
 
 	def self.send_request_court_mechanize(jsessionid, search)
