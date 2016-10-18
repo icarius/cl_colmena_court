@@ -96,7 +96,7 @@ class CaseController < ApplicationController
 		agenta = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
 		oldip = agenta.ip
 		localhost = Net::Telnet::new("Host" => "127.0.0.1", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
-		localhost.cmd('AUTHENTICATE ""') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
+		localhost.cmd('AUTHENTICATE "16:872860B76453A77D60CA2BB8C1A7042072093276A3D701AD684053EC4C"') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
 		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
 		localhost.close
 		agentb = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
