@@ -104,4 +104,37 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :oldip => oldip, :newip => newip}, :status => 200
 	end
 
+	def mail_test
+		destinatarios = [
+			{
+				:name => 'Felipe 1',
+				:email => 'felipe@coddea.com'
+			},
+			{
+				:name => 'Felipe 2',
+				:email => 'felipe.gonzalez.g@gmail.com'
+			}
+		]
+		msj_txt = "Hola mundo"
+		msj_html = "<h1>Hola mundo</h1>"
+		Case.send_email(
+			'Nuevas causas',
+			destinatarios,
+			msj_txt,
+			msj_html
+		)
+		render :json => { :status => true }, :status => 200
+	end
+
+	def news_test
+		Case.poderjudicial_news_crawler
+		render :json => { :status => true }, :status => 200
+	end
+
+	def get_news_test
+		now_date_time = DateTime.now
+		cases = Case.where("updated_at > ?", now_date_time.beginning_of_day)
+		render :json => { :status => true, :result => cases }, :status => 200
+	end
+
 end

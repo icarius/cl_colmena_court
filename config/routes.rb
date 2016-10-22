@@ -29,6 +29,9 @@ Rails.application.routes.draw do
 			get '/crawler' => 'case#crawler_test'
 			get '/driver' => 'case#driver_test'
 			get '/circuit' => 'case#circuit_test'
+			get '/mail' => 'case#mail_test'
+			get '/news' => 'case#news_test'
+			get '/getnews' => 'case#get_news_test'
 		end
 	end
 
