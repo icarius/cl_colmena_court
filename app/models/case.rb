@@ -61,67 +61,60 @@ class Case < ApplicationRecord
 						end
 					end
 				end
-
 				# El objeto caso se encuentra completo por lo que lo actualizo de ser necesario.
-				puts data[:id]
-				puts data[:estado_procesal]
-				puts data.save!
-				# caso = self.where(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte]).first
-				# self.update(data)
-
-
-				# # Obtengo datos faltantes de litigantes.
-				# litigantes.each do |row|
-				# 	litigante = { case_id: caso[:id] }
-				# 	row.css('td').each_with_index do |obj, index|
-				# 		case index
-				# 		when 0
-				# 			litigante[:sujeto] = obj.text.squish.strip
-				# 		when 1
-				# 			litigante[:rut] = obj.text.squish.strip.downcase
-				# 		when 2
-				# 			litigante[:persona] = obj.text.squish.strip.downcase
-				# 		when 3
-				# 			litigante[:razon_social] = obj.text.squish.strip
-				# 		end
-				# 	end
-				# 	# Creo el objeto litigante solo si no existe.
-				# 	CaseLitigant.where(case_id: litigante[:case_id], rut: litigante[:rut]).first || CaseLitigant.create(litigante)
-				# end
-				# # Obtengo datos faltantes de expediente.
-				# historia.each do |row|
-				# 	registro = { case_id: caso[:id] }
-				# 	row.css('td').each_with_index do |obj, index|
-				# 		case index
-				# 		when 0
-				# 			registro[:folio] = obj.text.squish.strip
-				# 		when 1
-				# 			registro[:ano] = obj.text.squish.strip
-				# 		when 2
-				# 			if  obj.css('img')[0]['onclick'].include? "ShowPDF"
-				# 				registro[:link_doc] = 'http://corte.poderjudicial.cl' + obj.css('img')[0]['onclick'].gsub("ShowPDF('", '').gsub("')", '')
-				# 			end
-				# 			if obj.css('img')[0]['onclick'].include? "ShowWord"
-				# 				registro[:link_doc] = 'http://corte.poderjudicial.cl' + obj.css('img')[0]['onclick'].gsub("ShowWord('", '').gsub("')", '')
-				# 			end
-				# 		when 3
-				# 			# Nada por que al parecer nunca va nada.
-				# 			# Sino se parece al anterior.
-				# 		when 4
-				# 			registro[:sala] = obj.text.squish.strip
-				# 		when 5
-				# 			registro[:tramite] = obj.text.squish.strip
-				# 		when 6
-				# 			registro[:descripcion_tramite] = obj.text.squish.strip
-				# 		when 7
-				# 			registro[:fecha_tramite] = obj.text.squish.strip
-				# 		when 8
-				# 			registro[:estado] = obj.text.squish.strip
-				# 		end
-				# 	end
-				# 	# Creo el objeto historia solo si no existe.
-				# 	CaseHistory.where(case_id: registro[:case_id], folio: registro[:folio]).first || CaseHistory.create(registro)
-				# end
+				data.save!
+				# Obtengo datos faltantes de litigantes.
+				litigantes.each do |row|
+					litigante = { case_id: caso[:id] }
+					row.css('td').each_with_index do |obj, index|
+						case index
+						when 0
+							litigante[:sujeto] = obj.text.squish.strip
+						when 1
+							litigante[:rut] = obj.text.squish.strip.downcase
+						when 2
+							litigante[:persona] = obj.text.squish.strip.downcase
+						when 3
+							litigante[:razon_social] = obj.text.squish.strip
+						end
+					end
+					# Creo el objeto litigante solo si no existe.
+					litigante.save!
+				end
+				# Obtengo datos faltantes de expediente.
+				historia.each do |row|
+					registro = { case_id: caso[:id] }
+					row.css('td').each_with_index do |obj, index|
+						case index
+						when 0
+							registro[:folio] = obj.text.squish.strip
+						when 1
+							registro[:ano] = obj.text.squish.strip
+						when 2
+							if  obj.css('img')[0]['onclick'].include? "ShowPDF"
+								registro[:link_doc] = 'http://corte.poderjudicial.cl' + obj.css('img')[0]['onclick'].gsub("ShowPDF('", '').gsub("')", '')
+							end
+							if obj.css('img')[0]['onclick'].include? "ShowWord"
+								registro[:link_doc] = 'http://corte.poderjudicial.cl' + obj.css('img')[0]['onclick'].gsub("ShowWord('", '').gsub("')", '')
+							end
+						when 3
+							# Nada por que al parecer nunca va nada.
+							# Sino se parece al anterior.
+						when 4
+							registro[:sala] = obj.text.squish.strip
+						when 5
+							registro[:tramite] = obj.text.squish.strip
+						when 6
+							registro[:descripcion_tramite] = obj.text.squish.strip
+						when 7
+							registro[:fecha_tramite] = obj.text.squish.strip
+						when 8
+							registro[:estado] = obj.text.squish.strip
+						end
+					end
+					# Creo el objeto historia solo si no existe.
+					registro.save!
+				end
 			end
 		end
 	end
