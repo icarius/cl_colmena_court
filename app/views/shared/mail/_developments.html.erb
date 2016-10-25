@@ -1390,17 +1390,101 @@ body.outlook p {
 														<tr>
 															<th>
 																<h1 class="text-center"><%= @title %></h1>
+                                <br/>
+                                <h3 class="text-left">Causas con cambios</h3>
+                                <table class="row">
+                                  <tbody>
+                                    <tr>
+                                      <th class="small-12 large-6 columns first">
+                                        <table style="font-size: 8px;">
+                                          <% @elements[:cases].each do |obj| %>
+                                          <tr>
+                                          <td><%=obj.tramite%></td>
+                                          <td><%=obj.descripcion_tramite%></td>
+                                          <td><%=obj.fecha_tramite%></td>
+                                          <td><a target='_blank' href='<%=obj.link_caso_detalle%>'>IR</a></td>
+                                          </tr> 
+                                          <% end %>
+                                        </table>
+                                      </th>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <br/>
+                                <h3 class="text-left">Causas con nuevos litigantes</h3>
+                                <table class="row">
+                                  <tbody>
+                                    <tr>
+                                      <th class="small-12 large-6 columns first">
+                                        <table style="font-size: 8px;">
+                                          <% @elements[:new_litigant].each do |obj| %>
+                                          <tr>
+                                          <td><%=obj.rut%></td>
+                                          <td><%=obj.persona%></td>
+                                          <td><%=obj.sujeto%></td>
+                                          <td><%=obj.razon_social%></td>
+                                          <td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          </tr> 
+                                          <% end %>
+                                        </table>
+                                      </th>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <br/>
+                                <h3 class="text-left">Causas con nuevas historias</h3>
+                                <table class="row">
+                                  <tbody>
+                                    <tr>
+                                      <th class="small-12 large-6 columns first">
+                                        <table style="font-size: 8px;">
+                                          <% @elements[:new_history].each do |obj| %>
+                                          <tr>
+                                          <td><%=obj.tramite%></td>
+                                          <td><%=obj.descripcion_tramite%></td>
+                                          <td><%=obj.fecha_tramite%></td>
+                                          <td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          </tr> 
+                                          <% end %>
+                                        </table>
+                                      </th>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <br/>
+                                <h3 class="text-left">Causas con cambios en litigantes</h3>
+                                <table class="row">
+                                  <tbody>
+                                    <tr>
+                                      <th class="small-12 large-6 columns first">
+                                        <table style="font-size: 8px;">
+                                          <% @elements[:edited_litigant].each do |obj| %>
+                                          <tr>
+                                          <td><%=obj.rut%></td>
+                                          <td><%=obj.persona%></td>
+                                          <td><%=obj.sujeto%></td>
+                                          <td><%=obj.razon_social%></td>
+                                          <td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          </tr> 
+                                          <% end %>
+                                        </table>
+                                      </th>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <br/>
+                                <h3 class="text-left">Causas con cambios en historias</h3>
 																<table class="row">
 																	<tbody>
 																		<tr>
 																			<th class="small-12 large-6 columns first">
 																				<table style="font-size: 8px;">
-																					<% @cases.each do |obj| %>
+																					<% @elements[:edited_history].each do |obj| %>
 																					<tr>
-																					<td><%=obj.ningreso%></td>
-																					<td><%=obj.tipo_causa%></td>
-																					<td><%=obj.corte%></td>
-																					<td><a target='_blank' href='<%=obj.link_caso_detalle%>'>IR</a></td>
+                                          <td><%=obj.tramite%></td>
+                                          <td><%=obj.descripcion_tramite%></td>
+                                          <td><%=obj.fecha_tramite%></td>
+																					<td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
 																					</tr>	
 																					<% end %>
 																				</table>

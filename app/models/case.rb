@@ -27,11 +27,14 @@ class Case < ApplicationRecord
 
 	def self.poderjudicial_news_cases_details
 		now_date_time = DateTime.now
-		cases = Case.where("updated_at > ?", now_date_time.beginning_of_day)
-		new_history = CaseHistory.where("created_at > ?", now_date_time.beginning_of_day)
-		new_litigant = CaseLitigant.where("created_at > ?", now_date_time.beginning_of_day)
-		edited_history = CaseHistory.where("updated_at > ?", now_date_time.beginning_of_day)
-		edited_litigant = CaseLitigant.where("updated_at > ?", now_date_time.beginning_of_day)
+		return {
+		cases: Case.where("updated_at > ?", now_date_time.beginning_of_day).where("updated_at != created_at"),
+		new_history: CaseHistory.where("created_at > ?", now_date_time.beginning_of_day),
+		new_litigant: CaseLitigant.where("created_at > ?", now_date_time.beginning_of_day),
+		edited_history: CaseHistory.where("updated_at > ?", now_date_time.beginning_of_day),
+		edited_litigant: CaseLitigant.where("updated_at > ?", now_date_time.beginning_of_day)
+		}
+		 
 	end
 
 	def self.poderjudicial_news_crawler

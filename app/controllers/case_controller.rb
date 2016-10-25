@@ -105,23 +105,35 @@ class CaseController < ApplicationController
 	end
 
 	def mail_test
+		now_date_time = DateTime.now
 		destinatarios = [
 			{
-				:name => 'Felipe 1',
+				:name => 'Felipe I. González G.',
 				:email => 'felipe@coddea.com'
-			},
-			{
-				:name => 'Felipe 2',
-				:email => 'felipe.gonzalez.g@gmail.com'
 			}
 		]
-		msj_txt = "Hola mundo"
-		msj_html = "<h1>Hola mundo</h1>"
+		# Mail 1
+		title1 = 'Nuevas causas '+now_date_time.strftime('%d-%m-%Y')
+		@cases = Case.poderjudicial_new_cases
+		msj1_txt = ""
+		msj1_html = render_to_string partial: '/shared/mail/news', :locals => {:@title => title1}, :object => @cases, layout: false
 		Case.send_email(
-			'Nuevas causas',
+			title1,
 			destinatarios,
-			msj_txt,
-			msj_html
+			msj1_txt,
+			msj1_html
+		)
+		# Mail 2
+		title2 = 'Novedades '+now_date_time.strftime('%d-%m-%Y')
+		@elements = Case.poderjudicial_news_cases_details
+		puts "kaosbite"
+		puts @elements.inspect
+		msj2_html = render_to_string partial: '/shared/mail/developments', :locals => {:@title => title2}, :object => @elements, layout: false
+		Case.send_email(
+			title2,
+			destinatarios,
+			msj1_txt,
+			msj2_html
 		)
 		render :json => { :status => true }, :status => 200
 	end
