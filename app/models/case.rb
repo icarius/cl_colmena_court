@@ -19,11 +19,26 @@ class Case < ApplicationRecord
 		return sending
 	end
 
+	def self.poderjudicial_new_cases
+		now_date_time = DateTime.now
+		cases = Case.where("created_at > ?", now_date_time.beginning_of_day)
+		return cases
+	end
+
+	def self.poderjudicial_news_cases_details
+		now_date_time = DateTime.now
+		cases = Case.where("updated_at > ?", now_date_time.beginning_of_day)
+		new_history = CaseHistory.where("created_at > ?", now_date_time.beginning_of_day)
+		new_litigant = CaseLitigant.where("created_at > ?", now_date_time.beginning_of_day)
+		edited_history = CaseHistory.where("updated_at > ?", now_date_time.beginning_of_day)
+		edited_litigant = CaseLitigant.where("updated_at > ?", now_date_time.beginning_of_day)
+	end
+
 	def self.poderjudicial_news_crawler
 		require 'nokogiri'
 		require 'open-uri'
 		# Obtengo las causas a verificar.
-		causas = Case.where("ano > ?", 2010).where.not(estado_procesal: 'fallada-terminada')
+		causas = Case.where("ano > ?", 2012).where.not(estado_procesal: 'fallada-terminada')
 		puts "Cantidad causas: #{causas.count}"
 		# Por cada causa verifico si hay nuevos antecedentes.
 		causas.each do |data|
