@@ -41,7 +41,7 @@ class Case < ApplicationRecord
 		require 'nokogiri'
 		require 'open-uri'
 		# Obtengo las causas a verificar.
-		causas = Case.where("ano > ?", 2012).where.not(estado_procesal: 'fallada-terminada')
+		causas = Case.where("ano > ?", 2015).where.not(estado_procesal: 'fallada-terminada')
 		puts "Cantidad causas: #{causas.count}"
 		# Por cada causa verifico si hay nuevos antecedentes.
 		causas.each do |data|
@@ -157,22 +157,25 @@ class Case < ApplicationRecord
 			row[8..-1].each do |obj|
 				begin
 					ningreso_arr = obj.css('td')[0].text.squish.split('-')
-					data = {
-						ningreso: obj.css('td')[0].text.squish,
-						tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
-						correlativo: ningreso_arr[ningreso_arr.length-2].squish,
-						ano: ningreso_arr[ningreso_arr.length-1].squish,
-						corte: obj.css('td')[4].text.squish,
-						fecha_ingreso: obj.css('td')[1].text.squish,
-						ubicacion: obj.css('td')[2].text.squish,
-						fecha_ubicacion: obj.css('td')[3].text.squish,
-						caratulado: obj.css('td')[5].text.squish,
-						link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
-					}
-					# Verifico que no exista la causa.
-					if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
-						# Por cada elemento obtengo su detalle.
-						result << self.detalle_recurso_scraper(data)
+					# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
+					if ningreso_arr[ningreso_arr.length-1].squish.to_id >= 2016
+						data = {
+							ningreso: obj.css('td')[0].text.squish,
+							tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
+							correlativo: ningreso_arr[ningreso_arr.length-2].squish,
+							ano: ningreso_arr[ningreso_arr.length-1].squish,
+							corte: obj.css('td')[4].text.squish,
+							fecha_ingreso: obj.css('td')[1].text.squish,
+							ubicacion: obj.css('td')[2].text.squish,
+							fecha_ubicacion: obj.css('td')[3].text.squish,
+							caratulado: obj.css('td')[5].text.squish,
+							link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
+						}
+						# Verifico que no exista la causa.
+						if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+							# Por cada elemento obtengo su detalle.
+							result << self.detalle_recurso_scraper(data)
+						end
 					end
 				rescue StandardError => e
 					error_obj << obj

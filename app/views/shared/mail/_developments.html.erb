@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
@@ -1361,8 +1360,11 @@ body.outlook p {
 	  body,
 	  html,
 	  .body {
-		background: #f3f3f3 !important;
-	  }
+      background: #f3f3f3 !important;
+    }
+    .txtrow {
+      font-size: 10px !important;
+    }
 	</style>
 </head>
 <body>
@@ -1396,13 +1398,13 @@ body.outlook p {
                                   <tbody>
                                     <tr>
                                       <th class="small-12 large-6 columns first">
-                                        <table style="font-size: 8px;">
+                                        <table>
                                           <% @elements[:cases].each do |obj| %>
                                           <tr>
-                                          <td><%=obj.tramite%></td>
-                                          <td><%=obj.descripcion_tramite%></td>
-                                          <td><%=obj.fecha_tramite%></td>
-                                          <td><a target='_blank' href='<%=obj.link_caso_detalle%>'>IR</a></td>
+                                          <td class="txtrow"><%=obj.tramite%></td>
+                                          <td class="txtrow"><%=obj.descripcion_tramite%></td>
+                                          <td class="txtrow"><%=obj.fecha_tramite%></td>
+                                          <td class="txtrow"><a target='_blank' href='http://colmena-court.reframe.cl/case/<%=obj.case_id%>'>IR</a></td>
                                           </tr> 
                                           <% end %>
                                         </table>
@@ -1416,14 +1418,14 @@ body.outlook p {
                                   <tbody>
                                     <tr>
                                       <th class="small-12 large-6 columns first">
-                                        <table style="font-size: 8px;">
+                                        <table>
                                           <% @elements[:new_litigant].each do |obj| %>
                                           <tr>
-                                          <td><%=obj.rut%></td>
-                                          <td><%=obj.persona%></td>
-                                          <td><%=obj.sujeto%></td>
-                                          <td><%=obj.razon_social%></td>
-                                          <td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          <td class="txtrow"><%=obj.rut%></td>
+                                          <td class="txtrow"><%=obj.persona%></td>
+                                          <td class="txtrow"><%=obj.sujeto%></td>
+                                          <td class="txtrow"><%=obj.razon_social%></td>
+                                          <td class="txtrow"><a target='_blank' href='http://colmena-court.reframe.cl/case/<%=obj.case_id%>'>IR</a></td>
                                           </tr> 
                                           <% end %>
                                         </table>
@@ -1437,13 +1439,13 @@ body.outlook p {
                                   <tbody>
                                     <tr>
                                       <th class="small-12 large-6 columns first">
-                                        <table style="font-size: 8px;">
+                                        <table>
                                           <% @elements[:new_history].each do |obj| %>
                                           <tr>
-                                          <td><%=obj.tramite%></td>
-                                          <td><%=obj.descripcion_tramite%></td>
-                                          <td><%=obj.fecha_tramite%></td>
-                                          <td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          <td class="txtrow"><%=obj.tramite%></td>
+                                          <td class="txtrow"><%=obj.descripcion_tramite%></td>
+                                          <td class="txtrow"><%=obj.fecha_tramite%></td>
+                                          <td class="txtrow"><a target='_blank' href='http://colmena-court.reframe.cl/case/<%=obj.case_id%>'>IR</a></td>
                                           </tr> 
                                           <% end %>
                                         </table>
@@ -1457,14 +1459,14 @@ body.outlook p {
                                   <tbody>
                                     <tr>
                                       <th class="small-12 large-6 columns first">
-                                        <table style="font-size: 8px;">
+                                        <table>
                                           <% @elements[:edited_litigant].each do |obj| %>
                                           <tr>
-                                          <td><%=obj.rut%></td>
-                                          <td><%=obj.persona%></td>
-                                          <td><%=obj.sujeto%></td>
-                                          <td><%=obj.razon_social%></td>
-                                          <td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          <td class="txtrow"><%=obj.rut%></td>
+                                          <td class="txtrow"><%=obj.persona%></td>
+                                          <td class="txtrow"><%=obj.sujeto%></td>
+                                          <td class="txtrow"><%=obj.razon_social%></td>
+                                          <td class="txtrow"><a target='_blank' href='http://colmena-court.reframe.cl/case/<%=obj.case_id%>'>IR</a></td>
                                           </tr> 
                                           <% end %>
                                         </table>
@@ -1478,13 +1480,13 @@ body.outlook p {
 																	<tbody>
 																		<tr>
 																			<th class="small-12 large-6 columns first">
-																				<table style="font-size: 8px;">
+																				<table>
 																					<% @elements[:edited_history].each do |obj| %>
 																					<tr>
-                                          <td><%=obj.tramite%></td>
-                                          <td><%=obj.descripcion_tramite%></td>
-                                          <td><%=obj.fecha_tramite%></td>
-																					<td><a target='_blank' href='<%=obj.id%>'>IR</a></td>
+                                          <td class="txtrow"><%=obj.tramite%></td>
+                                          <td class="txtrow"><%=obj.descripcion_tramite%></td>
+                                          <td class="txtrow"><%=obj.fecha_tramite%></td>
+																					<td class="txtrow"><a target='_blank' href='http://colmena-court.reframe.cl/case/<%=obj.case_id%>'>IR</a></td>
 																					</tr>	
 																					<% end %>
 																				</table>

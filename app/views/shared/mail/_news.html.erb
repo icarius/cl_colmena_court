@@ -1363,6 +1363,10 @@ body.outlook p {
 	  .body {
 		background: #f3f3f3 !important;
 	  }
+
+    .txtrow {
+      font-size: 10px !important;
+    }
 	</style>
 </head>
 <body>
@@ -1394,13 +1398,13 @@ body.outlook p {
 																	<tbody>
 																		<tr>
 																			<th class="small-12 large-6 columns first">
-																				<table style="font-size: 8px;">
+																				<table>
 																					<% @cases.each do |obj| %>
 																					<tr>
-																					<td><%=obj.ningreso%></td>
-																					<td><%=obj.tipo_causa%></td>
-																					<td><%=obj.corte%></td>
-																					<td><a target='_blank' href='<%=obj.link_caso_detalle%>'>IR</a></td>
+																					<td class="txtrow"><%=obj.ningreso%></td>
+																					<td class="txtrow"><%=obj.tipo_causa%></td>
+																					<td class="txtrow"><%=obj.corte%></td>
+																					<td class="txtrow"><a target='_blank' href='http://colmena-court.reframe.cl/case/<%=obj.id%>'>IR</a></td>
 																					</tr>	
 																					<% end %>
 																				</table>

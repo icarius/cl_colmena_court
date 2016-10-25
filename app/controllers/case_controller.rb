@@ -126,8 +126,6 @@ class CaseController < ApplicationController
 		# Mail 2
 		title2 = 'Novedades '+now_date_time.strftime('%d-%m-%Y')
 		@elements = Case.poderjudicial_news_cases_details
-		puts "kaosbite"
-		puts @elements.inspect
 		msj2_html = render_to_string partial: '/shared/mail/developments', :locals => {:@title => title2}, :object => @elements, layout: false
 		Case.send_email(
 			title2,
