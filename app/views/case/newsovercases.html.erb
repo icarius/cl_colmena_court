@@ -1,0 +1,158 @@
+<!-- Causas con modificaciones -->
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Causas con novedades</h3>
+	</div>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table no-margin">
+			<thead>
+				<tr>
+					<th>N. Ingreso</th>
+					<th>Ubicacion</th>
+					<th>Corte</th>
+					<th>F. Ingreso</th>
+					<th>F. Ubicacion</th>
+					<th>E. Recurso</th>
+					<th>E. Procesal</th>
+					<th>E. Colmena</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% @news[:cases].each do |obj| %>
+			<tr>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ningreso %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ubicacion %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.corte %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.fecha_ingreso %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.fecha_ubicacion %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.estado_recurso %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.estado_procesal %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.estado_colmena %><% end %></td>
+			</tr>
+			<% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- Nuevas historias -->
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Historias nuevas</h3>
+	</div>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table no-margin">
+			<thead>
+				<tr>
+					<th>Tramite</th>
+					<th>Descripcion</th>
+					<th>Fecha</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% @news[:new_history].each do |obj| %>
+			<tr>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.tramite %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.descripcion_tramite %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.fecha_tramite %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.estado %><% end %></td>
+			</tr>
+			<% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- Nuevos litigantes -->
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Litigantes nuevos</h3>
+	</div>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table no-margin">
+			<thead>
+				<tr>
+					<th>Sujeto</th>
+					<th>RUT</th>
+					<th>Persona</th>
+					<th>Razon social</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% @news[:new_litigant].each do |obj| %>
+			<tr>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.sujeto %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.rut %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.persona %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.razon_social %><% end %></td>
+			</tr>
+			<% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- Historias modificadas -->
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Historias con novedades</h3>
+	</div>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table no-margin">
+			<thead>
+				<tr>
+					<th>Tramite</th>
+					<th>Descripcion</th>
+					<th>Fecha</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% @news[:edited_history].each do |obj| %>
+			<tr>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.tramite %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.descripcion_tramite %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.fecha_tramite %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.estado %><% end %></td>
+			</tr>
+			<% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- Litigantes modificadas -->
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title">Litigantes con novedades</h3>
+	</div>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table no-margin">
+			<thead>
+				<tr>
+					<th>Sujeto</th>
+					<th>RUT</th>
+					<th>Persona</th>
+					<th>Razon social</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% @news[:edited_litigant].each do |obj| %>
+			<tr>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.sujeto %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.rut %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.persona %><% end %></td>
+				<td><%= link_to controller: "case", action: "show", id: obj.case_id do %><%= obj.razon_social %><% end %></td>
+			</tr>
+			<% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
