@@ -158,7 +158,7 @@ class Case < ApplicationRecord
 				begin
 					ningreso_arr = obj.css('td')[0].text.squish.split('-')
 					# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
-					if ningreso_arr[ningreso_arr.length-1].squish.to_i >= 2016
+					if ningreso_arr[ningreso_arr.length-1].squish.to_i >= 2014
 						data = {
 							ningreso: obj.css('td')[0].text.squish,
 							tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
