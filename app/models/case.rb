@@ -41,7 +41,7 @@ class Case < ApplicationRecord
 		require 'nokogiri'
 		require 'open-uri'
 		# Obtengo las causas a verificar.
-		causas = Case.where("ano > ?", 2015).where.not(estado_procesal: 'fallada-terminada')
+		causas = Case.where("ano > ?", 2012).where.not(estado_procesal: 'fallada-terminada')
 		puts "Cantidad causas: #{causas.count}"
 		# Por cada causa verifico si hay nuevos antecedentes.
 		causas.each do |data|
