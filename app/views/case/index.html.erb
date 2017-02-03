@@ -59,7 +59,7 @@
 			<table class="table no-margin">
 			<thead>
 				<tr>
-					<% if params.has_key?(:estadocolmena) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno') %><th></th><% end %>
+					<% if (params.has_key?(:estadocolmena) || params.has_key?(:estadocolmenasituacion)) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno' || params[:estadocolmena] === 'notificado' || params[:estadocolmenasituacion] === 'aceptado' || params[:estadocolmenasituacion] === 'aceptadoobs' || params[:estadocolmenasituacion] === 'rechazado') %><th></th><% end %>
 					<th>N. Ingreso</th>
 					<th>Ubicacion</th>
 					<th>Corte</th>
@@ -73,7 +73,7 @@
 			<tbody>
 			<% @cases.each do |obj| %>
 			<tr>
-				<% if params.has_key?(:estadocolmena) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno') %><td><input type="checkbox" name="select" value="<%=obj.id%>"></td><% end %>
+				<% if (params.has_key?(:estadocolmena) || params.has_key?(:estadocolmenasituacion)) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno' || params[:estadocolmena] === 'notificado' || params[:estadocolmenasituacion] === 'aceptado' || params[:estadocolmenasituacion] === 'aceptadoobs' || params[:estadocolmenasituacion] === 'rechazado') %><td><input type="checkbox" name="select" value="<%=obj.id%>"></td><% end %>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ningreso %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.ubicacion %><% end %></td>
 				<td><%= link_to controller: "case", action: "show", id: obj.id do %><%= obj.corte %><% end %></td>
