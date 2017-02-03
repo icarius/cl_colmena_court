@@ -27,10 +27,16 @@ class CaseController < ApplicationController
 	def index
 		if params.has_key?(:estadocolmena)
 			# Diccionario: ingresado, notificado, enviadoexterno.
-			@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			# Si estadocolmenta es ingresado se ordena por id, sino por fecha notificado.
+			if params['estadocolmena'] == 'ingresado'
+				@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			else
+				# Si su estado no es ingresado se ordena por la fecha de modificacion. (que implica el cambio de estado) es posible que se haga necesario incoporar un nuevo dato para dar seguimiento a esta accion de forma exclusiva.
+				@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('updated_at DESC')
+			end
 		elsif params.has_key?(:estadocolmenasituacion)
 			# Diccionario, aceptado, aceptadoobs, rechazado, traspasadooni.
-			@cases = Case.where(estado_colmena_situacion: params['estadocolmenasituacion']).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			@cases = Case.where(estado_colmena_situacion: params['estadocolmenasituacion']).paginate(page: params[:page], :per_page => 30).order('updated_at DESC')
 		elsif params.has_key?(:kind) && params.has_key?(:txtsearch)
 			# Segun el tipo de busqueda ejecuto una query diferente.
 			case params['kind']
