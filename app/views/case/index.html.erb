@@ -44,12 +44,22 @@
 		</div>
 	</div>
 	
-	<% if params.has_key?(:estadocolmena) %>
+	<% if params.has_key?(:estadocolmena) || params.has_key?(:estadocolmenasituacion) %>
 	<div class="box-body">
 		<% if params.has_key?(:estadocolmena) && params[:estadocolmena] === 'ingresado' %>
 			<button type="button" class="tonotificado btn btn-block btn-primary">Marcar como notificado</button>
+		<% elsif params.has_key?(:estadocolmena) && params[:estadocolmena] === 'notificado' %>
+			<button type="button" class="toaceptado btn btn-block btn-success">Marcar como aceptado</button>
+			<br/>
+			<button type="button" class="toaceptadoobs btn btn-block btn-warning">Marcar como aceptado con observaciones</button>
+			<br/>
+			<button type="button" class="torechazado btn btn-block btn-danger">Marcar como rechazado</button>
+		<% elsif params.has_key?(:estadocolmenasituacion) && (params[:estadocolmenasituacion] === 'aceptado' || params[:estadocolmenasituacion] === 'aceptadoobs' || params[:estadocolmenasituacion] === 'rechazado' || params[:estadocolmenasituacion] === 'traspasadooni') %>
+			<button type="button" class="tocerrado btn btn-block btn-gray">Marcar como cerrado</button>
 		<% elsif params.has_key?(:estadocolmena) && params[:estadocolmena] === 'enviadoexterno' %>
 			<button type="button" class="tocerrado btn btn-block btn-gray">Marcar como cerrado</button>
+		<% elsif params.has_key?(:estadocolmena) && params[:estadocolmena] == 'cerrado' %>
+			<button type="button" class="tocerrado btn btn-block btn-palegreen">Re-abrir</button>
 		<% end %>
 	</div>
 	<% end %>
