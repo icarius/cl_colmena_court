@@ -31,17 +31,17 @@
 		&nbsp;Hasta&nbsp;<input type="date" name="hasta">
 		<br/>
 		<br/>
+		Buscar por:&nbsp;&nbsp;<input type="radio" name="kind" value="rut">&nbsp;RUT,
+		<!-- &nbsp;<input type="radio" name="kind" value="corte">&nbsp;Corte, -->
+		&nbsp;<input type="radio" name="kind" value="rol">&nbsp;Rol,
+		&nbsp;<input type="radio" name="kind" value="ningreso">&nbsp;Número&nbsp;ingreso.
+		<br/>
 		<div class="input-group input-group-sm pull-left">
 			<input id="txtsearch" type="text" value="" class="form-control">
 			<span class="input-group-btn">
 				<button id="btnsearch" class="btn btn-info btn-flat" type="button">Buscar!</button>
 			</span>
 		</div>
-		Buscar por:&nbsp;&nbsp;<input type="radio" name="kind" value="rut">&nbsp;RUT,
-		<!-- &nbsp;<input type="radio" name="kind" value="corte">&nbsp;Corte, -->
-		&nbsp;<input type="radio" name="kind" value="rol">&nbsp;Rol,
-		&nbsp;<input type="radio" name="kind" value="ningreso">&nbsp;Número&nbsp;ingreso.
-		<br/>
 	</div>
 	
 	<% if params.has_key?(:estadocolmena) %>
