@@ -236,7 +236,7 @@ class Case < ApplicationRecord
 							if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
 								# Por cada elemento obtengo su detalle.
 								# result << self.detalle_recurso_scraper(data)
-								DetailWorker.perform(data)
+								DetailWorker.perform_async(data)
 							end
 						end
 					rescue StandardError => e
