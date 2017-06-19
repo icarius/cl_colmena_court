@@ -13,6 +13,24 @@ class CaseController < ApplicationController
 	# 	end
 	# end
 
+	# Re-inicia la cola de sidekiq
+	def start
+		require 'sidekiq/api'
+		Sidekiq::Queue.new.clear
+		Sidekiq::RetrySet.new.clear
+		Sidekiq::ScheduledSet.new.clear
+		# Inicializador para comenzar la cadena de tareas.
+		SearchWorker.perform_at(10.seconds.from_now)
+		render :json => 'start'
+	end
+
+	# Re-inicia la cola de sidekiq
+	def reset
+		require 'sidekiq/api'
+		Sidekiq::Stats.new.reset
+		render :json => 'reset'
+	end
+
 	def dashboard
 		@ingresados = Case.where(estado_colmena: 'ingresado').count
 		@notificados = Case.where(estado_colmena: 'notificado').count

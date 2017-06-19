@@ -31,6 +31,14 @@ Rails.application.routes.draw do
 		end
 	end
 
+	get '/reset' => 'case#reset'
+	get '/start' => 'case#start'
+
 	resources :case
+
+	require 'sidekiq/web'
+	authenticate :user do
+		mount Sidekiq::Web => '/sidekiq'
+	end
 
 end
