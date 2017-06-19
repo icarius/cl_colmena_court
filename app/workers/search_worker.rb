@@ -1,6 +1,6 @@
 class SearchWorker
 	include Sidekiq::Worker
-	def perform(*args)
+	def perform
 		require 'selenium-webdriver'
 		require 'nokogiri'
 		# Inicializo elemento que se buscara.
@@ -14,6 +14,10 @@ class SearchWorker
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
+		puts "kaosb1"
+		puts cookie[:value].inspect
+		puts "kaosb2"
+		puts search.inspect
 		document = Nokogiri::HTML(Case.send_request_court(cookie[:value], search))
 		if document.present?
 			# Obtengo la tabla.
