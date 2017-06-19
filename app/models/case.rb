@@ -196,6 +196,7 @@ class Case < ApplicationRecord
 	def self.poderjudicial_crawler_job(search)
 		require 'selenium-webdriver'
 		require 'nokogiri'
+		require 'sidekiq/api'
 		# Inicializo objetos que contendran los resultados.
 		result = Array.new
 		error_obj = Array.new
@@ -232,7 +233,7 @@ class Case < ApplicationRecord
 						if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
 							# Por cada elemento obtengo su detalle.
 							# result << self.detalle_recurso_scraper(data)
-							DetailWorker.perform_async(data)
+							DetailWorker.perform(data)
 						end
 					end
 				rescue StandardError => e
