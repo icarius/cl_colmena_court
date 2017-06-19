@@ -15,7 +15,7 @@ class SearchWorker
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
 		puts "kaosb1"
-		puts cookie[:value].inspect
+		puts cookie.inspect
 		puts "kaosb2"
 		puts search.inspect
 		document = Nokogiri::HTML(Case.send_request_court(cookie[:value], search))

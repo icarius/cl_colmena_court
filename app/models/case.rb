@@ -148,6 +148,8 @@ class Case < ApplicationRecord
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
+		puts "kaosb1"
+		puts cookie.inspect
 		# Ejecuto el request y obtengo el dom.
 		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
 		if document.present?
