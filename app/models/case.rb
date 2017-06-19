@@ -356,7 +356,6 @@ class Case < ApplicationRecord
 
 	def self.send_request_court(jsessionid, search)
 		require 'net/http'
-		#http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do (POST )
 		begin
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
 			# Create client
@@ -378,7 +377,7 @@ class Case < ApplicationRecord
 				"APE_Materno" => "",
 				"ROL_Recurso" => "",
 				"ROL_Causa" => "",
-				"FEC_Hasta" => "15/08/2016",
+				"FEC_Hasta" => "15/08/2017",
 				"RUC_Dv" => "",
 				"selConsulta" => "0",
 				"ERA_Causa" => "",

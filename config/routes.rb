@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
 	get '/reset' => 'case#reset'
 	get '/start' => 'case#start'
+	get '/test' => 'case#test'
 
 	resources :case
 

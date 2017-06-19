@@ -31,6 +31,11 @@ class CaseController < ApplicationController
 		render :json => 'reset'
 	end
 
+	def test
+		Case.poderjudicial_crawler_job("COLMENA")
+		render :json => 'test'
+	end
+
 	def dashboard
 		@ingresados = Case.where(estado_colmena: 'ingresado').count
 		@notificados = Case.where(estado_colmena: 'notificado').count
