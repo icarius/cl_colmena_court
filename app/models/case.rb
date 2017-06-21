@@ -460,10 +460,19 @@ class Case < ApplicationRecord
 		require 'selenium-webdriver'
 		# Creo el driver para obtener la session y poder ejecutar el request.
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
-		driver.manage.timeouts.page_load = 1000
-		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		# driver.manage.timeouts.page_load = 1000
+		# driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
-		cookie = driver.manage.cookie_named("JSESSIONID")
+		# cookie = driver.manage.cookie_named("JSESSIONID")
+		# return cookie[:value]
+		loop do
+			# Navego y obtengo la pagina.
+			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+			# Obtengo el valor de JSESSIONID.
+			cookie = driver.manage.cookie_named("JSESSIONID")
+			# Verifico que el valor de cookie existe para poder continuar con la ejecucion.
+			break if !cookie[:value].nil? && !cookie[:value].blank?
+		end
 		return cookie[:value]
 	end
 
