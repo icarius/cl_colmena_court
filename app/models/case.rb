@@ -471,7 +471,7 @@ class Case < ApplicationRecord
 			# Obtengo el valor de JSESSIONID.
 			cookie = driver.manage.cookie_named("JSESSIONID")
 			# Verifico que el valor de cookie existe para poder continuar con la ejecucion.
-			break if !cookie[:value].nil? && !cookie[:value].blank?
+			break if !cookie.nil? && cookie.key?("value") && !cookie[:value].nil? && !cookie[:value].blank?
 		end
 		return cookie[:value]
 	end
