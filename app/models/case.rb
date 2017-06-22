@@ -475,7 +475,7 @@ class Case < ApplicationRecord
 		# 	# Verifico que el valor de cookie existe para poder continuar con la ejecucion.
 		# 	break if !cookie.nil? && cookie.key?("value") && !cookie[:value].nil? && !cookie[:value].blank?
 		# end
-		return cookie
+		return cookie[:result]
 	end
 
 end
