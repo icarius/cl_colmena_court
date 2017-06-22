@@ -408,7 +408,8 @@ class Case < ApplicationRecord
 			# Fetch Request
 			res = http.request(req)
 			puts "Search response HTTP Status Code: #{res.code}"
-			if res.code.to_i == 200
+			# if res.code.to_i == 200
+			if res.kind_of? Net::HTTPSuccess
 				# body = res.body
 				# http.finish
 				# req.finish
