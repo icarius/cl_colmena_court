@@ -528,7 +528,7 @@ class Case < ApplicationRecord
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		if cookie.nil?
-			driver.quit
+			driver.close
 			self.switch_tor_circuit
 			sleep(0.5)
 			self.get_driver
