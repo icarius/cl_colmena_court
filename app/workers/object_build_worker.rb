@@ -25,7 +25,6 @@ class ObjectBuildWorker
 				end
 			end
 		rescue StandardError => e
-			error_obj << obj
 			puts "Parse error #{e.message}"
 		end
 	end
