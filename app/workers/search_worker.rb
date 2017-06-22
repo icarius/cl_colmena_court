@@ -17,11 +17,13 @@ class SearchWorker
 			row = document.css('.textoPortal')
 			# Itero el resultado.
 			row[8..-1].each do |obj|
+				puts "Agregue un Object builder obj worker"
 				ObjectBuildWorker.perform_async(obj)
 			end
 		end
 		# Cierro el driver que le dio persistencia a la session durante la ejecucion.
 		driver.close
+		puts "Agregue un Search worker"
 		SearchWorker.perform_at(1.day.from_now)
 	end
 end

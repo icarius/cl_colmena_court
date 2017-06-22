@@ -20,6 +20,7 @@ class ObjectBuildWorker
 				# Verifico que no exista la causa.
 				if !Case.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
 					# Por cada elemento obtengo su detalle.
+					puts "Agregue un Detail worker"
 					DetailWorker.perform(data)
 				end
 			end
