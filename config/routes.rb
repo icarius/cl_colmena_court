@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 			get '/circuit' => 'case#circuit_test'
 			get '/news' => 'case#news_test'
 			get '/getnews' => 'case#get_news_test'
+			get '/getdriver' => 'case#get_driver_test'
 		end
 	end
 

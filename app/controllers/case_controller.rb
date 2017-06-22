@@ -160,6 +160,12 @@ class CaseController < ApplicationController
 		end
 	end
 
+	def get_driver_test
+		driver = Case.get_driver
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		render :json => { :status => true, :result => cookie[:value]}, :status => 200
+	end
+
 	def circuit_test
 		require 'net/telnet'
 		agenta = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
