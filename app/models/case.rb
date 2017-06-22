@@ -466,6 +466,8 @@ class Case < ApplicationRecord
 		# cookie = driver.manage.cookie_named("JSESSIONID")
 		# return cookie[:value]
 		loop do
+			self.switch_tor_circuit
+			sleep(0.5)
 			# Navego y obtengo la pagina.
 			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 			# Obtengo el valor de JSESSIONID.
