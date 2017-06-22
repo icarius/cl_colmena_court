@@ -143,9 +143,7 @@ class Case < ApplicationRecord
 		# Inicializo objetos que contendran los resultados.
 		result = Array.new
 		error_obj = Array.new
-		# Creo el driver para obtener la session y poder ejecutar el request.
-		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
-		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		driver = self.get_driver
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		puts cookie.inspect
