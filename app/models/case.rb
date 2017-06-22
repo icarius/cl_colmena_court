@@ -345,12 +345,12 @@ class Case < ApplicationRecord
 
 	def self.send_request_court(jsessionid, search)
 		require 'net/http'
-		uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
-		# Create client
-		http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
-		# Create Request
-		req =  Net::HTTP::Post.new(uri_post)
 		begin
+			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
+			# Create client
+			http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
+			# Create Request
+			req =  Net::HTTP::Post.new(uri_post)
 			data = {
 				"TIP_Consulta" => "3",
 				"TIP_Lengueta" => "tdNombre",
@@ -418,8 +418,6 @@ class Case < ApplicationRecord
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
-			http.finish
-			req.finish
 			self.switch_tor_circuit
 			sleep(0.5)
 			return self.send_request_court(jsessionid, search)
@@ -428,10 +426,10 @@ class Case < ApplicationRecord
 
 	def self.get_case_detail(uri)
 		require 'net/http'
-		uri_get = URI(uri)
-		http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
-		req =  Net::HTTP::Get.new(uri_get)
 		begin
+			uri_get = URI(uri)
+			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
+			req =  Net::HTTP::Get.new(uri_get)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
 			if res.code.to_i == 200
@@ -448,8 +446,6 @@ class Case < ApplicationRecord
 			end
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
-			http.finish
-			req.finish
 			self.switch_tor_circuit
 			sleep(0.5)
 			return self.get_case_detail(uri)
