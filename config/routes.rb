@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 			get '/news' => 'case#news_test'
 			get '/getnews' => 'case#get_news_test'
 			get '/getdriver' => 'case#get_driver_test'
+			get '/getdriverpercent' => 'case#get_driver_test_percent'
 		end
 	end
 
