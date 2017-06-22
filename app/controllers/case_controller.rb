@@ -195,6 +195,7 @@ class CaseController < ApplicationController
 			driver = Case.get_driver
 			cookie = driver.manage.cookie_named("JSESSIONID")
 			var << cookie[:value]
+			driver.close
 		end
 		render :json => { :status => true, :result => var}, :status => 200
 	end
