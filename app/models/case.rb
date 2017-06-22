@@ -45,7 +45,6 @@ class Case < ApplicationRecord
 		puts "Cantidad causas: #{causas.count}"
 		# Por cada causa verifico si hay nuevos antecedentes.
 		causas.each do |data|
-			# document = Nokogiri::HTML(self.get_case_detail(causa.link_caso_detalle))
 			document = Nokogiri::HTML(open(data.link_caso_detalle))
 			if document.present?
 				# Obtengo los elementos del dom y los asocio a objetos segun tema.
@@ -368,7 +367,7 @@ class Case < ApplicationRecord
 				"APE_Materno" => "",
 				"ROL_Recurso" => "",
 				"ROL_Causa" => "",
-				"FEC_Hasta" => "15/08/2017",
+				"FEC_Hasta" => "15/08/2018",
 				"RUC_Dv" => "",
 				"selConsulta" => "0",
 				"ERA_Causa" => "",

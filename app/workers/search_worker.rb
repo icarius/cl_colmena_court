@@ -6,12 +6,10 @@ class SearchWorker
 		require 'sidekiq/api'
 		# Inicializo objetos que contendran los resultados.
 		search = "COLMENA"
-		result = Array.new
 		error_obj = Array.new		
 		driver = Case.get_driver
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
-		puts cookie.inspect
 		# Ejecuto el request y obtengo el dom.
 		document = Nokogiri::HTML(Case.send_request_court(cookie[:value], search))
 		if document.present?
