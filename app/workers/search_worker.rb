@@ -38,7 +38,7 @@ class SearchWorker
 						# Verifico que no exista la causa.
 						if !Case.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
 							# Por cada elemento obtengo su detalle.
-							DetailWorker.perform_async(data)
+							DetailWorker.perform(data)
 						end
 					end
 				rescue StandardError => e
