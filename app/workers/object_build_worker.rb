@@ -1,6 +1,7 @@
 class ObjectBuildWorker
 	include Sidekiq::Worker
-	def perform(obj)
+	def perform(html)
+		obj = Nokogiri::HTML(html)
 		# begin
 			ningreso_arr = obj.css('td')[0].text.squish.split('-')
 			# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
