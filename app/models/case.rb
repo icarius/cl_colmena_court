@@ -145,14 +145,10 @@ class Case < ApplicationRecord
 		error_obj = Array.new
 		# Creo el driver para obtener la session y poder ejecutar el request.
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
-		loop do
-			# Navego y obtengo la pagina.
-			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
-			# Obtengo el valor de JSESSIONID.
-			cookie = driver.manage.cookie_named("JSESSIONID")
-			# Verifico que el valor de cookie existe para poder continuar con la ejecucion.
-			break if !cookie[:value].nil? && !cookie[:value].blank?
-		end
+		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		# Obtengo el valor de JSESSIONID.
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		puts cookie.inspect
 		# Ejecuto el request y obtengo el dom.
 		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
 		if document.present?
@@ -195,6 +191,68 @@ class Case < ApplicationRecord
 			return result
 		else
 			return false
+		end
+	end
+
+	def self.poderjudicial_crawler_job(search)
+		require 'selenium-webdriver'
+		require 'nokogiri'
+		require 'sidekiq/api'
+		# Inicializo objetos que contendran los resultados.
+		result = Array.new
+		error_obj = Array.new
+		begin
+			# Creo el driver para obtener la session y poder ejecutar el request.
+			driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
+			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+			# Obtengo el valor de JSESSIONID.
+			cookie = driver.manage.cookie_named("JSESSIONID")
+			# Ejecuto el request y obtengo el dom.
+			document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
+			if document.present?
+				# Obtengo la tabla.
+				row = document.css('.textoPortal')
+				# Itero el resultado.
+				row[8..-1].each do |obj|
+					begin
+						ningreso_arr = obj.css('td')[0].text.squish.split('-')
+						# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
+						if ningreso_arr[ningreso_arr.length-1].squish.to_i >= 2014
+							data = {
+								ningreso: obj.css('td')[0].text.squish,
+								tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
+								correlativo: ningreso_arr[ningreso_arr.length-2].squish,
+								ano: ningreso_arr[ningreso_arr.length-1].squish,
+								corte: obj.css('td')[4].text.squish,
+								fecha_ingreso: obj.css('td')[1].text.squish,
+								ubicacion: obj.css('td')[2].text.squish,
+								fecha_ubicacion: obj.css('td')[3].text.squish,
+								caratulado: obj.css('td')[5].text.squish,
+								link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
+							}
+							# Verifico que no exista la causa.
+							if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+								# Por cada elemento obtengo su detalle.
+								# result << self.detalle_recurso_scraper(data)
+								DetailWorker.perform_async(data)
+							end
+						end
+					rescue StandardError => e
+						error_obj << obj
+						puts "Parse error #{e.message}"
+					end
+				end
+			end
+			# Cierro el driver que le dio persistencia a la session durante la ejecucion.
+			driver.quit
+			# Determino la respuesta.
+			if result.any?
+				return result
+			else
+				return false
+			end
+		rescue
+			puts "Error al navegar"
 		end
 	end
 
@@ -296,7 +354,6 @@ class Case < ApplicationRecord
 
 	def self.send_request_court(jsessionid, search)
 		require 'net/http'
-		#http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do (POST )
 		begin
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
 			# Create client
@@ -318,7 +375,7 @@ class Case < ApplicationRecord
 				"APE_Materno" => "",
 				"ROL_Recurso" => "",
 				"ROL_Causa" => "",
-				"FEC_Hasta" => "15/08/2016",
+				"FEC_Hasta" => "15/08/2017",
 				"RUC_Dv" => "",
 				"selConsulta" => "0",
 				"ERA_Causa" => "",
@@ -460,22 +517,10 @@ class Case < ApplicationRecord
 		require 'selenium-webdriver'
 		# Creo el driver para obtener la session y poder ejecutar el request.
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
-		# driver.manage.timeouts.page_load = 1000
-		# driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
-		# cookie = driver.manage.cookie_named("JSESSIONID")
-		# return cookie[:value]
-		loop do
-			# self.switch_tor_circuit
-			# sleep(0.5)
-			# Navego y obtengo la pagina.
-			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
-			# Obtengo el valor de JSESSIONID.
-			cookie = driver.manage.cookie_named("JSESSIONID")
-			# Verifico que el valor de cookie existe para poder continuar con la ejecucion.
-			break if !cookie.nil? && !cookie[:value].blank?
-		end
-		return cookie[:value]
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		return cookie
 	end
 
 end

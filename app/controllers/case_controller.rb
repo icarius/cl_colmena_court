@@ -153,7 +153,11 @@ class CaseController < ApplicationController
 
 	def driver_test
 		result = Case.test_driver_proxy
-		render :json => { :status => true, :result => result}, :status => 200
+		if !result.nil? && !result[:value].blank?
+			render :json => { :status => true, :result => result[:value]}, :status => 200
+		else
+			self.driver_test
+		end
 	end
 
 	def circuit_test
