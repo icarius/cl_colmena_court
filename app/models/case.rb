@@ -350,6 +350,7 @@ class Case < ApplicationRecord
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
 			# Create client
 			http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
+			http.read_timeout = 900
 			# Create Request
 			req =  Net::HTTP::Post.new(uri_post)
 			data = {
