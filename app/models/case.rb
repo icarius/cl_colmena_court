@@ -185,7 +185,7 @@ class Case < ApplicationRecord
 			end
 		end
 		# Cierro el driver que le dio persistencia a la session durante la ejecucion.
-		driver.quit
+		driver.close
 		# Determino la respuesta.
 		if result.any?
 			return result
@@ -244,7 +244,7 @@ class Case < ApplicationRecord
 				end
 			end
 			# Cierro el driver que le dio persistencia a la session durante la ejecucion.
-			driver.quit
+			driver.close
 			# Determino la respuesta.
 			if result.any?
 				return result
