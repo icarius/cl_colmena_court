@@ -201,58 +201,51 @@ class Case < ApplicationRecord
 		# Inicializo objetos que contendran los resultados.
 		result = Array.new
 		error_obj = Array.new
-		begin
-			# Creo el driver para obtener la session y poder ejecutar el request.
-			driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
-			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
-			# Obtengo el valor de JSESSIONID.
-			cookie = driver.manage.cookie_named("JSESSIONID")
-			# Ejecuto el request y obtengo el dom.
-			document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
-			if document.present?
-				# Obtengo la tabla.
-				row = document.css('.textoPortal')
-				# Itero el resultado.
-				row[8..-1].each do |obj|
-					begin
-						ningreso_arr = obj.css('td')[0].text.squish.split('-')
-						# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
-						if ningreso_arr[ningreso_arr.length-1].squish.to_i >= 2014
-							data = {
-								ningreso: obj.css('td')[0].text.squish,
-								tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
-								correlativo: ningreso_arr[ningreso_arr.length-2].squish,
-								ano: ningreso_arr[ningreso_arr.length-1].squish,
-								corte: obj.css('td')[4].text.squish,
-								fecha_ingreso: obj.css('td')[1].text.squish,
-								ubicacion: obj.css('td')[2].text.squish,
-								fecha_ubicacion: obj.css('td')[3].text.squish,
-								caratulado: obj.css('td')[5].text.squish,
-								link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
-							}
-							# Verifico que no exista la causa.
-							if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
-								# Por cada elemento obtengo su detalle.
-								# result << self.detalle_recurso_scraper(data)
-								DetailWorker.perform_async(data)
-							end
+		driver = self.get_driver
+		# Obtengo el valor de JSESSIONID.
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		# Ejecuto el request y obtengo el dom.
+		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
+		if document.present?
+			# Obtengo la tabla.
+			row = document.css('.textoPortal')
+			# Itero el resultado.
+			row[8..-1].each do |obj|
+				begin
+					ningreso_arr = obj.css('td')[0].text.squish.split('-')
+					# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
+					if ningreso_arr[ningreso_arr.length-1].squish.to_i >= 2014
+						data = {
+							ningreso: obj.css('td')[0].text.squish,
+							tipo_causa: ningreso_arr[((ningreso_arr.length)*-1)..ningreso_arr.length-3].join(' '),
+							correlativo: ningreso_arr[ningreso_arr.length-2].squish,
+							ano: ningreso_arr[ningreso_arr.length-1].squish,
+							corte: obj.css('td')[4].text.squish,
+							fecha_ingreso: obj.css('td')[1].text.squish,
+							ubicacion: obj.css('td')[2].text.squish,
+							fecha_ubicacion: obj.css('td')[3].text.squish,
+							caratulado: obj.css('td')[5].text.squish,
+							link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
+						}
+						# Verifico que no exista la causa.
+						if !self.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+							# Por cada elemento obtengo su detalle.
+							DetailWorker.perform_async(data)
 						end
-					rescue StandardError => e
-						error_obj << obj
-						puts "Parse error #{e.message}"
 					end
+				rescue StandardError => e
+					error_obj << obj
+					puts "Parse error #{e.message}"
 				end
 			end
-			# Cierro el driver que le dio persistencia a la session durante la ejecucion.
-			driver.close
-			# Determino la respuesta.
-			if result.any?
-				return result
-			else
-				return false
-			end
-		rescue
-			puts "Error al navegar"
+		end
+		# Cierro el driver que le dio persistencia a la session durante la ejecucion.
+		driver.close
+		# Determino la respuesta.
+		if result.any?
+			return result
+		else
+			return false
 		end
 	end
 
@@ -354,10 +347,12 @@ class Case < ApplicationRecord
 
 	def self.send_request_court(jsessionid, search)
 		require 'net/http'
+		uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
+		# Create client
+		http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
+		# Create Request
+		req =  Net::HTTP::Post.new(uri_post)
 		begin
-			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
-			# Create client
-			http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
 			data = {
 				"TIP_Consulta" => "3",
 				"TIP_Lengueta" => "tdNombre",
@@ -382,8 +377,6 @@ class Case < ApplicationRecord
 				"RUC_Era" => "",
 			}
 			body = URI.encode_www_form(data)
-			# Create Request
-			req =  Net::HTTP::Post.new(uri_post)
 			# Add headers
 			req.add_field "Connection", "keep-alive"
 			# Add headers
@@ -414,14 +407,21 @@ class Case < ApplicationRecord
 			res = http.request(req)
 			puts "Search response HTTP Status Code: #{res.code}"
 			if res.code.to_i == 200
-				return res.body
+				body = res.body
+				http.finish
+				req.finish
+				return body
 			else
+				http.finish
+				req.finish
 				self.switch_tor_circuit
 				sleep(0.5)
 				return self.send_request_court(jsessionid, search)
 			end
 		rescue StandardError => e
 			puts "Search HTTP Request failed (#{e.message})"
+			http.finish
+			req.finish
 			self.switch_tor_circuit
 			sleep(0.5)
 			return self.send_request_court(jsessionid, search)
@@ -430,21 +430,28 @@ class Case < ApplicationRecord
 
 	def self.get_case_detail(uri)
 		require 'net/http'
+		uri_get = URI(uri)
+		http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
+		req =  Net::HTTP::Get.new(uri_get)
 		begin
-			uri_get = URI(uri)
-			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
-			req =  Net::HTTP::Get.new(uri_get)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
 			if res.code.to_i == 200
+				body = res.body
+				http.finish
+				req.finish
 				return res.body
 			else
+				http.finish
+				req.finish
 				self.switch_tor_circuit
 				sleep(0.5)
 				return self.get_case_detail(uri)
 			end
 		rescue StandardError => e
 			puts "Detail HTTP Request failed (#{e.message})"
+			http.finish
+			req.finish
 			self.switch_tor_circuit
 			sleep(0.5)
 			return self.get_case_detail(uri)
