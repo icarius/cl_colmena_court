@@ -452,8 +452,8 @@ class Case < ApplicationRecord
 	end
 
 	def self.switch_tor_circuit(origin)
-		puts origin
 		puts "Retry..."
+		puts origin
 		require 'net/telnet'
 		localhost = Net::Telnet::new("Host" => "127.0.0.1", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
 		localhost.cmd('AUTHENTICATE "colmena"') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
@@ -531,7 +531,7 @@ class Case < ApplicationRecord
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		if cookie.nil?
 			driver.close
-			self.switch_tor_circuit
+			self.switch_tor_circuit('cookie nil -> get_driver')
 			sleep(0.5)
 			self.get_driver
 		else
