@@ -343,6 +343,8 @@ class Case < ApplicationRecord
 	end
 
 	def self.send_request_court(jsessionid, search)
+		puts "session -> #{jsessionid}"
+		puts "search -> #{search}"
 		require 'net/http'
 		begin
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
