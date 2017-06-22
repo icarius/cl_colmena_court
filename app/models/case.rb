@@ -203,7 +203,9 @@ class Case < ApplicationRecord
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# Ejecuto el request y obtengo el dom.
 		document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
+		puts "Regreso desde la busqueda."
 		if document.present?
+			puts "El documento esta presente."
 			# Obtengo la tabla.
 			row = document.css('.textoPortal')
 			# Itero el resultado.
