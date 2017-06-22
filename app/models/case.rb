@@ -529,6 +529,8 @@ class Case < ApplicationRecord
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		if cookie.nil?
 			driver.quit
+			self.switch_tor_circuit
+			sleep(0.5)
 			self.get_driver
 		else
 			return driver

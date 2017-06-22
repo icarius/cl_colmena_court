@@ -156,6 +156,8 @@ class CaseController < ApplicationController
 		if !result.nil? && !result[:value].blank?
 			render :json => { :status => true, :result => result[:value]}, :status => 200
 		else
+			Case.switch_tor_circuit
+			sleep(0.5)
 			self.driver_test
 		end
 	end
