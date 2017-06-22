@@ -1,7 +1,7 @@
 class ObjectBuildWorker
 	include Sidekiq::Worker
 	def perform(obj)
-		begin
+		# begin
 			ningreso_arr = obj.css('td')[0].text.squish.split('-')
 			# Filtro para reducir la muestra de causas obtenidas desde la consulta contra el servidor.
 			if ningreso_arr[ningreso_arr.length-1].squish.to_i >= 2014
@@ -24,8 +24,8 @@ class ObjectBuildWorker
 					DetailWorker.perform(data)
 				end
 			end
-		rescue StandardError => e
-			puts "Parse error #{e.message}"
-		end
+		# rescue StandardError => e
+		# 	puts "Parse error #{e.message}"
+		# end
 	end
 end
