@@ -176,7 +176,17 @@ class CaseController < ApplicationController
 
 	def driver_test
 		result = Case.test_driver_proxy
-		render :json => { :status => true, :result => result}, :status => 200
+		if !result.nil? && !result[:value].blank?
+			render :json => { :status => true, :result => result[:value]}, :status => 200
+		else
+			self.driver_test
+		end
+	end
+
+	def get_driver_test
+		driver = Case.get_driver
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		render :json => { :status => true, :result => cookie[:value]}, :status => 200
 	end
 
 	def circuit_test

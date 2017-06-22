@@ -204,11 +204,9 @@ class Case < ApplicationRecord
 		begin
 			# Creo el driver para obtener la session y poder ejecutar el request.
 			driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
-			driver.manage.timeouts.page_load = 300
 			driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 			# Obtengo el valor de JSESSIONID.
 			cookie = driver.manage.cookie_named("JSESSIONID")
-			puts cookie.inspect
 			# Ejecuto el request y obtengo el dom.
 			document = Nokogiri::HTML(self.send_request_court(cookie[:value], search))
 			if document.present?
@@ -522,7 +520,22 @@ class Case < ApplicationRecord
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
-		return cookie[:value]
+		return cookie
+	end
+
+	def self.get_driver
+		require 'selenium-webdriver'
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
+		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		if cookie.nil?
+			driver.close
+			self.switch_tor_circuit
+			sleep(0.5)
+			self.get_driver
+		else
+			return driver
+		end
 	end
 
 end
