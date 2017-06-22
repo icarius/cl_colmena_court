@@ -5,6 +5,7 @@ class SearchWorker
 		require 'nokogiri'
 		require 'sidekiq/api'
 		# Inicializo objetos que contendran los resultados.
+		search = "COLMENA"
 		result = Array.new
 		error_obj = Array.new		
 		driver = Case.get_driver
