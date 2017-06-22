@@ -367,7 +367,7 @@ class Case < ApplicationRecord
 				"APE_Materno" => "",
 				"ROL_Recurso" => "",
 				"ROL_Causa" => "",
-				"FEC_Hasta" => "15/08/2018",
+				"FEC_Hasta" => "15/08/2017",
 				"RUC_Dv" => "",
 				"selConsulta" => "0",
 				"ERA_Causa" => "",
@@ -435,7 +435,7 @@ class Case < ApplicationRecord
 				body = res.body
 				http.finish
 				req.finish
-				return res.body
+				return body
 			else
 				http.finish
 				req.finish
