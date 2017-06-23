@@ -22,7 +22,7 @@ class ObjectBuildWorker
 				if !Case.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
 					# Por cada elemento obtengo su detalle.
 					puts "Agregue un Detail worker"
-					DetailWorker.perform(data)
+					DetailWorker.perform_async(data)
 				end
 			end
 		# rescue StandardError => e
