@@ -6,7 +6,6 @@ class SearchWorker
 		require 'sidekiq/api'
 		# Inicializo objetos que contendran los resultados.
 		search = "COLMENA"
-		error_obj = Array.new		
 		driver = Case.get_driver
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
