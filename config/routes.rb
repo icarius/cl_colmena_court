@@ -29,9 +29,18 @@ Rails.application.routes.draw do
 			get '/news' => 'case#news_test'
 			get '/getnews' => 'case#get_news_test'
 			get '/getdriver' => 'case#get_driver_test'
+			get '/getdriverpercent' => 'case#get_driver_test_percent'
 		end
 	end
 
+	get '/reset' => 'case#reset'
+	get '/start' => 'case#start'
+
 	resources :case
+
+	require 'sidekiq/web'
+	authenticate :user do
+		mount Sidekiq::Web => '/sidekiq'
+	end
 
 end
