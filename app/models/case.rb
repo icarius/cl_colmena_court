@@ -432,8 +432,6 @@ class Case < ApplicationRecord
 	def self.get_case_detail(uri)
 		require 'net/http'
 		begin
-			puts "Link.."
-			puts uri
 			uri_get = URI(uri)
 			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
 			req =  Net::HTTP::Get.new(uri_get)
