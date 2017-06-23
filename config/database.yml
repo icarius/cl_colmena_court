@@ -1,6 +1,6 @@
 default: &default
   adapter: mysql2
-  pool: 25
+  pool: 75
   timeout: 5000
   encoding: utf8
   collation: utf8_bin
