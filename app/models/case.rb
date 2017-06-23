@@ -410,10 +410,10 @@ class Case < ApplicationRecord
 			puts "Search response HTTP Status Code: #{res.code}"
 			# if res.code.to_i == 200
 			if res.kind_of? Net::HTTPSuccess
-				# body = res.body
-				# http.finish
-				# req.finish
-				return res.body
+				body = res.body
+				http.finish
+				req.finish
+				return body
 			else
 				http.finish
 				req.finish
@@ -437,7 +437,7 @@ class Case < ApplicationRecord
 			req =  Net::HTTP::Get.new(uri_get)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
-			if res.code.to_i == 200
+			if res.kind_of? Net::HTTPSuccess
 				body = res.body
 				http.finish
 				req.finish
