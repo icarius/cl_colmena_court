@@ -3,6 +3,7 @@ class DetailWorker
 	def perform(data)
 		require 'open-uri'
 		require 'nokogiri'
+		puts "Link"
 		puts data[:link_caso_detalle]
 		document = Nokogiri::HTML(Case.get_case_detail(data[:link_caso_detalle]))
 		if document.present?
