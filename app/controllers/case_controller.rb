@@ -1,18 +1,5 @@
 class CaseController < ApplicationController
 
-	# def welcome
-	# 	render :json => { :status => true, :message => "Colmena court." }, :status => 200
-	# end
-
-	# def test
-	# 	result = Case.poderjudicial_crawler('COLMENA')
-	# 	if result
-	# 		render :json => { :status => true, :message => "Colmena court test.", :result => result }, :status => 200
-	# 	else
-	# 		render :json => { :status => true, :message => "Colmena court test no result." }, :status => 200
-	# 	end
-	# end
-
 	# Re-inicia la cola de sidekiq
 	def start
 		require 'sidekiq/api'
@@ -57,30 +44,7 @@ class CaseController < ApplicationController
 			@cases = Case.where(estado_colmena_situacion: params['estadocolmenasituacion']).paginate(page: params[:page], :per_page => 30).order('updated_at DESC')
 		elsif params.has_key?(:kind) && params.has_key?(:txtsearch)
 			# Segun el tipo de busqueda ejecuto una query diferente.
-			case params['kind']
-
-
-
-			# 	# Busco por RUT y obtengo el case_id.
-			# 	litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
-			# 	# Verifico si el parametro fecha esta presente y corte.
-			# 	if params.has_key?(:corte) && params.has_key?(:fdesde) && params.has_key?(:fhasta)
-			# 		if params.has_key?(:corte) && params['corte'] != 'all'
-			# 			@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
-			# 		else
-			# 			@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
-			# 		end
-			# 	elsif params.has_key?(:corte) && params['corte'] != 'all' # Verifico si el parametro corte al menos esta presente.
-			# 		@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
-			# 	else
-			# 		@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
-			# 	end
-			# # when "corte"
-			# # 	# Busco por Corte.
-			# # 	@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
-
-
-				
+			case params['kind']				
 			when "rut"
 				# Busco por RUT y obtengo el case_id.
 				litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
