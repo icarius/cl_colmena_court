@@ -18,13 +18,13 @@ class DetailWorker
 			recurso.each do |detail|
 				detail.css('td').each do |obj|
 					if obj.text.squish.strip.include? "Estado Recurso:"
-						data[:estado_recurso] = obj.text.squish.strip.gsub('Estado Recurso:', '').squish.downcase
+						data["estado_recurso"] = obj.text.squish.strip.gsub('Estado Recurso:', '').squish.downcase
 					end
 					if obj.text.squish.strip.include? "Estado Procesal:"
-						data[:estado_procesal] = obj.text.squish.strip.gsub('Estado Procesal:', '').squish.downcase
+						data["estado_procesal"] = obj.text.squish.strip.gsub('Estado Procesal:', '').squish.downcase
 					end
 					if obj.text.squish.strip.include? "Recurso :"
-						data[:recurso] = obj.text.squish.strip.gsub('Recurso :', '').squish.downcase
+						data["recurso"] = obj.text.squish.strip.gsub('Recurso :', '').squish.downcase
 					end
 				end
 			end
@@ -32,15 +32,15 @@ class DetailWorker
 			expediente.each do |detail|
 				detail.css('td').each do |obj|
 					if obj.text.squish.strip.include? "RUC :"
-						data[:ruc] = obj.text.squish.strip.gsub('RUC :', '').squish.downcase
+						data["ruc"] = obj.text.squish.strip.gsub('RUC :', '').squish.downcase
 					end
 					if obj.text.squish.strip.include? "Rol o Rit :"
-						data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
+						data["rol_rit"] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
 					end
 				end
 			end
 			# El objeto caso se encuentra completo por lo que lo creo en la BD.
-			caso = Case.where(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte]).first || Case.create(data)
+			caso = Case.where(tipo_causa: data["tipo_causa"], correlativo: data["correlativo"], ano: data["ano"], corte: data["corte"]).first || Case.create(data)
 			# TODO Agregar el ID del caso a un array que posteriormente se utilizara para enviar el reporte de novedades sobre nuevas causas.
 			# Obtengo datos faltantes de litigantes.
 			litigantes.each do |row|

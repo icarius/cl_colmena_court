@@ -22,6 +22,6 @@ class SearchWorker
 		end
 		# Cierro el driver que le dio persistencia a la session durante la ejecucion.
 		driver.close
-		SearchWorker.perform_at(1.day.from_now)
+		SearchWorker.perform_at(2.day.from_now)
 	end
 end
