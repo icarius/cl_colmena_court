@@ -40,7 +40,7 @@ class DetailWorker
 				end
 			end
 			# El objeto caso se encuentra completo por lo que lo creo en la BD.
-			caso = Case.where(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte]).first || self.create(data)
+			caso = Case.where(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte]).first || Case.create(data)
 			# TODO Agregar el ID del caso a un array que posteriormente se utilizara para enviar el reporte de novedades sobre nuevas causas.
 			# Obtengo datos faltantes de litigantes.
 			litigantes.each do |row|
