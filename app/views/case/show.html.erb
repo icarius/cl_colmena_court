@@ -291,21 +291,10 @@
 			// });
 			$('#btn_send_oni').click(function(event){
 				event.preventDefault();
-				var rol = $('#rol').val().split("-");
-				rol = rol[1].trim();
-				var obj = {
-					proveedor: {id: $('#prov_id').val(), hash:$('#prov_hash').val()},
-					rol: rol,
-					corteApelacion: { id: getCorteID($('#corte').val()) },
-					periodo: checkPeriodo($('#periodo').val()),
-					fechaInter: $('#finter').val(),
-					reclamante: { rut: $('#reclamante').val() },
-					materia: { id: $('#materia').val() },
-					fechaCarta: $('#fcarta').val(),
-					abogado: { rut: $('#abogado').val(), nombres: $('#abogado_nombres').val(), apePaterno: "", apeMaterno: "" },
-					usuario: { rut: $('#usuario').val() }
+				if(checkData()){
+					obj = getData();
+					console.log(obj);
 				}
-				console.log(obj);
 			});
 			
 		});
@@ -416,5 +405,55 @@
 			ano = ano + 2000;
 		}
 		return ano * 1
+	}
+
+	function getData(){
+		var rol = $('#rol').val().split("-");
+		rol = rol[1].trim();
+		var obj = {
+			proveedor: {id: $('#prov_id').val(), hash:$('#prov_hash').val()},
+			rol: rol,
+			corteApelacion: { id: getCorteID($('#corte').val()) },
+			periodo: checkPeriodo($('#periodo').val()),
+			fechaInter: $('#finter').val(),
+			reclamante: { rut: $('#reclamante').val() },
+			materia: { id: $('#materia').val() },
+			fechaCarta: $('#fcarta').val(),
+			abogado: { rut: $('#abogado').val(), nombres: $('#abogado_nombres').val(), apePaterno: $('#abogado_apaterno').val(), apeMaterno: $('#abogado_amaterno').val() },
+			usuario: { rut: $('#usuario').val() }
+		}
+		return obj;
+	}
+
+	function checkData(){
+		/**
+		 * Verificamos rol
+		 */
+		var rol = $('#rol').val().split("-");
+		if(rol[1]){
+			console.log(rol);
+			rol = rol[1].trim();
+		}
+		if(isEmpty(rol)){
+			$('#rol').css('border', '5px solid #ffdddd').css('background', 'pink');
+			$('#rol').focus();
+		}else{
+			$('#rol').css('border', '#d2d6de').css('background', 'white');
+		}
+
+		if(isEmpty(getCorteID($('#corte').val()))){
+			$('#corte').css('border', '5px solid #ffdddd').css('background', 'pink');
+			$('#corte').focus();
+		}
+	}
+
+	/**
+	 * HELPERS
+	 */
+	function isEmpty(str) {
+		return (!str || 0 === str.length);
+	}
+	function isBlank(str) {
+		return (!str || /^\s*$/.test(str));
 	}
 </script>
