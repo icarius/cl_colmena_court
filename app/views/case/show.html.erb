@@ -110,7 +110,9 @@
 									<label for="abogado">Abogado</label>
 									<% abogado = CaseLitigant.where(case_id: @case.id, sujeto: "Ab. Recurrente").first %>
 									<input id="abogado" class="form-control" type="text" name="abogado" value="<%= (abogado.nil?) ? "" : abogado.rut%>" />
-									<input id="abogado_nombres" class="form-control" type="hidden" name="abogado_nombres" value="<%= (abogado.nil?) ? "" : abogado.razon_social%>" />
+									<input id="abogado_nombres" class="form-control" type="text" name="abogado_nombres" value="<%= (abogado.nil?) ? "" : abogado.razon_social%>" placeholder="Nombres" />
+									<input id="abogado_apaterno" class="form-control" type="text" name="abogado_apaterno" value="<%= (abogado.nil?) ? "" : abogado.razon_social%>" placeholder="Apellido materno" />
+									<input id="abogado_amaterno" class="form-control" type="text" name="abogado_amaterno" value="<%= (abogado.nil?) ? "" : abogado.razon_social%>" placeholder="Apellido paterno" />
 								</div>
 								<!-- <div class="form-group">
 									<label for="usuario">Usuario</label> -->
