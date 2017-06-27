@@ -74,7 +74,10 @@
 								</div>
 								<div class="form-group">
 									<label for="reclamante">Reclamante</label>
-									<input id="reclamante" class="form-control" type="text" name="reclamante" value="<%#=@case.case_litigants.first.rut%>" />
+									<% reclamante = CaseLitigant.where(case_id: @case.id, sujeto: "Recurrente").first %>
+									<% puts "kaosbite" %>
+									<% puts reclamante.inspect %>
+									<input id="reclamante" class="form-control" type="text" name="reclamante" value="<%= (reclamante.nil?) ? "" : reclamante.rut%>" />
 								</div>
 								<div class="form-group">
 									<label for="materia">Materia</label>
@@ -305,7 +308,6 @@
 
 	function getCorteID(str){
 		str = str.split("C.A. de ").pop().trim();
-		console.log(str);
 		switch(str){
 			// case 'Corte de Apelaciones de Arica':
 			case "Arica":
@@ -376,8 +378,9 @@
 				corte_int = 17;
 			break;
 			default:
+				console.log(str);
 				console.log("entre al default");
-				corte_int = 1;
+				corte_int = 18;
 			break;
 		}
 		return corte_int;
