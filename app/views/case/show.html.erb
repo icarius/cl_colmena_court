@@ -66,7 +66,7 @@
 								</div>
 								<div class="form-group">
 									<label for="periodo">Periodo</label>
-									<input id="periodo" class="form-control" type="text" name="periodo" value="<%=@case.fecha_ubicacion%>" />
+									<input id="periodo" class="form-control" type="text" name="periodo" value="<%=@case.ano%>" />
 								</div>
 								<div class="form-group">
 									<label for="finter">Fecha Inter</label>
@@ -271,7 +271,7 @@
 					proveedor: {id: $('#prov_id').val(), hash:$('#prov_hash').val()},
 					rol: rol,
 					corteApelacion: { id: getCorteID($('#corte').val()) },
-					periodo: 0,
+					periodo: checkPeriodo($('#periodo').val()),
 					fechaInter: 0,
 					reclamante: { rut: 0 },
 					materia: { id: 0 },
@@ -304,7 +304,74 @@
 	});
 
 	function getCorteID(str){
+		str = str.split("C.A. de ").pop().trim();
 		console.log(str);
+		var str = 1;
+		switch(str){
+			case 'Corte de Apelaciones de Arica':
+				corte_int = 1;
+			break;
+			case 'Corte de Apelaciones de Iquique':
+				corte_int = 2;
+			break;
+			case 'Corte de Apelaciones de Antofagasta':
+				corte_int = 3;
+			break;
+			case 'Corte de Apelaciones de Copiapo':
+				corte_int = 4;
+			break;
+			case 'Corte de Apelaciones de La Serena':
+				corte_int = 5;
+			break;
+			case 'Corte de Apelaciones de Valparaiso':
+				corte_int = 6;
+			break;
+			case 'Corte de Apelaciones de Santiago':
+				corte_int = 7;
+			break;
+			case 'Corte de Apelaciones de San Miguel':
+				corte_int = 8;
+			break;
+			case 'Corte de Apelaciones de Rancagua':
+				corte_int = 9;
+			break;
+			case 'Corte de Apelaciones de Talca':
+				corte_int = 10;
+			break;
+			case 'Corte de Apelaciones de Chillán':
+				corte_int = 11;
+			break;
+			case 'Corte de Apelaciones de Concepción':
+				corte_int = 12;
+			break;
+			case 'Corte de Apelaciones de Temuco':
+				corte_int = 13;
+			break;
+			case 'Corte de Apelaciones de Valdivia':
+				corte_int = 14;
+			break;
+			case 'Corte de Apelaciones de Puerto Montt':
+				corte_int = 15;
+			break;
+			case 'Corte de Apelaciones de Coyhaique':
+				corte_int = 16;
+			break;
+			case 'Corte de Apelaciones de  Punta Arenas':
+				corte_int = 17;
+			break;
+			default:
+				corte_int = 1;
+			break;
+		}
 		return 1;
+	}
+
+	function checkPeriodo(ano){
+		if(ano == '' || ano == ' ' || ano == 'undefined'){
+			ano = 1;
+		}else if(ano < 2000){
+			ano = ano + 2000;
+		}
+		return ano * 1
 	}
 </script>
