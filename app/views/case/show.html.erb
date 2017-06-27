@@ -75,8 +75,6 @@
 								<div class="form-group">
 									<label for="reclamante">Reclamante</label>
 									<% reclamante = CaseLitigant.where(case_id: @case.id, sujeto: "Recurrente").first %>
-									<% puts "kaosbite" %>
-									<% puts reclamante.inspect %>
 									<input id="reclamante" class="form-control" type="text" name="reclamante" value="<%= (reclamante.nil?) ? "" : reclamante.rut%>" />
 								</div>
 								<div class="form-group">
@@ -276,7 +274,7 @@
 					corteApelacion: { id: getCorteID($('#corte').val()) },
 					periodo: checkPeriodo($('#periodo').val()),
 					fechaInter: 0,
-					reclamante: { rut: 0 },
+					reclamante: { rut: $('#reclamante').val() },
 					materia: { id: 0 },
 					fechaCarta: 0,
 					abogado: { rut: 0, nombres: "", apePaterno: "", apeMaterno: "" },
