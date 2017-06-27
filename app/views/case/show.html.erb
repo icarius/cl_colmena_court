@@ -458,7 +458,7 @@ $.ajax({
 
 	function getData(){
 		var rol = $('#rol').val().split("-");
-		rol = rol[1].trim();
+		rol = rol[1];//.trim();
 		var obj = {
 			proveedor: {id: $('#prov_id').val(), hash:$('#prov_hash').val()},
 			rol: rol,
