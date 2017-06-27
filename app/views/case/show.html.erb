@@ -306,64 +306,81 @@
 	function getCorteID(str){
 		str = str.split("C.A. de ").pop().trim();
 		console.log(str);
-		var str = 1;
 		switch(str){
-			case 'Corte de Apelaciones de Arica':
+			// case 'Corte de Apelaciones de Arica':
+			case "Arica":
 				corte_int = 1;
 			break;
-			case 'Corte de Apelaciones de Iquique':
+			// case 'Corte de Apelaciones de Iquique':
+			case "Iquique":
 				corte_int = 2;
 			break;
-			case 'Corte de Apelaciones de Antofagasta':
+			// case 'Corte de Apelaciones de Antofagasta':
+			case "Antofagasta":
 				corte_int = 3;
 			break;
-			case 'Corte de Apelaciones de Copiapo':
+			// case 'Corte de Apelaciones de Copiapo':
+			case "Copiapo":
 				corte_int = 4;
 			break;
-			case 'Corte de Apelaciones de La Serena':
+			// case 'Corte de Apelaciones de La Serena':
+			case "La Serena":
 				corte_int = 5;
 			break;
-			case 'Corte de Apelaciones de Valparaiso':
+			// case 'Corte de Apelaciones de Valparaiso':
+			case "Valparaiso":
 				corte_int = 6;
 			break;
-			case 'Corte de Apelaciones de Santiago':
+			// case 'Corte de Apelaciones de Santiago':
+			case "Santiago":
 				corte_int = 7;
 			break;
-			case 'Corte de Apelaciones de San Miguel':
+			// case 'Corte de Apelaciones de San Miguel':
+			case 'San Miguel':
 				corte_int = 8;
 			break;
-			case 'Corte de Apelaciones de Rancagua':
+			// case 'Corte de Apelaciones de Rancagua':
+			case "Rancagua":
 				corte_int = 9;
 			break;
-			case 'Corte de Apelaciones de Talca':
+			// case 'Corte de Apelaciones de Talca':
+			case "Talca":
 				corte_int = 10;
 			break;
-			case 'Corte de Apelaciones de Chillán':
+			// case 'Corte de Apelaciones de Chillán':
+			case "Chillán":
 				corte_int = 11;
 			break;
-			case 'Corte de Apelaciones de Concepción':
+			// case 'Corte de Apelaciones de Concepción':
+			case "Concepción":
 				corte_int = 12;
 			break;
-			case 'Corte de Apelaciones de Temuco':
+			// case 'Corte de Apelaciones de Temuco':
+			case "Temuco":
 				corte_int = 13;
 			break;
-			case 'Corte de Apelaciones de Valdivia':
+			// case 'Corte de Apelaciones de Valdivia':
+			case "Valdivia":
 				corte_int = 14;
 			break;
-			case 'Corte de Apelaciones de Puerto Montt':
+			// case 'Corte de Apelaciones de Puerto Montt':
+			case "Puerto Montt":
 				corte_int = 15;
 			break;
-			case 'Corte de Apelaciones de Coyhaique':
+			// case 'Corte de Apelaciones de Coyhaique':
+			case "Coyhaique":
 				corte_int = 16;
 			break;
-			case 'Corte de Apelaciones de  Punta Arenas':
+			// case 'Corte de Apelaciones de  Punta Arenas':
+			case "Punta Arenas":
 				corte_int = 17;
 			break;
 			default:
+				console.log("entre al default");
 				corte_int = 1;
 			break;
 		}
-		return 1;
+		return corte_int;
 	}
 
 	function checkPeriodo(ano){
