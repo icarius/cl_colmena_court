@@ -265,10 +265,12 @@
 			// });
 			$('#btn_send_oni').click(function(event){
 				event.preventDefault();
+				var rol = $('#rol').val().split("-");
+				rol = rol[1].trim();
 				var obj = {
 					proveedor: {id: $('#prov_id').val(), hash:$('#prov_hash').val()},
-					rol: $('#rol').val(),
-					corteApelacion: { id: $('#corte').val() },
+					rol: rol,
+					corteApelacion: { id: getCorteID($('#corte').val()) },
 					periodo: 0,
 					fechaInter: 0,
 					reclamante: { rut: 0 },
@@ -300,4 +302,9 @@
 			});
 		});
 	});
+
+	function getCorteID(str){
+		console.log(str);
+		return 1;
+	}
 </script>
