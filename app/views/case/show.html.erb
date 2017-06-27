@@ -70,7 +70,7 @@
 								</div>
 								<div class="form-group">
 									<label for="finter">Fecha Inter</label>
-									<input id="finter" class="form-control" type="text" name="finter" value="<%=@case.fecha_ingreso%>" />
+									<input id="finter" class="form-control" type="text" name="finter" placeholder="dd/mm/yyyy" value="<%=@case.fecha_ingreso%>" />
 								</div>
 								<div class="form-group">
 									<label for="reclamante">Reclamante</label>
@@ -79,20 +79,43 @@
 								</div>
 								<div class="form-group">
 									<label for="materia">Materia</label>
-									<input id="materia" class="form-control" type="text" name="materia" value="" />
+									<select id="materia" name="materia" class="form-control">
+										<option value="1" selected>Adecuación Precio base</option>
+										<option value="2">Alza de Precio por Tabla</option>
+										<option value="3">Cobertura CAEC</option>
+										<option value="4">Cobertura GES</option>
+										<option value="5">Cotizaciones de Salud</option>
+										<option value="6">Ley de Urgencia</option>
+										<option value="7">Negativa por Preexistencia</option>
+										<option value="8">SIL</option>
+										<option value="9">Licencias Médicas</option>
+										<option value="10">Término de Contrato</option>
+										<option value="11">Bonificación del plan complementario</option>
+										<option value="12">Negativa por Cirugía Plástica</option>
+										<option value="13">Negativa por Prestaciones no Aranceladas</option>
+										<option value="14">Negativa por Homologación de Prestación</option>
+										<option value="15">Cobertura Hospitalización Domiciliaria</option>
+										<option value="16">Adecuación por Excedentes</option>
+										<option value="17">Adecuación por Beneficios</option>
+										<option value="19">Adecuación GES</option>
+										<option value="18">Otras</option>
+									</select>
+									<!-- <input id="materia" class="form-control" type="text" name="materia" value="" /> -->
 								</div>
 								<div class="form-group">
 									<label for="fcarta">Fecha Carta</label>
-									<input id="fcarta" class="form-control" type="text" name="fcarta" value="" />
+									<input id="fcarta" class="form-control" type="text" format="dd/MM/yyyy" name="fcarta" placeholder="dd/mm/yyyy" value="" />
 								</div>
 								<div class="form-group">
 									<label for="abogado">Abogado</label>
-									<input id="abogado" class="form-control" type="text" name="abogado" value="" />
+									<% abogado = CaseLitigant.where(case_id: @case.id, sujeto: "Ab. Recurrente").first %>
+									<input id="abogado" class="form-control" type="text" name="abogado" value="<%= (abogado.nil?) ? "" : abogado.rut%>" />
+									<input id="abogado_nombres" class="form-control" type="hidden" name="abogado_nombres" value="<%= (abogado.nil?) ? "" : abogado.razon_social%>" />
 								</div>
-								<div class="form-group">
-									<label for="usuario">Usuario</label>
-									<input id="usuario" class="form-control" type="text" name="usuario" value="" />
-								</div>
+								<!-- <div class="form-group">
+									<label for="usuario">Usuario</label> -->
+									<input id="usuario" class="form-control" type="hidden" name="usuario" value="<%=current_user.rut%>" />
+								<!-- </div> -->
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
@@ -273,12 +296,12 @@
 					rol: rol,
 					corteApelacion: { id: getCorteID($('#corte').val()) },
 					periodo: checkPeriodo($('#periodo').val()),
-					fechaInter: 0,
+					fechaInter: $('#finter').val(),
 					reclamante: { rut: $('#reclamante').val() },
-					materia: { id: 0 },
-					fechaCarta: 0,
-					abogado: { rut: 0, nombres: "", apePaterno: "", apeMaterno: "" },
-					usuario: { rut: 0 }
+					materia: { id: $('#materia').val() },
+					fechaCarta: $('#fcarta').val(),
+					abogado: { rut: $('#abogado').val(), nombres: $('#abogado_nombres').val(), apePaterno: "", apeMaterno: "" },
+					usuario: { rut: $('#usuario').val() }
 				}
 				console.log(obj);
 			});
