@@ -262,38 +262,87 @@
 		});
 		$('.toenviadoexterno').on('click', function(){
 
-			/**
-			 * Desplegar formulario.
-			 */
-			
-			/**
-			 * Bindear envio formulario.
-			 */
-			
-			/**
-			 * Validar y manejo de errores.
-			 */
-			
-			/**
-			 * Enviar formulario
-			 */
-			
-			/**
-			 * Analizar respuesta y marcar o no como enviado a ONI segun corresponda (Con la funcion mas abajo.)
-			 */
-
-			// $.ajax({
-			// 	method: "GET",
-			// 	url: "/api/estado/" + $(this).attr('caseid') + "/enviadoexterno",
-			// 	success: function(data){
-			// 		location.reload();
-			// 	}
-			// });
 			$('#btn_send_oni').click(function(event){
 				event.preventDefault();
 				if(checkData()){
 					obj = getData();
 					console.log(obj);
+
+
+
+
+
+
+
+
+
+$.ajax({
+    url: "http://190.96.77.22:8180/wsWebAfiliados/rest/recursoProteccionRest/grabarRecursoProteccion",
+    type: "POST",
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+    },
+    contentType: "application/json",
+    data: JSON.stringify(obj)
+    // data: JSON.stringify({
+    //     "proveedor": {
+    //         "id": "100",
+    //         "hash": "e9d348d2fbb28db50b11ad84a793d1d78b821cd7"
+    //     },
+    //     "reclamante": {
+    //         "rut": "17937305-k"
+    //     },
+    //     "fechaInter": "02/08/2013",
+    //     "rol": "48454",
+    //     "corteApelacion": {
+    //         "id": "5"
+    //     },
+    //     "periodo": "2071655",
+    //     "materia": {
+    //         "id": "4"
+    //     },
+    //     "fechaCarta": "02/12/2012",
+    //     "abogado": {
+    //         "apePaterno": "zart",
+    //         "nombres": "andres antonio",
+    //         "apeMaterno": "saavedra",
+    //         "rut": "10354943-4"
+    //     },
+    //     "usuario": {
+    //         "rut": "162411356-9"
+    //     }
+    // })
+})
+.done(function(data, textStatus, jqXHR) {
+    console.log("HTTP Request Succeeded: " + jqXHR.status);
+    console.log(data);
+})
+.fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("HTTP Request Failed");
+})
+.always(function() {
+    /* ... */
+});
+
+
+
+
+
+
+
+
+
+
+
+					// $.ajax({
+					// 	method: "GET",
+					// 	url: "/api/estado/" + $(this).attr('caseid') + "/enviadoexterno",
+					// 	success: function(data){
+					// 		location.reload();
+					// 	}
+					// });
+
+
 				}
 			});
 			
@@ -427,29 +476,50 @@
 
 	function checkData(){
 		/**
-		 * Verificamos rol
+		 * Verificamos obtenemos el rol
 		 */
 		var rol = $('#rol').val().split("-");
-		if(rol[1]){
-			console.log(rol);
-			rol = rol[1].trim();
+		if(rol[1] != undefined){
+			rol = rol[1];
 		}
+		var flag = true;
 		if(isEmpty(rol)){
 			$('#rol').css('border', '5px solid #ffdddd').css('background', 'pink');
 			$('#rol').focus();
+			flag = false;
 		}else{
 			$('#rol').css('border', '#d2d6de').css('background', 'white');
+			flag = true;
 		}
-
-		if(isEmpty(getCorteID($('#corte').val()))){
-			$('#corte').css('border', '5px solid #ffdddd').css('background', 'pink');
-			$('#corte').focus();
-		}
+		flag = checkField('#corte');
+		flag = checkField('#periodo');
+		flag = checkField('#finter');
+		flag = checkField('#reclamante');
+		flag = checkField('#materia');
+		flag = checkField('#fcarta');
+		flag = checkField('#abogado');
+		flag = checkField('#abogado_nombres');
+		flag = checkField('#abogado_apaterno');
+		flag = checkField('#abogado_amaterno');
+		flag = checkField('#usuario');
+		return flag;
 	}
 
 	/**
 	 * HELPERS
 	 */
+	function checkField(selector){
+		flag = true;
+		if(isEmpty($(selector).val())){
+			$(selector).css('border', '5px solid #ffdddd').css('background', 'pink');
+			$(selector).focus();
+			flag = false;
+		}else{
+			$(selector).css('border', '#d2d6de').css('background', 'white');
+			flag = true;
+		}
+		return flag;
+	}
 	function isEmpty(str) {
 		return (!str || 0 === str.length);
 	}
