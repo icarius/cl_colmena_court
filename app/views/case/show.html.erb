@@ -50,10 +50,49 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title"><%=@case.ningreso%></h4>
+								<h4 class="modal-title"><%=@case.ningreso%> a ONI</h4>
 							</div>
+							<input type="hiddent" id="prov_id" name="prov_id" value="100">
+							<input type="hiddent" id="prov_hash" name="prov_hash" value="e9d348d2fbb28db50b11ad84a793d1d78b821cd7">
 							<div class="modal-body">
-								<p>One fine body…</p>
+								<div class="form-group">
+									<label for="rol">ROL</label>
+									<input id="rol" class="form-control" type="text" name="rol" value="<%=@case.rol_rit%>" />
+								</div>
+								<div class="form-group">
+									<label for="corte">Corte</label>
+									<input id="corte" class="form-control" type="text" name="corte" value="<%=@case.corte%>" />
+									<!-- Tiene que ser numerico -->
+								</div>
+								<div class="form-group">
+									<label for="periodo">Periodo</label>
+									<input id="periodo" class="form-control" type="text" name="periodo" value="<%=@case.fecha_ubicacion%>" />
+									
+								</div>
+								<div class="form-group">
+									<label for="finter">Fecha Inter</label>
+									<input id="finter" class="form-control" type="text" name="finter" value="<%=@case.fecha_ingreso%>" />
+								</div>
+								<div class="form-group">
+									<label for="reclamante">Reclamante</label>
+									<input id="reclamante" class="form-control" type="text" name="reclamante" value="<%#=@case.case_litigants.first.rut%>" />
+								</div>
+								<div class="form-group">
+									<label for="materia">Materia</label>
+									<input id="materia" class="form-control" type="text" name="materia" value="" />
+								</div>
+								<div class="form-group">
+									<label for="fcarta">Fecha Carta</label>
+									<input id="fcarta" class="form-control" type="text" name="fcarta" value="" />
+								</div>
+								<div class="form-group">
+									<label for="abogado">Abogado</label>
+									<input id="abogado" class="form-control" type="text" name="abogado" value="" />
+								</div>
+								<div class="form-group">
+									<label for="usuario">Usuario</label>
+									<input id="usuario" class="form-control" type="text" name="usuario" value="" />
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
