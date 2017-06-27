@@ -52,8 +52,8 @@
 								</button>
 								<h4 class="modal-title"><%=@case.ningreso%> a ONI</h4>
 							</div>
-							<input type="hiddent" id="prov_id" name="prov_id" value="100">
-							<input type="hiddent" id="prov_hash" name="prov_hash" value="e9d348d2fbb28db50b11ad84a793d1d78b821cd7">
+							<input type="hidden" id="prov_id" name="prov_id" value="100">
+							<input type="hidden" id="prov_hash" name="prov_hash" value="e9d348d2fbb28db50b11ad84a793d1d78b821cd7">
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="rol">ROL</label>
@@ -67,7 +67,6 @@
 								<div class="form-group">
 									<label for="periodo">Periodo</label>
 									<input id="periodo" class="form-control" type="text" name="periodo" value="<%=@case.fecha_ubicacion%>" />
-									
 								</div>
 								<div class="form-group">
 									<label for="finter">Fecha Inter</label>
@@ -96,7 +95,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-								<button type="button" class="btn btn-outline">Enviar a ONI</button>
+								<button id="btn_send_oni" type="button" class="btn btn-outline">Enviar a ONI</button>
 							</div>
 						</div>
 					</div>
@@ -264,6 +263,23 @@
 			// 		location.reload();
 			// 	}
 			// });
+			$('#btn_send_oni').click(function(event){
+				event.preventDefault();
+				var obj = {
+					proveedor: {id: $('#prov_id').val(), hash:$('#prov_hash').val()},
+					rol: $('#rol').val(),
+					corteApelacion: { id: $('#corte').val() },
+					periodo: 0,
+					fechaInter: 0,
+					reclamante: { rut: 0 },
+					materia: { id: 0 },
+					fechaCarta: 0,
+					abogado: { rut: 0, nombres: "", apePaterno: "", apeMaterno: "" },
+					usuario: { rut: 0 }
+				}
+				console.log(obj);
+			});
+			
 		});
 		$('.totraspasadooni').on('click', function(){
 			$.ajax({
