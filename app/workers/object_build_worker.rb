@@ -17,10 +17,13 @@ class ObjectBuildWorker
 				caratulado: obj.css('td')[5].text.squish,
 				link_caso_detalle: 'http://corte.poderjudicial.cl' + obj.css('td')[0].css('a')[0]['href']
 			}
-			# Verifico que no exista la causa.
-			if !Case.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
-				# Por cada elemento obtengo su detalle.
-				DetailWorker.perform_async(data)
+			# Filtro de cantidad por año
+			if ningreso_arr[ningreso_arr.length-1].squish.to_i > 2015 
+				# Verifico que no exista la causa.
+				if !Case.exists?(tipo_causa: data[:tipo_causa], correlativo: data[:correlativo], ano: data[:ano], corte: data[:corte])
+					# Por cada elemento obtengo su detalle.
+					DetailWorker.perform_async(data)
+				end
 			end
 		end
 	end
