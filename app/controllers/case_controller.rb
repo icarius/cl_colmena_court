@@ -147,7 +147,6 @@ class CaseController < ApplicationController
 			msj1_txt,
 			msj2_html
 		)
-		return true
 	end
 
 	def study_crawler
