@@ -92,7 +92,15 @@ class CaseController < ApplicationController
 			{
 				:name => 'Felipe I. González G.',
 				:email => 'felipe@coddea.com'
-			}
+			},
+			{
+				:name => 'Ruben Ugarte',
+				:email => 'rugarte@colmena.cl'
+			},
+			{
+				:name => 'Fabiola Calderon',
+				:email => 'fabiola.calderon@colmena.cl'
+			}			
 		]
 		# Mail 1
 		title1 = 'Nuevas causas '+now_date_time.strftime('%d-%m-%Y')
