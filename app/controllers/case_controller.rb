@@ -7,7 +7,8 @@ class CaseController < ApplicationController
 		Sidekiq::RetrySet.new.clear
 		Sidekiq::ScheduledSet.new.clear
 		# Inicializador para comenzar la cadena de tareas.
-		SearchWorker.perform_at(10.seconds.from_now)
+		# SearchWorker.perform_at(10.seconds.from_now)
+		DailyMailReportWorker.perform_at(5.seconds.from_now)
 		render :json => 'start'
 	end
 
