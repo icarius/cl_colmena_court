@@ -69,7 +69,7 @@
 			<table class="table no-margin">
 			<thead>
 				<tr>
-					<% if (params.has_key?(:estadocolmena) || params.has_key?(:estadocolmenasituacion)) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno' || params[:estadocolmena] === 'notificado' || params[:estadocolmenasituacion] === 'aceptado' || params[:estadocolmenasituacion] === 'aceptadoobs' || params[:estadocolmenasituacion] === 'rechazado') %><th></th><% end %>
+					<% if (params.has_key?(:estadocolmena) || params.has_key?(:estadocolmenasituacion)) && (params[:estadocolmena] === 'ingresado' || params[:estadocolmena] === 'enviadoexterno' || params[:estadocolmena] === 'notificado' || params[:estadocolmenasituacion] === 'aceptado' || params[:estadocolmenasituacion] === 'aceptadoobs' || params[:estadocolmenasituacion] === 'rechazado') %><th><button type="button" class="btn btn-block btn-info" id="btnall">all</button></th><% end %>
 					<th>N. Ingreso</th>
 					<th>Ubicacion</th>
 					<th>Corte</th>
@@ -104,6 +104,12 @@
 </div>
 <script type="text/javascript">
 	$(function(){
+		$('#btnall').on('click', function(event){
+			event.preventDefault();
+			$('input[name="select"]:not(:checked)').each(function(index){
+				$(this).prop('checked', true);
+			});
+		});
 		$('.tonotificado').on('click', function(){
 			$('input[name="select"]:checked').each(function(index){
 				$.ajax({
