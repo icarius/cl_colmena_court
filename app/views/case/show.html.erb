@@ -6,6 +6,10 @@
 	</div>
 	<div class="box-body">
 		<dl class="dl-horizontal">
+			<% if !@case.id_colmena.nil? %>
+			<dt>id colmena</dt>
+			<dd><%=@case.id_colmena%></dd>
+			<% end %>
 			<dt>ningreso</dt>
 			<dd><%=@case.ningreso%></dd>
 			<dt>rol_rit</dt>
@@ -121,7 +125,7 @@
 							</div>
 							<div class="modal-footer">
 								<button id="btn_close_oni_form" type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-								<button id="btn_send_oni" type="button" class="btn btn-outline">Enviar a ONI</button>
+								<button caseid="<%=@case.id%>" id="btn_send_oni" type="button" class="btn btn-outline">Enviar a ONI</button>
 							</div>
 						</div>
 					</div>
@@ -267,84 +271,35 @@
 				if(checkData()){
 					obj = getData();
 					console.log(obj);
-
-
-
-
-
-
-
-
-
-$.ajax({
-    url: "http://190.96.77.22:8180/wsWebAfiliados/rest/recursoProteccionRest/grabarRecursoProteccion",
-    type: "POST",
-    headers: {
-        "Content-Type": "application/json; charset=utf-8",
-    },
-    contentType: "application/json",
-    data: JSON.stringify(obj)
-    // data: JSON.stringify({
-    //     "proveedor": {
-    //         "id": "100",
-    //         "hash": "e9d348d2fbb28db50b11ad84a793d1d78b821cd7"
-    //     },
-    //     "reclamante": {
-    //         "rut": "17937305-k"
-    //     },
-    //     "fechaInter": "02/08/2013",
-    //     "rol": "48454",
-    //     "corteApelacion": {
-    //         "id": "5"
-    //     },
-    //     "periodo": "2071655",
-    //     "materia": {
-    //         "id": "4"
-    //     },
-    //     "fechaCarta": "02/12/2012",
-    //     "abogado": {
-    //         "apePaterno": "zart",
-    //         "nombres": "andres antonio",
-    //         "apeMaterno": "saavedra",
-    //         "rut": "10354943-4"
-    //     },
-    //     "usuario": {
-    //         "rut": "162411356-9"
-    //     }
-    // })
-})
-.done(function(data, textStatus, jqXHR) {
-    console.log("HTTP Request Succeeded: " + jqXHR.status);
-    console.log(data);
-    $('#btn_close_oni_form').click();
-    alert(data.resultadoEjecucion.nombre);
-})
-.fail(function(jqXHR, textStatus, errorThrown) {
-    console.log("HTTP Request Failed");
-})
-.always(function() {
-    /* ... */
-});
-
-
-
-
-
-
-
-
-
-
-
-					// $.ajax({
-					// 	method: "GET",
-					// 	url: "/api/estado/" + $(this).attr('caseid') + "/enviadoexterno",
-					// 	success: function(data){
-					// 		location.reload();
-					// 	}
-					// });
-
-
+					$.ajax({
+						url: "http://190.96.77.22:8180/wsWebAfiliados/rest/recursoProteccionRest/grabarRecursoProteccion",
+						type: "POST",
+						headers: {
+							"Content-Type": "application/json; charset=utf-8",
+						},
+						contentType: "application/json",
+						data: JSON.stringify(obj)
+					})
+					.done(function(data, textStatus, jqXHR) {
+						console.log("HTTP Request Succeeded: " + jqXHR.status);
+						if(data.resultadoEjecucion.id == 1){
+							alert(data.resultadoEjecucion.nombre);
+						}else{
+							alert("La causa fue ingresada a ONI con el id:"+data.idColmena);
+							$('#btn_close_oni_form').click();
+							// Marcar como ingresada a ONI y guardar el idColmena como id ONI.
+							$.ajax({
+								method: "GET",
+								url: "/api/colmena/" + $('#btn_send_oni').attr('caseid') + "/" + data.idColmena,
+								success: function(data){
+									location.reload();
+								}
+							});
+						}
+					})
+					.fail(function(jqXHR, textStatus, errorThrown) {
+						console.log("HTTP Request Failed");
+					});
 				}
 			});
 			

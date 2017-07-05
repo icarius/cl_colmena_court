@@ -82,6 +82,11 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :estado_colmena_situacion => params[:estado_colmena_situacion] }, :status => 200
 	end
 
+	def update_id_colmena
+		Case.update(params[:id_caso], id_colmena: params[:id_colmena], estado_colmena: 'enviadoexterno', estado_colmena_situacion: 'traspasadooni')
+		render :json => { :status => true, :id_colmena => params[:id_colmena] }, :status => 200
+	end
+
 	def newsovercases
 		@news = Case.poderjudicial_news_cases_details
 	end
