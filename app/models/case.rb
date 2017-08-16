@@ -196,7 +196,7 @@ class Case < ApplicationRecord
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
 			# Create client
 			http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
-			http.read_timeout = 1200
+			http.read_timeout = 10000
 			# Create Request
 			req =  Net::HTTP::Post.new(uri_post)
 			data = {
@@ -307,6 +307,7 @@ class Case < ApplicationRecord
 	def self.get_driver
 		require 'selenium-webdriver'
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
+		driver.timeout = 500
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		if cookie.nil?
