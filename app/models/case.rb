@@ -126,6 +126,7 @@ class Case < ApplicationRecord
 					end
 					if obj.text.squish.strip.include? "Rol o Rit :"
 						data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
+						# DEBERIA OBTENER EL ROL
 					end
 				end
 			end
