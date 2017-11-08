@@ -45,11 +45,9 @@
 				var txtsearch = $('#txtsearch').val();
 				var kind = $("input[name='kind']:checked").val();
 				if((txtsearch != undefined && txtsearch != null && txtsearch.length > 0) &&(kind != undefined && kind != null && kind.length > 0)){
-					console.log(txtsearch);
-					console.log(kind);
 					document.location.href = '?kind='+kind+'&txtsearch='+txtsearch;
 				}else{
-					console.log("No paso na.");
+					console.log("No paso na!");
 				}
 			});
 			// Comportamiento botones link carga loader
@@ -58,6 +56,7 @@
 			});
 		});		
 	</script>
+	<!-- Loader -->
 	<div id="trama" style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:rgba(255,255,255,.8);z-index:100;display:none;">
 		<div style="position:absolute;top:50%;left:50%;" >
 			<img src="loader.gif" style="margin-top:-64px;">
@@ -65,5 +64,6 @@
 			<span style="color:black;font-weight:bold;">Cargando...</span>
 		</div>
 	</div>
+	<!-- Loader fin -->
 </body>
 </html>
