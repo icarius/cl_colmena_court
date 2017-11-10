@@ -42,12 +42,57 @@
 			// Funcion boton busqueda
 			$('#btnsearch').click(function(event){
 				event.preventDefault();
+				// Obtengo los valores del formulario de busqueda
 				var txtsearch = $('#txtsearch').val();
 				var kind = $("input[name='kind']:checked").val();
-				if((txtsearch != undefined && txtsearch != null && txtsearch.length > 0) &&(kind != undefined && kind != null && kind.length > 0)){
-					document.location.href = '?kind='+kind+'&txtsearch='+txtsearch;
-				}else{
-					console.log("No paso na!");
+				var corte = $('#corte').val();
+				var desde = $('#desde').val();
+				var hasta = $('#hasta').val();
+				// Construyo el objeto como una query GET
+				var query = '';
+				// Check txtsearch
+				if(txtsearch != undefined && txtsearch != null && txtsearch.length > 0){
+					if(query.length > 0){
+						query = query + '&txtsearch=' + txtsearch;
+					}else{
+						query = '?txtsearch=' + txtsearch;
+					}
+				}
+				// Check kind
+				if(kind != undefined && kind != null && kind.length > 0){
+					if(query.length > 0){
+						query = query + '&kind=' + kind;
+					}else{
+						query = '?kind=' + kind;
+					}
+				}
+				// Check corte
+				if(corte != undefined && corte != null && corte.length > 0){
+					if(query.length > 0){
+						query = query + '&corte=' + corte;
+					}else{
+						query = '?corte=' + corte;
+					}
+				}
+				// Check desde
+				if(desde != undefined && desde != null && desde.length > 0){
+					if(query.length > 0){
+						query = query + '&desde=' + desde;
+					}else{
+						query = '?desde=' + desde;
+					}
+				}
+				// Check desde
+				if(hasta != undefined && hasta != null && hasta.length > 0){
+					if(query.length > 0){
+						query = query + '&hasta=' + hasta;
+					}else{
+						query = '?hasta=' + hasta;
+					}
+				}
+				// Check query
+				if(query != undefined && query != null && query.length > 0){
+					document.location.href = query;
 				}
 			});
 			// Comportamiento botones link carga loader

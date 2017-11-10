@@ -5,30 +5,30 @@
 		<br/>
 		Corte&nbsp;&nbsp;
 		<select id="corte" name="corte" >
-			<option value="all" selected="selected">Todas</option>
-			<option value="antofagasta">C.A. de Antofagasta</option>
-			<option value="arica">C.A. de Arica</option>
-			<option value="chillan">C.A. de Chillan</option>
-			<option value="concepcion">C.A. de Concepción</option>
-			<option value="copiapo">C.A. de Copiapó</option>
-			<option value="coyhaique">C.A. de Coyhaique</option>
-			<option value="iquique">C.A. de Iquique</option>
-			<option value="serena">C.A. de La Serena</option>
-			<option value="montt">C.A. de Puerto Montt</option>
-			<option value="arenas">C.A. de Punta Arenas</option>
-			<option value="rancagua">C.A. de Rancagua</option>
-			<option value="miguel">C.A. de San Miguel</option>
-			<option value="santiago">C.A. de Santiago</option>
-			<option value="talca">C.A. de Talca</option>
-			<option value="temuco">C.A. de Temuco</option>
-			<option value="valdivia">C.A. de Valdivia</option>
-			<option value="valparaiso">C.A. de Valparaíso</option>
-			<option value="suprema">Corte Suprema</option>
+			<option value="all" <% if params[:corte] == 'all' %>selected="selected"<% else %>selected="selected"<% end %>>Todas</option>
+			<option value="antofagasta" <% if params[:corte] == 'antofagasta' %>selected="selected"<% end %>>C.A. de Antofagasta</option>
+			<option value="arica" <% if params[:corte] == 'arica' %>selected="selected"<% end %>>C.A. de Arica</option>
+			<option value="chillan" <% if params[:corte] == 'chillan' %>selected="selected"<% end %>>C.A. de Chillan</option>
+			<option value="concepcion" <% if params[:corte] == 'concepcion' %>selected="selected"<% end %>>C.A. de Concepción</option>
+			<option value="copiapo" <% if params[:corte] == 'copiapo' %>selected="selected"<% end %>>C.A. de Copiapó</option>
+			<option value="coyhaique" <% if params[:corte] == 'coyhaique' %>selected="selected"<% end %>>C.A. de Coyhaique</option>
+			<option value="iquique" <% if params[:corte] == 'iquique' %>selected="selected"<% end %>>C.A. de Iquique</option>
+			<option value="serena" <% if params[:corte] == 'serena' %>selected="selected"<% end %>>C.A. de La Serena</option>
+			<option value="montt" <% if params[:corte] == 'montt' %>selected="selected"<% end %>>C.A. de Puerto Montt</option>
+			<option value="arenas" <% if params[:corte] == 'arenas' %>selected="selected"<% end %>>C.A. de Punta Arenas</option>
+			<option value="rancagua" <% if params[:corte] == 'rancagua' %>selected="selected"<% end %>>C.A. de Rancagua</option>
+			<option value="miguel" <% if params[:corte] == 'miguel' %>selected="selected"<% end %>>C.A. de San Miguel</option>
+			<option value="santiago" <% if params[:corte] == 'santiago' %>selected="selected"<% end %>>C.A. de Santiago</option>
+			<option value="talca" <% if params[:corte] == 'talca' %>selected="selected"<% end %>>C.A. de Talca</option>
+			<option value="temuco" <% if params[:corte] == 'temuco' %>selected="selected"<% end %>>C.A. de Temuco</option>
+			<option value="valdivia" <% if params[:corte] == 'valdivia' %>selected="selected"<% end %>>C.A. de Valdivia</option>
+			<option value="valparaiso" <% if params[:corte] == 'valparaiso' %>selected="selected"<% end %>>C.A. de Valparaíso</option>
+			<option value="suprema" <% if params[:corte] == 'suprema' %>selected="selected"<% end %>>Corte Suprema</option>
 		</select>
 		<br/>
 		<br/>
-		Fecha&nbsp;Desde&nbsp;<input type="date" name="desde">
-		&nbsp;Hasta&nbsp;<input type="date" name="hasta">
+		Fecha&nbsp;Desde&nbsp;<input type="date" id="desde" name="desde" <% if params.has_key?(:desde) %>value="<%=params[:desde]%>"<% end %>>
+		&nbsp;Hasta&nbsp;<input type="date" id="hasta" name="hasta" <% if params.has_key?(:hasta) %>value="<%=params[:hasta]%>"<% end %>>
 		<br/>
 		<br/>
 		Buscar por:&nbsp;&nbsp;<input type="radio" name="kind" value="rut" checked="checked">&nbsp;RUT,
