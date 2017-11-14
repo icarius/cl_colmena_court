@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 			get '/getnews' => 'case#get_news_test'
 			get '/getdriver' => 'case#get_driver_test'
 			get '/getdriverpercent' => 'case#get_driver_test_percent'
+			get '/fecha_ingreso_data' => 'case#convert_fecha_ingreso_to_date'
 		end
 	end
 
