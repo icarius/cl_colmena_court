@@ -94,14 +94,14 @@
 				if(query != undefined && query != null && query.length > 0){
 					var id = $(this).attr("id");
 					if(id == 'btnexport'){
-						document.location.href = 'case_export' + query;
+						document.location.href = 'case_export.csv' + query;
 					}else{
 						document.location.href = query;
 					}
 				}
 			});
 			// Comportamiento botones link carga loader
-			$('a, #btnsearch, #btnexport').click(function(event){
+			$('a, #btnsearch').click(function(event){
 				$('#trama').show();
 			});
 			// Comportamiento filtro busqueda txtsearch & kind
