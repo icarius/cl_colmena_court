@@ -69,6 +69,7 @@
 		<input id="txtsearch" value="" class="form-control" placeholder="Texto busqueda" type="text"  <% if !params.has_key?(:kind) || (params.has_key?(:kind) && params[:kind]) == "" %>disabled<%end%>>
 		<br/>
 		<button id="btnsearch" type="button" class="btn btn-primary">Buscar!</button>
+		<button id="btnexport" type="button" class="btn btn-primary">Exportar resultado en CSV</button>
 	</div>
 	
 	<% if params.has_key?(:estadocolmena) || params.has_key?(:estadocolmenasituacion) %>

@@ -1,5 +1,7 @@
 class CaseController < ApplicationController
 
+	require 'csv'
+
 	# Re-inicia la cola de sidekiq
 	def start
 		require 'sidekiq/api'
@@ -113,6 +115,88 @@ class CaseController < ApplicationController
 			end
 		else
 			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
+		end
+	end
+
+	def case_export
+		if params.has_key?(:corte) && params.has_key?(:kind) && params.has_key?(:txtsearch) && params.has_key?(:desde) && params.has_key?(:hasta)
+			start_date = DateTime.parse(params[:desde])
+			end_date = DateTime.parse(params[:hasta])
+			if params[:corte] == 'all'
+				case params['kind']
+				when "rut"
+					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
+					@cases = Case.where(id: litigants).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "rol"
+					@cases = Case.where('lower(rol_rit) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "ningreso"
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				else
+					@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				end
+			else
+				case params['kind']
+				when "rut"
+					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
+					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "rol"
+					@cases = Case.where('lower(rol_rit) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "ningreso"
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				else
+					@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				end
+			end
+		elsif params.has_key?(:corte) && params.has_key?(:kind) && params.has_key?(:txtsearch)
+			if params[:corte] == 'all'
+				case params['kind']
+				when "rut"
+					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
+					@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "rol"
+					@cases = Case.where('lower(rol_rit) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "ningreso"
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				else
+					@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
+				end
+			else
+				case params['kind']
+				when "rut"
+					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
+					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "rol"
+					@cases = Case.where('lower(rol_rit) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				when "ningreso"
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				else
+					@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+				end
+			end
+		elsif params.has_key?(:corte) && params.has_key?(:desde) && params.has_key?(:hasta)
+			start_date = DateTime.parse(params[:desde])
+			end_date = DateTime.parse(params[:hasta])
+			if params[:corte] == 'all'
+				@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			else
+				@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			end
+		elsif params.has_key?(:corte)
+			if params[:corte] == 'all'
+				@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
+			else
+				@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			end
+		else
+			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
+		end
+		# Ahora generamos el archivo a exportar
+		respond_to do |format|
+			format.html
+			format.csv do
+				headers['Content-Disposition'] = "attachment; filename=\"cases-report-"+Time.now.strftime("%d%m%Y-%H%M%S")+".csv\""
+				headers['Content-Type'] ||= 'text/csv'
+			end
 		end
 	end
 

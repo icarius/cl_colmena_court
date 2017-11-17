@@ -40,7 +40,7 @@
 	<script type="text/javascript">
 		$(function(){
 			// Funcion boton busqueda
-			$('#btnsearch').click(function(event){
+			$('#btnsearch, #btnexport').click(function(event){
 				event.preventDefault();
 				// Obtengo los valores del formulario de busqueda
 				var txtsearch = $('#txtsearch').val();
@@ -92,11 +92,16 @@
 				}
 				// Check query
 				if(query != undefined && query != null && query.length > 0){
-					document.location.href = query;
+					var id = $(this).attr("id");
+					if(id == 'btnexport'){
+						document.location.href = 'case_export' + query;
+					}else{
+						document.location.href = query;
+					}
 				}
 			});
 			// Comportamiento botones link carga loader
-			$('a').click(function(event){
+			$('a, #btnsearch, #btnexport').click(function(event){
 				$('#trama').show();
 			});
 			// Comportamiento filtro busqueda txtsearch & kind

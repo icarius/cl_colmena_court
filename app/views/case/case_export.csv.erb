@@ -1,0 +1,5 @@
+<%- headers = ['ID', 'corte'] -%>
+<%= CSV.generate_line headers %>
+<%- @cases.each do |cause| -%>
+<%= CSV.generate_line([cause.id, cause.corte]) -%>
+<%- end -%>

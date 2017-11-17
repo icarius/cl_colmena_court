@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 	get '/reset' => 'case#reset'
 	get '/start' => 'case#start'
 
+	get '/case_export' => 'case#case_export'
+
 	resources :case
 
 	require 'sidekiq/web'
