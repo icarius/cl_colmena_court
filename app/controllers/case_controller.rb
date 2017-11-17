@@ -206,9 +206,10 @@ class CaseController < ApplicationController
 		causes.each do |cause|
 			rol = cause.ningreso.split('-')
 			rol = rol[rol.length - 2]
+			puts rol
 			cause.rol = rol
-			cause.save
 			quantity = quantity + 1
+			cause.save
 		end
 		render :json => { :status => true, :fixed_quantity => quantity }, :status => 200
 	end
