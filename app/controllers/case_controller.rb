@@ -200,6 +200,19 @@ class CaseController < ApplicationController
 		end
 	end
 
+	def case_fix
+		causes = Case.all
+		quantity = 0
+		causes.each do |cause|
+			rol = cause.ningreso.split('-')
+			rol = rol[rol.length - 2]
+			cause.rol = rol
+			cause.save
+			quantity = quantity + 1
+		end
+		render :json => { :status => true, :fixed_quantity => quantity }, :status => 200
+	end
+
 	def show
 		@case = Case.find_by_id(params[:id])
 	end

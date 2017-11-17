@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114071030) do
+ActiveRecord::Schema.define(version: 20171117041331) do
 
   create_table "case_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "case_id",                            null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20171114071030) do
   create_table "cases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string   "rol_rit"
     t.string   "ruc"
+    t.string   "rol"
     t.string   "ningreso"
     t.string   "tipo_causa"
     t.string   "correlativo"
