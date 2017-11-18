@@ -98,7 +98,7 @@ class Case < ApplicationRecord
 	def self.detalle_recurso_scraper(data)
 		require 'open-uri'
 		require 'nokogiri'
-		# document = Nokogiri::HTML(open(data[:link_caso_detalle], proxy: URI.parse("http://66.175.216.65:8118")))
+		# document = Nokogiri::HTML(open(data[:link_caso_detalle], proxy: URI.parse("http://127.0.0.1:8118")))
 		document = Nokogiri::HTML(self.get_case_detail(data[:link_caso_detalle]))
 		if document.present?
 			# Obtengo los elementos del dom y los asocio a objetos segun tema.
@@ -310,7 +310,7 @@ class Case < ApplicationRecord
 
 	def self.get_driver
 		require 'selenium-webdriver'
-		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
 		# driver.timeout = 500
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
@@ -327,7 +327,7 @@ class Case < ApplicationRecord
 	def self.test_driver_proxy
 		require 'selenium-webdriver'
 		# Creo el driver para obtener la session y poder ejecutar el request.
-		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=66.175.216.65:8118'
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")

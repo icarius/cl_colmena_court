@@ -315,7 +315,7 @@ class CaseController < ApplicationController
 
 	def proxy_test
 		require 'tor-privoxy'
-		agent = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
+		agent = TorPrivoxy::Agent.new '127.0.0.1', '', 8118 => 9051
 		render :json => { :status => true, :newip => agent.ip}, :status => 200
 	end
 
@@ -352,13 +352,13 @@ class CaseController < ApplicationController
 
 	def circuit_test
 		require 'net/telnet'
-		agenta = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
+		agenta = TorPrivoxy::Agent.new '127.0.0.1', '', 8118 => 9051
 		oldip = agenta.ip
 		localhost = Net::Telnet::new("Host" => "127.0.0.1", "Port" => "9051", "Timeout" => 10, "Prompt" => /250 OK\n/)
 		localhost.cmd('AUTHENTICATE "colmena"') { |c| print c; throw "Cannot authenticate to Tor" if c != "250 OK\n" }
 		localhost.cmd('signal NEWNYM') { |c| print c; throw "Cannot switch Tor to new route" if c != "250 OK\n" }
 		localhost.close
-		agentb = TorPrivoxy::Agent.new '66.175.216.65', '', 8118 => 9051
+		agentb = TorPrivoxy::Agent.new '127.0.0.1', '', 8118 => 9051
 		newip = agentb.ip
 		render :json => { :status => true, :oldip => oldip, :newip => newip}, :status => 200
 	end
