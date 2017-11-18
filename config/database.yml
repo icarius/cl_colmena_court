@@ -22,5 +22,6 @@ test:
 production:
   <<: *default
   database: colmena_court_production
+  socket: /var/run/mysqld/mysqld.sock
   username: root
   password: reframe2015+-
