@@ -199,7 +199,7 @@ class Case < ApplicationRecord
 		begin
 			uri_post = URI('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do')
 			# Create client
-			http = Net::HTTP.new(uri_post.host, uri_post.port, '66.175.216.65', 8118)
+			http = Net::HTTP.new(uri_post.host, uri_post.port, '127.0.0.1', 8118)
 			http.read_timeout = 10000
 			# Create Request
 			req =  Net::HTTP::Post.new(uri_post)
@@ -277,7 +277,7 @@ class Case < ApplicationRecord
 		require 'net/http'
 		begin
 			uri_get = URI(uri)
-			http = Net::HTTP.new(uri_get.host, uri_get.port, '66.175.216.65', 8118)
+			http = Net::HTTP.new(uri_get.host, uri_get.port, '127.0.0.1', 8118)
 			req =  Net::HTTP::Get.new(uri_get)
 			res = http.request(req)
 			puts "Detail response HTTP Status Code: #{res.code} URI: #{uri}"
