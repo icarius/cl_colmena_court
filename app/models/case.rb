@@ -110,6 +110,9 @@ class Case < ApplicationRecord
 			# Obtengo datos faltantes de recurso.
 			recurso.each do |detail|
 				detail.css('td').each do |obj|
+					if obj.text.squish.strip.include? "Libro :"
+						data[:ningreso] = obj.text.squish.strip.gsub('Libro :', '').squish.downcase
+					end
 					if obj.text.squish.strip.include? "Estado Recurso:"
 						data[:estado_recurso] = obj.text.squish.strip.gsub('Estado Recurso:', '').squish.downcase
 					end
@@ -130,6 +133,10 @@ class Case < ApplicationRecord
 					if obj.text.squish.strip.include? "Rol o Rit :"
 						data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
 						# DEBERIA OBTENER EL ROL
+						# Obtenemos el ROL
+						# Calculo el ROL a partir del numero de caso
+						rol = data[:ningreso].split('-')
+						data[:rol] = resultado[rol.length - 2]
 					end
 				end
 			end
