@@ -1,17 +1,17 @@
 <aside class="main-sidebar">
 <section class="sidebar">
 <ul class="sidebar-menu">
-	<li><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-	<li><a href="/newsovercases"><i class="fa fa-newspaper-o"></i> <span>Novedades</span></a></li>
-	<li><a href="/case"><i class="fa fa-files-o"></i><span>Recursos</span></a></li>
-	<li><a href="/case?estadocolmena=ingresado"><i class="fa fa-circle-o text-purple"></i>Ingresados</a></li>
-	<li><a href="/case?estadocolmena=notificado"><i class="fa fa-circle-o text-blue"></i>Notificados</a></li>
-	<li><a href="/case?estadocolmenasituacion=aceptado"><i class="fa fa-circle-o text-green"></i>Aceptados</a></li>
-	<li><a href="/case?estadocolmenasituacion=aceptadoobs"><i class="fa fa-circle-o text-yellow"></i>Aceptados con obs.</a</li>
-	<li><a href="/case?estadocolmenasituacion=rechazado"><i class="fa fa-circle-o text-red"></i>Rechazado</a></li>
+	<li class="<% if request.path == '/' %>active<%end%>"><a href="/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+	<li class="<% if request.path == '/newsovercases' %>active<%end%>"><a href="/newsovercases"><i class="fa fa-newspaper-o"></i> <span>Novedades</span></a></li>
+	<li class="<% if request.path == '/case' && (!params.has_key?(:estadocolmenasituacion) && !params.has_key?(:estadocolmena)) %>active<%end%>"><a href="/case"><i class="fa fa-files-o"></i><span>Recursos</span></a></li>
+	<li class="<% if params[:estadocolmena] && (params[:estadocolmena] == 'ingresado') %>active<%end%>"><a href="/case?estadocolmena=ingresado"><i class="fa fa-circle-o text-purple"></i>Ingresados</a></li>
+	<li class="<% if params[:estadocolmena] && (params[:estadocolmena] == 'notificado') %>active<%end%>"><a href="/case?estadocolmena=notificado"><i class="fa fa-circle-o text-blue"></i>Notificados</a></li>
+	<li class="<% if params[:estadocolmenasituacion] && (params[:estadocolmenasituacion] == 'aceptado') %>active<%end%>"><a href="/case?estadocolmenasituacion=aceptado"><i class="fa fa-circle-o text-green"></i>Aceptados</a></li>
+	<li class="<% if params[:estadocolmenasituacion] && (params[:estadocolmenasituacion] == 'aceptadoobs') %>active<%end%>"><a href="/case?estadocolmenasituacion=aceptadoobs"><i class="fa fa-circle-o text-yellow"></i>Aceptados con obs.</a</li>
+	<li class="<% if params[:estadocolmenasituacion] && (params[:estadocolmenasituacion] == 'rechazado') %>active<%end%>"><a href="/case?estadocolmenasituacion=rechazado"><i class="fa fa-circle-o text-red"></i>Rechazado</a></li>
 	<!-- <li><a href="/case?estadocolmena=enviadoexterno"><i class="fa fa-circle-o text-aqua"></i>Enviados a externos</a></li> -->
-	<li><a href="/case?estadocolmenasituacion=traspasadooni"><i class="fa fa-circle-o" style="color:#30bbbb !important;"></i>Traspasado a ONI</a></li>
-	<li><a href="/case?estadocolmena=cerrado"><i class="fa fa-circle-o text-gray"></i>Cerrados</a></li>
+	<li class="<% if params[:estadocolmenasituacion] && (params[:estadocolmenasituacion] == 'traspasadooni') %>active<%end%>"><a href="/case?estadocolmenasituacion=traspasadooni"><i class="fa fa-circle-o" style="color:#30bbbb !important;"></i>Traspasado a ONI</a></li>
+	<li class="<% if params[:estadocolmena] && (params[:estadocolmena] == 'cerrado') %>active<%end%>"><a href="/case?estadocolmena=cerrado"><i class="fa fa-circle-o text-gray"></i>Cerrados</a></li>
 </ul>
 </section>
 </aside>
