@@ -397,7 +397,7 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :quantity => count }, :status => 200
 	end
 
-	def regenerate_rol
+	def generate_rol
 		cases = Case.all
 		count = 0
 		cases.each do |obj|
