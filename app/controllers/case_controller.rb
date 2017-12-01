@@ -385,4 +385,28 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :quantity => count }, :status => 200
 	end
 
+	def regenerate_rol_rit
+		cases = Case.all
+		count = 0
+		cases.each do |obj|
+			count = count + 1
+			rol_rit = obj.ningreso.split('-')
+			obj.rol_rit = rol_rit[rol_rit.length - 2] + '-' + rol_rit[rol_rit.length - 1]
+			obj.save
+		end
+		render :json => { :status => true, :quantity => count }, :status => 200
+	end
+
+	def regenerate_rol
+		cases = Case.all
+		count = 0
+		cases.each do |obj|
+			count = count + 1
+			rol = obj.ningreso.split('-')
+			obj.rol = rol[rol.length - 2]
+			obj.save
+		end
+		render :json => { :status => true, :quantity => count }, :status => 200
+	end
+
 end

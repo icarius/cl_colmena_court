@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 			get '/getdriverpercent' => 'case#get_driver_test_percent'
 			get '/fecha_ingreso_data' => 'case#convert_fecha_ingreso_to_date'
 			get '/fix_cases' => 'case#case_fix'
+			get '/regenerate_rol_rit' => 'case#regenerate_rol_rit'
+			get '/generate_rol' => 'case#generate_rol'
 		end
 	end
 

@@ -131,12 +131,13 @@ class Case < ApplicationRecord
 						data[:ruc] = obj.text.squish.strip.gsub('RUC :', '').squish.downcase
 					end
 					if obj.text.squish.strip.include? "Rol o Rit :"
-						data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
+						# data[:rol_rit] = obj.text.squish.strip.gsub('Rol o Rit :', '').squish.downcase
 						# DEBERIA OBTENER EL ROL
 						# Obtenemos el ROL
 						# Calculo el ROL a partir del numero de caso
 						rol = data[:ningreso].split('-')
-						data[:rol] = resultado[rol.length - 2]
+						data[:rol] = rol[rol.length - 2]
+						data[:rol_rit] = rol[rol.length - 2] + '-' + rol[rol.length - 1]
 					end
 				end
 			end
