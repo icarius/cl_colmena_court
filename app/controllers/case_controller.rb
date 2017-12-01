@@ -54,7 +54,8 @@ class CaseController < ApplicationController
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
 					@cases = Case.where(id: litigants).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
 					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
@@ -66,7 +67,8 @@ class CaseController < ApplicationController
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
 					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
 					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
@@ -80,7 +82,8 @@ class CaseController < ApplicationController
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
 					@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
 					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
@@ -92,7 +95,8 @@ class CaseController < ApplicationController
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
 					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
 					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
@@ -119,32 +123,46 @@ class CaseController < ApplicationController
 	end
 
 	def case_export
-		if params.has_key?(:corte) && params.has_key?(:kind) && params.has_key?(:txtsearch) && params.has_key?(:desde) && params.has_key?(:hasta)
+		if params.has_key?(:estadocolmena)
+			# Diccionario: ingresado, notificado, enviadoexterno.
+			# Si estadocolmenta es ingresado se ordena por id, sino por fecha notificado.
+			if params['estadocolmena'] == 'ingresado'
+				@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('id DESC')
+			else
+				# Si su estado no es ingresado se ordena por la fecha de modificacion. (que implica el cambio de estado) es posible que se haga necesario incoporar un nuevo dato para dar seguimiento a esta accion de forma exclusiva.
+				@cases = Case.where(estado_colmena: params['estadocolmena']).paginate(page: params[:page], :per_page => 30).order('updated_at DESC')
+			end
+		elsif params.has_key?(:estadocolmenasituacion)
+			# Diccionario, aceptado, aceptadoobs, rechazado, traspasadooni.
+			@cases = Case.where(estado_colmena_situacion: params['estadocolmenasituacion']).paginate(page: params[:page], :per_page => 30).order('updated_at DESC')
+		elsif params.has_key?(:corte) && params.has_key?(:kind) && params.has_key?(:txtsearch) && params.has_key?(:desde) && params.has_key?(:hasta)
 			start_date = DateTime.parse(params[:desde])
 			end_date = DateTime.parse(params[:hasta])
 			if params[:corte] == 'all'
 				case params['kind']
 				when "rut"
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
-					@cases = Case.where(id: litigants).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					@cases = Case.where(id: litigants).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
-					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
-					@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				end
 			else
 				case params['kind']
 				when "rut"
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
-					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
-					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
-					@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+					@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				end
 			end
 		elsif params.has_key?(:corte) && params.has_key?(:kind) && params.has_key?(:txtsearch)
@@ -152,40 +170,42 @@ class CaseController < ApplicationController
 				case params['kind']
 				when "rut"
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
-					@cases = Case.where(id: litigants).order('id DESC')
+					@cases = Case.where(id: litigants).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
-					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).order('id DESC')
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
-					@cases = Case.order('id DESC')
+					@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
 				end
 			else
 				case params['kind']
 				when "rut"
 					litigants = CaseLitigant.where(rut: params['txtsearch']).distinct(:case_id).pluck(:case_id)
-					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).order('id DESC')
+					@cases = Case.where(id: litigants).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "rol"
-					@cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).order('id DESC')
+					# @cases = Case.where('lower(rol) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
+					@cases = Case.where(rol: params['txtsearch']).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				when "ningreso"
-					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).order('id DESC')
+					@cases = Case.where('lower(ningreso) COLLATE utf8_general_ci LIKE :search', search: "%#{params['txtsearch']}%".downcase).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				else
-					@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).order('id DESC')
+					@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 				end
 			end
 		elsif params.has_key?(:corte) && params.has_key?(:desde) && params.has_key?(:hasta)
 			start_date = DateTime.parse(params[:desde])
 			end_date = DateTime.parse(params[:hasta])
 			if params[:corte] == 'all'
-				@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).order('id DESC')
+				@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			else
-				@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).order('id DESC')
+				@cases = Case.where(fecha_ingreso_como_fecha: start_date..end_date).where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			end
 		elsif params.has_key?(:corte)
 			if params[:corte] == 'all'
-				@cases = Case.order('id DESC')
+				@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
 			else
-				@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).order('id DESC')
+				@cases = Case.where('lower(corte) COLLATE utf8_general_ci LIKE :search', search: "%#{params['corte']}%".downcase).paginate(page: params[:page], :per_page => 30).order('id DESC')
 			end
 		else
 			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
