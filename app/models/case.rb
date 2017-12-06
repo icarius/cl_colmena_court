@@ -325,7 +325,7 @@ class Case < ApplicationRecord
 		if cookie.nil?
 			driver.close
 			self.switch_tor_circuit('cookie nil -> get_driver')
-			sleep(0.5)
+			sleep(1)
 			self.get_driver
 		else
 			return driver
