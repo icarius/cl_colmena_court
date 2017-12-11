@@ -318,7 +318,7 @@ class Case < ApplicationRecord
 
 	def self.get_driver
 		require 'selenium-webdriver'
-		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
+		driver = Selenium::WebDriver.for :phantomjs#, args: '--proxy=127.0.0.1:8118'
 		# driver.timeout = 500
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
