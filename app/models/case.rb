@@ -322,6 +322,7 @@ class Case < ApplicationRecord
 		# driver.timeout = 500
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
+		puts driver.manage.cookie_named("JSESSIONID").inspect
 		if cookie.nil?
 			driver.close
 			self.switch_tor_circuit('cookie nil -> get_driver')
