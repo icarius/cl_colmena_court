@@ -321,7 +321,6 @@ class Case < ApplicationRecord
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
 		# driver.timeout = 500
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
-		sleep(2)
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		if cookie.nil?
 			driver.close
