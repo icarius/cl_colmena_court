@@ -333,6 +333,10 @@ class CaseController < ApplicationController
 		else
 			@cases = Case.paginate(page: params[:page], :per_page => 30).order('id DESC')
 		end
+
+
+
+		
 		# Ahora generamos el archivo a exportar
 		respond_to do |format|
 			format.html
