@@ -24,7 +24,7 @@ echo 'forward-socks4a / 127.0.0.1:9050 .' >> /etc/privoxy/config
 
 echo 'forward-socks5 / 127.0.0.1:9050 .' >> /etc/privoxy/config
 
-for i in 1 2 3 4 5
+for i in 2 3 4 5
 
 do
 
@@ -51,7 +51,6 @@ touch /etc/privoxy/config$i
 echo 'logdir /var/log/privoxy'$i >> /etc/privoxy/config$i
 
 echo 'listen-address localhost:8'$i'18' >> /etc/privoxy/config$i
-echo 'listen-address 127.0.0.1:8'$i'18' >> /etc/privoxy/config$i
 
 echo 'forward-socks4 / 127.0.0.1:9'$(($i-1))'50 .' >> /etc/privoxy/config$i
 
@@ -65,15 +64,15 @@ done
 
 echo 'StrictExitNodes 1' >> /etc/tor/torrc2
 
-echo 'ExitNodes {cl}' >> /etc/tor/torrc2
+echo 'ExitNodes {us}' >> /etc/tor/torrc2
 
 echo 'StrictExitNodes 1' >> /etc/tor/torrc3
 
-echo 'ExitNodes {br}' >> /etc/tor/torrc3
+echo 'ExitNodes {ru}' >> /etc/tor/torrc3
 
 echo 'StrictExitNodes 1' >> /etc/tor/torrc4
 
-echo 'ExitNodes {us}' >> /etc/tor/torrc4
+echo 'ExitNodes {br}' >> /etc/tor/torrc4
 
 #MAKING SCRIPT FOR START ALL PRIVO/TORS
 
