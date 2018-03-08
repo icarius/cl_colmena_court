@@ -24,7 +24,7 @@ echo 'forward-socks4a / 127.0.0.1:9050 .' >> /etc/privoxy/config
 
 echo 'forward-socks5 / 127.0.0.1:9050 .' >> /etc/privoxy/config
 
-for i in 2 3 4 5
+for i in 1 2 3 4 5
 
 do
 
@@ -51,6 +51,7 @@ touch /etc/privoxy/config$i
 echo 'logdir /var/log/privoxy'$i >> /etc/privoxy/config$i
 
 echo 'listen-address localhost:8'$i'18' >> /etc/privoxy/config$i
+echo 'listen-address 127.0.0.1:8'$i'18' >> /etc/privoxy/config$i
 
 echo 'forward-socks4 / 127.0.0.1:9'$(($i-1))'50 .' >> /etc/privoxy/config$i
 
