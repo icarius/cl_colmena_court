@@ -347,10 +347,11 @@ class Case < ApplicationRecord
 		http = Net::HTTP.new(uri_get.host, uri_get.port, '127.0.0.1', 8118)
 		req =  Net::HTTP::Get.new(uri_get)
 		res = http.request(req)
-		return rest.body
-			# if res.kind_of? Net::HTTPSuccess
-			# 	return res.body
-			# else
+		if res.kind_of? Net::HTTPSuccess
+			return res.body
+		else
+			return "No paso nada"
+		end
 	end
 
 end
