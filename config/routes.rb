@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 			get '/fix_cases' => 'case#case_fix'
 			get '/regenerate_rol_rit' => 'case#regenerate_rol_rit'
 			get '/generate_rol' => 'case#generate_rol'
+			get '/proxy_socks5' => 'case#proxy_socks5_test'
 		end
 	end
 

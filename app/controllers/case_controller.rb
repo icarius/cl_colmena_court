@@ -480,6 +480,15 @@ class CaseController < ApplicationController
 		end
 	end
 
+	def proxy_socks5_test
+		result = Case.test_http_sock5_proxy('http://www.google.cl')
+		if !result.nil? && !result[:value].blank?
+			render :json => { :status => true, :result => result[:value]}, :status => 200
+		else
+			self.driver_test
+		end
+	end
+
 	def get_driver_test
 		driver = Case.get_driver
 		cookie = driver.manage.cookie_named("JSESSIONID")
