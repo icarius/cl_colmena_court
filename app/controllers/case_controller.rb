@@ -483,7 +483,7 @@ class CaseController < ApplicationController
 	def proxy_socks5_test
 		result = Case.test_http_sock5_proxy('http://www.google.cl')
 		if !result.nil? && !result.blank?
-			render :json => { :status => true, :result => result}, :status => 200
+			render :json => { :status => true, :result => result.to_s}, :status => 200
 		else
 			self.driver_test
 		end
