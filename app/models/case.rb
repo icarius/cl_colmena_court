@@ -332,28 +332,14 @@ class Case < ApplicationRecord
 		end
 	end
 
-	# /usr/local/bin/phantomjs --proxy=localhost:8118 --proxy-type=socks5
 	def self.test_driver_proxy
 		require 'selenium-webdriver'
 		# Creo el driver para obtener la session y poder ejecutar el request.
-		# driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=localhost:8118 --proxy-type=socks5'
-		# 
-		# 
-		# 
-		# 
-		# driver = Selenium::WebDriver.for :phantomjs, args: ['--proxy=127.0.0.1:8118', '--proxy-type=socks5']
-		# driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
+		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
-		# cookie = driver.manage.cookie_named("JSESSIONID")
-		# return cookie
-		proxy_addr = '127.0.0.1'
-		proxy_port = 8118
-		response = 'nada'
-		Net::HTTP.new('google.de', nil, proxy_addr, proxy_port).start { |http|
-			# always proxy via your.proxy.addr:8080
-			response = http.get('google.de', '')
-		}
-		return response
+		cookie = driver.manage.cookie_named("JSESSIONID")
+		return cookie
 	end
 
 end
