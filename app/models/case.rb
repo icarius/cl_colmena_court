@@ -343,10 +343,13 @@ class Case < ApplicationRecord
 	end
 
 	def self.test_http_sock5_proxy(uri)
+		require 'net/http'
 		uri_get = URI(uri)
 		http = Net::HTTP.new(uri_get.host, uri_get.port, '127.0.0.1', 8118)
 		req =  Net::HTTP::Get.new(uri_get)
 		res = http.request(req)
+		puts "kaosbite"
+		puts res.inspect
 		if res.kind_of? Net::HTTPSuccess
 			return res.body
 		else

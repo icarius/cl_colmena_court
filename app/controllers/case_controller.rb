@@ -481,7 +481,7 @@ class CaseController < ApplicationController
 	end
 
 	def proxy_socks5_test
-		result = Case.test_http_sock5_proxy('http://coddea.com')
+		result = Case.test_http_sock5_proxy('http://google.com')
 		if !result.nil? && !result.blank?
 			render :json => { :status => true, :result => result}, :status => 200
 		else
