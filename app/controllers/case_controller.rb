@@ -530,6 +530,14 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :result => cases }, :status => 200
 	end
 
+	def get_with_chromedriver_test
+		require 'selenium-webdriver'
+		driver = Selenium::WebDriver.for(:chrome, args: ['headless'])
+		driver.get('http://corte.poderjudicial.cl/SITCORTEPORWEB/')
+		# driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
+		render :json => { :status => true, :result => driver.title }, :status => 200
+	end
+
 	def convert_fecha_ingreso_to_date
 		cases = Case.all
 		count = 0
