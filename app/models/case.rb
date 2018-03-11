@@ -335,26 +335,11 @@ class Case < ApplicationRecord
 	def self.test_driver_proxy
 		require 'selenium-webdriver'
 		# Creo el driver para obtener la session y poder ejecutar el request.
-		driver = Selenium::WebDriver.for :phantomjs#, args: '--proxy=127.0.0.1:8118'
-		driver.navigate.to "http://coddea.com"
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118 --proxy-type=["socks5"]'
+		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		# Obtengo el valor de JSESSIONID.
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		return cookie
-	end
-
-	def self.test_http_sock5_proxy(uri)
-		require 'net/http'
-		uri_get = URI(uri)
-		http = Net::HTTP.new(uri_get.host, uri_get.port, '127.0.0.1', 8118)
-		req =  Net::HTTP::Get.new(uri_get)
-		res = http.request(req)
-		puts "kaosbite"
-		puts res.inspect
-		if res.kind_of? Net::HTTPSuccess
-			return res.body
-		else
-			return "No paso nada"
-		end
 	end
 
 end
