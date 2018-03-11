@@ -533,7 +533,7 @@ class CaseController < ApplicationController
 	def get_with_chromedriver_test
 		require 'selenium-webdriver'
 		driver = Selenium::WebDriver.for(:chrome, args: ['headless'])
-		driver.get('http://corte.poderjudicial.cl/SITCORTEPORWEB/')
+		driver.get('http://stackoverflow.com/')
 		# driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		render :json => { :status => true, :result => driver.title }, :status => 200
 	end
