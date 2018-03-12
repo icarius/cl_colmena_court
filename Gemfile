@@ -60,3 +60,5 @@ gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'mechanize'
 gem 'sidekiq'
+
+gem 'rest-tor', '~> 0.1.7'
