@@ -579,8 +579,8 @@ class CaseController < ApplicationController
 		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
-		body = Tor.request(url: 'http://corte.poderjudicial.cl/SITCORTEPORWEB/', raw: false, timeout: 100)
-		render :json => { :status => true, :result => result, :cookie => cookie, :body => body }, :status => 200
+		# body = Tor.request(url: 'http://corte.poderjudicial.cl/SITCORTEPORWEB/', raw: false, timeout: 100)
+		render :json => { :status => true, :result => result, :cookie => cookie }, :status => 200
 	end
 
 end
