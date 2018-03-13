@@ -576,7 +576,7 @@ class CaseController < ApplicationController
 	def test_tor_rest
 		result = Tor.request(url: 'http://ip.plusor.cn/', raw: false)
 		require 'selenium-webdriver'
-		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy=127.0.0.1:8118'
+		driver = Selenium::WebDriver.for :phantomjs, args: '--proxy-type=socks5 --proxy=127.0.0.1:9050'
 		driver.navigate.to "http://corte.poderjudicial.cl/SITCORTEPORWEB/"
 		cookie = driver.manage.cookie_named("JSESSIONID")
 		# body = Tor.request(url: 'http://corte.poderjudicial.cl/SITCORTEPORWEB/', raw: false, timeout: 100)
