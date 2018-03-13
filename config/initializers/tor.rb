@@ -8,5 +8,5 @@ Tor.setup do
   # Specify a node(country)   " --ExitNodes {AU} --StrictNodes 1 "
   # Specify multiple nodes(country)   " --ExitNodes {AU,US,....} --StrictNodes 1 "
   # Node codes: https://countrycode.org
-  config.command    =   -> (port) { "tor --ExitNodes {CL,BR,US} --StrictNodes 1 --RunAsDaemon 1 --HashedControlPassword \"\"  --ControlPort auto --PidFile #{Tor.dir(port)}/tor.pid --SocksPort #{port} --DataDirectory #{Tor.dir(port)}  --CircuitBuildTimeout 5 --KeepalivePeriod 60 --NewCircuitPeriod 15 --NumEntryGuards 8 --quiet" }
+  config.command    =   -> (port) { "tor --ExitNodes {US} --StrictNodes 1 --RunAsDaemon 1 --HashedControlPassword \"\"  --ControlPort auto --PidFile #{Tor.dir(port)}/tor.pid --SocksPort #{port} --DataDirectory #{Tor.dir(port)}  --CircuitBuildTimeout 5 --KeepalivePeriod 60 --NewCircuitPeriod 15 --NumEntryGuards 8 --quiet" }
 end
