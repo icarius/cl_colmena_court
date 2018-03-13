@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 			get '/generate_rol' => 'case#generate_rol'
 			get '/proxy_socks5' => 'case#proxy_socks5_test'
 			get '/chrome' => 'case#get_with_chromedriver_test'
+			get '/test_tor_rest' => 'case#test_tor_rest'
 		end
 	end
 

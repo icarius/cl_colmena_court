@@ -573,4 +573,9 @@ class CaseController < ApplicationController
 		render :json => { :status => true, :quantity => count }, :status => 200
 	end
 
+	def test_tor_rest
+		result = Tor.request(url: 'http://ip.plusor.cn/', raw: false)
+		render :json => { :status => true, :result => result }, :status => 200
+	end
+
 end
